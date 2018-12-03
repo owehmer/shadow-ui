@@ -42,13 +42,6 @@ export class SdwSimpleDialogBuilder<C = any, D = any, R = any> extends SdwDialog
     this._config.data = new SdwSimpleDialogData<C, D>();
   }
 
-  setPanelClasses(newClasses?: string | string[]) {
-    return super.setPanelClasses([
-      ...(newClasses instanceof Array ? newClasses : [newClasses]),
-      'sdw-simple-dialog'
-    ]);
-  }
-
   setDialogData(newData: D) {
     this.data.data = newData;
     return this;

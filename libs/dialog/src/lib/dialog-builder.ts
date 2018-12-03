@@ -1,5 +1,4 @@
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
-import { ComponentType } from '@angular/cdk/portal';
 import { coerceArray } from '@angular/cdk/coercion';
 
 export abstract class SdwDialogBuilder<D = any> {
@@ -9,7 +8,6 @@ export abstract class SdwDialogBuilder<D = any> {
     this._config = this._config ? this._config : new MatDialogConfig();
     this._config.role = this._config.role ? this._config.role : 'dialog';
     this._config.hasBackdrop = this._config.hasBackdrop ? this._config.hasBackdrop : true;
-    // this._config.backdropClass = 'cdk-overlay-dark-backdrop sdw-backdrop';
     this._config.disableClose = this._config.disableClose != null ? this._config.disableClose : false;
   }
 
@@ -36,8 +34,10 @@ export abstract class SdwDialogBuilder<D = any> {
     return this;
   }
 
-  setPanelClasses(classes: string | string[]) {
-    this._config.panelClass = coerceArray(classes);
+  setPanelClasses(classes?: string | string[]) {
+    const inputArr = coerceArray(classes);
+    inputArr.push('sdw-cdk-dialog');
+    this._config.panelClass = inputArr;
     return this;
   }
 

@@ -70,16 +70,10 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
 
   constructor(dialogService: MatDialog, _config: MatDialogConfig<SdwAdvancedDialogData> = null) {
     super(dialogService, _config);
+    this._config.disableClose = true;
     this._config.maxWidth = this._config.maxWidth && this._config.maxWidth !== '80vw' ? this._config.maxWidth : '100vw';
     this._config.minHeight = this._config.minHeight ? this._config.minHeight : '135px';
     this._config.data = new SdwAdvancedDialogData<C, D>();
-  }
-
-  setPanelClasses(newClasses?: string | string[]) {
-    return super.setPanelClasses([
-      ...(newClasses instanceof Array ? newClasses : [newClasses]),
-      'sdw-cdk-dialog'
-    ]);
   }
 
   setDialogData(newData: D) {
@@ -148,14 +142,14 @@ interface DataThatChanges<T = any> {
 }
 
 @Component({
-  selector: 'sdw-material-dialog',
+  selector: 'sdw-advanced-dialog',
   templateUrl: './advanced-dialog.component.html',
   styleUrls: ['./advanced-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: {
-    'class': 'sdw-material-dialog',
+    'class': 'sdw-advanced-dialog',
     'tabindex': '-1'
   }
 })
