@@ -78,7 +78,7 @@ export class MaterialDialogBuilder<C = any, D = any, R = any> extends DialogBuil
   setPanelClasses(newClasses?: string | string[]) {
     return super.setPanelClasses([
       ...(newClasses instanceof Array ? newClasses : [newClasses]),
-      'sdw-material-dialog'
+      'sdw-cdk-dialog'
     ]);
   }
 
@@ -148,14 +148,14 @@ interface DataThatChanges<T = any> {
 }
 
 @Component({
-  selector: 'dlg-material-dialog',
+  selector: 'sdw-material-dialog',
   templateUrl: './material-dialog.component.html',
   styleUrls: ['./material-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: {
-    'class': 'dlg-material-dialog',
+    'class': 'sdw-material-dialog',
     'tabindex': '-1'
   }
 })

@@ -89,14 +89,14 @@ export class SimpleDialogBuilder<C = any, D = any, R = any> extends DialogBuilde
 }
 
 @Component({
-  selector: 'dlg-simple-dialog',
+  selector: 'sdw-simple-dialog',
   templateUrl: './simple-dialog.component.html',
   styleUrls: ['./simple-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: {
-    'class': 'dlg-simple-dialog',
+    'class': 'sdw-simple-dialog',
     'tabindex': '-1'
   }
 })

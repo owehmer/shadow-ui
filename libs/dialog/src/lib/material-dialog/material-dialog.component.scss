@@ -1,7 +1,7 @@
 $mat-default-padding: 24px;
 
 // CDK Element
-.sdw-material-dialog {
+.sdw-cdk-dialog {
   transition: all 0.25s ease;
 
   &.sdw-fullscreen-dialog {
@@ -21,7 +21,7 @@ $mat-default-padding: 24px;
     }
   }
 
-  .dlg-material-dialog {
+  .sdw-material-dialog {
     display: block;
     width: calc(100% + #{$mat-default-padding * 2});
     height: calc(100% + #{$mat-default-padding * 2});
