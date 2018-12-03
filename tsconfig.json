@@ -16,6 +16,9 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "@shadow-ui/dialog": [
+        "libs/dialog/src/index.ts"
+      ]
     }
   },
   "exclude": [
