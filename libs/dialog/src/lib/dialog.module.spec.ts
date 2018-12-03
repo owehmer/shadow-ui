@@ -1,14 +1,14 @@
 import { async, TestBed } from '@angular/core/testing';
-import { ShadowUiDialogModule } from './dialog.module';
+import { SdwDialogModule } from './dialog.module';
 
-describe('ShadowUiDialogModule', () => {
+describe('SdwDialogModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ShadowUiDialogModule]
+      imports: [SdwDialogModule]
     }).compileComponents();
   }));
 
   it('should create', () => {
-    expect(ShadowUiDialogModule).toBeDefined();
+    expect(SdwDialogModule).toBeDefined();
   });
 });

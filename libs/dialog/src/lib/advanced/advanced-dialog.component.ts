@@ -15,7 +15,7 @@ import {
   MatDialogRef
 } from '@angular/material/dialog';
 import { CdkPortalOutlet, ComponentType, PortalInjector } from '@angular/cdk/portal';
-import { DialogBuilder } from '../dialog-builder';
+import { SdwDialogBuilder } from '../dialog-builder';
 import { GenericDialogBase } from '../generic-dialog-base';
 import {
   determineValue,
@@ -28,9 +28,9 @@ import {
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { distinctUntilChanged, filter, takeUntil } from 'rxjs/operators';
 import { combineLatest, Subject, Subscription } from 'rxjs';
-import { SimpleDialogBuilder } from '../simple-dialog/simple-dialog.component';
+import { SdwSimpleDialogBuilder } from '../simple/simple-dialog.component';
 
-export class MaterialDialogData<C = any, D = any> {
+export class SdwAdvancedDialogData<C = any, D = any> {
   data: D = null;
   component: ComponentType<C> | TemplateRef<C> | null;
   injector?: Injector;
@@ -56,23 +56,23 @@ export class MaterialDialogData<C = any, D = any> {
   discardDlgOkText = 'Discard';
   discardDlgAbortText = 'Cancel';
 
-  constructor(data: Partial<MaterialDialogData> = {}) {
+  constructor(data: Partial<SdwAdvancedDialogData> = {}) {
     Object.assign(this, data);
   }
 }
 
-export class MaterialDialogBuilder<C = any, D = any, R = any> extends DialogBuilder {
-  protected _config: MatDialogConfig<MaterialDialogData>;
+export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDialogBuilder {
+  protected _config: MatDialogConfig<SdwAdvancedDialogData>;
 
-  protected get data(): MaterialDialogData<C, D> {
+  protected get data(): SdwAdvancedDialogData<C, D> {
     return this._config.data;
   }
 
-  constructor(dialogService: MatDialog, _config: MatDialogConfig<MaterialDialogData> = null) {
+  constructor(dialogService: MatDialog, _config: MatDialogConfig<SdwAdvancedDialogData> = null) {
     super(dialogService, _config);
     this._config.maxWidth = this._config.maxWidth && this._config.maxWidth !== '80vw' ? this._config.maxWidth : '100vw';
     this._config.minHeight = this._config.minHeight ? this._config.minHeight : '135px';
-    this._config.data = new MaterialDialogData<C, D>();
+    this._config.data = new SdwAdvancedDialogData<C, D>();
   }
 
   setPanelClasses(newClasses?: string | string[]) {
@@ -87,10 +87,10 @@ export class MaterialDialogBuilder<C = any, D = any, R = any> extends DialogBuil
     return this;
   }
 
-  open(): MatDialogRef<MaterialDialogComponent, R> {
+  open(): MatDialogRef<SdwAdvancedDialogComponent, R> {
     if (this._config.panelClass == null || this._config.panelClass === '')
       this.setPanelClasses();
-    return this._dialogService.open<MaterialDialogComponent, MaterialDialogData<C, D>, R>(MaterialDialogComponent, this._config);
+    return this._dialogService.open<SdwAdvancedDialogComponent, SdwAdvancedDialogData<C, D>, R>(SdwAdvancedDialogComponent, this._config);
   }
 
   setTitle(title: string) {
@@ -149,8 +149,8 @@ interface DataThatChanges<T = any> {
 
 @Component({
   selector: 'sdw-material-dialog',
-  templateUrl: './material-dialog.component.html',
-  styleUrls: ['./material-dialog.component.scss'],
+  templateUrl: './advanced-dialog.component.html',
+  styleUrls: ['./advanced-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
@@ -159,7 +159,7 @@ interface DataThatChanges<T = any> {
     'tabindex': '-1'
   }
 })
-export class MaterialDialogComponent extends GenericDialogBase implements OnInit, OnDestroy {
+export class SdwAdvancedDialogComponent extends GenericDialogBase implements OnInit, OnDestroy {
   public contentChanged = false;
 
   public get isTitleCentered() {
@@ -198,8 +198,8 @@ export class MaterialDialogComponent extends GenericDialogBase implements OnInit
   private readonly _footerHeight = 52;
 
   constructor(private dlgService: MatDialog,
-              protected dialogRef: MatDialogRef<MaterialDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) private dlgData: MaterialDialogData,
+              protected dialogRef: MatDialogRef<SdwAdvancedDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) private dlgData: SdwAdvancedDialogData,
               private _injector: Injector,
               private _bpObserver: BreakpointObserver,
               private _elemRef: ElementRef) {
@@ -268,7 +268,7 @@ export class MaterialDialogComponent extends GenericDialogBase implements OnInit
     this._waitForButtonResult = true;
 
     if (!isOkBtn && this.promtOnDiscard && this.contentChanged) {
-      const builder = new SimpleDialogBuilder(this.dlgService)
+      const builder = new SdwSimpleDialogBuilder(this.dlgService)
         .setTitle(this.dlgData.discardDlgTitle)
         .setText(this.dlgData.discardDlgText)
         .showAbortButton(this.dlgData.discardDlgAbortText)

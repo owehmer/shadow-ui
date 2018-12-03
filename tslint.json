@@ -13,7 +13,7 @@
     "forin": true,
     "import-blacklist": [
       true,
-      "rxjs/Rx"
+      "@angular/material"
     ],
     "interface-over-type-literal": true,
     "member-access": false,
@@ -21,10 +21,15 @@
       true,
       {
         "order": [
-          "static-field",
-          "instance-field",
-          "static-method",
-          "instance-method"
+          "public-static-field",
+          "public-instance-field",
+          "private-static-field",
+          "private-instance-field",
+          "public-constructor",
+          "private-constructor",
+          "public-instance-method",
+          "protected-instance-method",
+          "private-instance-method"
         ]
       }
     ],

@@ -1,6 +1,6 @@
 import { ComponentRef, Injector, OnDestroy, TemplateRef } from '@angular/core';
 import { CdkPortalOutlet, ComponentPortal, ComponentType, TemplatePortal } from '@angular/cdk/portal';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 
 export class GenericDialogBase implements OnDestroy {

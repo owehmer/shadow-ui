@@ -2,7 +2,7 @@ import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dial
 import { ComponentType } from '@angular/cdk/portal';
 import { coerceArray } from '@angular/cdk/coercion';
 
-export abstract class DialogBuilder<D = any> {
+export abstract class SdwDialogBuilder<D = any> {
   protected _config: MatDialogConfig<any>;
 
   constructor(protected _dialogService: MatDialog, _config: MatDialogConfig<any> = null) {
@@ -41,7 +41,7 @@ export abstract class DialogBuilder<D = any> {
     return this;
   }
 
-  abstract setDialogData(data: D): DialogBuilder;
+  abstract setDialogData(data: D): SdwDialogBuilder;
 
   abstract open(): MatDialogRef<any, any>;
 }

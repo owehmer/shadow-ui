@@ -10,11 +10,11 @@ import {
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { CdkPortalOutlet, ComponentType, PortalInjector } from '@angular/cdk/portal';
-import { DialogBuilder } from '../dialog-builder';
+import { SdwDialogBuilder } from '../dialog-builder';
 import { GenericDialogBase } from '../generic-dialog-base';
 import { determineValue, dlgAbortFn, dlgGetResult, dlgOkFn } from '../generic-dialog-content';
 
-export class SimpleDialogData<C = any, D = any> {
+export class SdwSimpleDialogData<C = any, D = any> {
   data: D = null;
   component: ComponentType<C> | TemplateRef<C> | null;
   injector?: Injector;
@@ -25,21 +25,21 @@ export class SimpleDialogData<C = any, D = any> {
   title: string | null = '';
   text: string | null;
 
-  constructor(data: Partial<SimpleDialogData> = {}) {
+  constructor(data: Partial<SdwSimpleDialogData> = {}) {
     Object.assign(this, data);
   }
 }
 
-export class SimpleDialogBuilder<C = any, D = any, R = any> extends DialogBuilder {
-  protected _config: MatDialogConfig<SimpleDialogData>;
+export class SdwSimpleDialogBuilder<C = any, D = any, R = any> extends SdwDialogBuilder {
+  protected _config: MatDialogConfig<SdwSimpleDialogData>;
 
-  protected get data(): SimpleDialogData<C, D> {
+  protected get data(): SdwSimpleDialogData<C, D> {
     return this._config.data;
   }
 
-  constructor(dialogService: MatDialog, _config: MatDialogConfig<SimpleDialogData> = null) {
+  constructor(dialogService: MatDialog, _config: MatDialogConfig<SdwSimpleDialogData> = null) {
     super(dialogService, _config);
-    this._config.data = new SimpleDialogData<C, D>();
+    this._config.data = new SdwSimpleDialogData<C, D>();
   }
 
   setPanelClasses(newClasses?: string | string[]) {
@@ -54,10 +54,10 @@ export class SimpleDialogBuilder<C = any, D = any, R = any> extends DialogBuilde
     return this;
   }
 
-  open(): MatDialogRef<SimpleDialogComponent, R> {
+  open(): MatDialogRef<SdwSimpleDialogComponent, R> {
     if (this._config.panelClass == null || this._config.panelClass === '')
       this.setPanelClasses();
-    return this._dialogService.open<SimpleDialogComponent, SimpleDialogData<C, D>, R>(SimpleDialogComponent, this._config);
+    return this._dialogService.open<SdwSimpleDialogComponent, SdwSimpleDialogData<C, D>, R>(SdwSimpleDialogComponent, this._config);
   }
 
   setTitle(title: string) {
@@ -100,7 +100,7 @@ export class SimpleDialogBuilder<C = any, D = any, R = any> extends DialogBuilde
     'tabindex': '-1'
   }
 })
-export class SimpleDialogComponent extends GenericDialogBase implements OnInit {
+export class SdwSimpleDialogComponent extends GenericDialogBase implements OnInit {
   public title: string;
   public text?: string;
 
@@ -116,8 +116,8 @@ export class SimpleDialogComponent extends GenericDialogBase implements OnInit {
 
   private _waitForButtonResult = false;
 
-  constructor(protected dialogRef: MatDialogRef<SimpleDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) private dlgData: SimpleDialogData,
+  constructor(protected dialogRef: MatDialogRef<SdwSimpleDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) private dlgData: SdwSimpleDialogData,
               private _injector: Injector) {
     super(dialogRef);
 

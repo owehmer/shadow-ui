@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MaterialDialogComponent } from './material-dialog.component';
+import { SdwAdvancedDialogComponent } from './advanced-dialog.component';
 
-describe('MaterialDialogComponent', () => {
-  let component: MaterialDialogComponent;
-  let fixture: ComponentFixture<MaterialDialogComponent>;
+describe('SdwAdvancedDialogComponent', () => {
+  let component: SdwAdvancedDialogComponent;
+  let fixture: ComponentFixture<SdwAdvancedDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MaterialDialogComponent ]
+      declarations: [ SdwAdvancedDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MaterialDialogComponent);
+    fixture = TestBed.createComponent(SdwAdvancedDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

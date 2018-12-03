@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MyContentComponent } from './my-content/my-content.component';
-import { MaterialDialogBuilder, SimpleDialogBuilder } from '@shadow-ui/dialog';
+import { SdwAdvancedDialogBuilder, SdwSimpleDialogBuilder } from '@shadow-ui/dialog';
 
 @Component({
   selector: 'app-playground-root',
@@ -18,7 +18,7 @@ export class AppComponent {
   }
 
   public openSimple() {
-    const builder = new SimpleDialogBuilder(this.dlgService)
+    const builder = new SdwSimpleDialogBuilder(this.dlgService)
       .setDimensions(this.size)
       .setDisplayComponent(this.component)
       .setTitle(this.title)
@@ -28,7 +28,7 @@ export class AppComponent {
   }
 
   public openMat() {
-    const builder = new MaterialDialogBuilder(this.dlgService)
+    const builder = new SdwAdvancedDialogBuilder(this.dlgService)
       .setDimensions(this.size)
       .setDisplayComponent(this.component)
       .setTitle(this.title)

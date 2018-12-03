@@ -4,8 +4,8 @@ import {
   DialogWithAbort,
   DialogWithOk,
   DialogWithOpenChanges,
-  MaterialDialogComponent,
-  SimpleDialogComponent
+  SdwAdvancedDialogComponent,
+  SdwSimpleDialogComponent
 } from '@shadow-ui/dialog';
 import { Observable, Subject } from 'rxjs';
 
@@ -28,9 +28,9 @@ export class MyContentComponent implements DialogWithAbort, DialogWithOk, Dialog
 
 
 
-  constructor(public dialogRef: MatDialogRef<SimpleDialogComponent>,
+  constructor(public dialogRef: MatDialogRef<SdwSimpleDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              public dlg: MaterialDialogComponent) {
+              public dlg: SdwAdvancedDialogComponent) {
 
   }
 
