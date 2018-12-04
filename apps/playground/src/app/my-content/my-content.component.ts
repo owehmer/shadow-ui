@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
   DialogWithAbort,
@@ -20,17 +20,10 @@ export class MyContentComponent implements DialogWithAbort, DialogWithOk, Dialog
 
   public lastChange = false;
 
-  public trigger(val?: string) {
-    console.warn(val, !this.lastChange);
-    this.changes$.next(true);
-    this.lastChange = !this.lastChange;
-  }
 
-
-
-  constructor(public dialogRef: MatDialogRef<SdwSimpleDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any,
-              public dlg: SdwAdvancedDialogComponent) {
+  constructor(@Optional() public dialogRef: MatDialogRef<SdwSimpleDialogComponent>,
+              @Optional() public dlg: SdwAdvancedDialogComponent,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
 
   }
 
@@ -44,5 +37,11 @@ export class MyContentComponent implements DialogWithAbort, DialogWithOk, Dialog
 
   onOk(): Observable<boolean> | Promise<boolean> | boolean {
     return true;
+  }
+
+  public trigger(val?: string) {
+    console.warn(val, !this.lastChange);
+    this.changes$.next(true);
+    this.lastChange = !this.lastChange;
   }
 }
