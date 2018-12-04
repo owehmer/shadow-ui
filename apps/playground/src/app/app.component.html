@@ -1,7 +1,11 @@
-<p>
-  <button (click)="openSimple()">OPEN SIMPLE</button>
-</p>
+<mat-toolbar color="primary">Shadow-UI playground</mat-toolbar>
 
-<p>
-  <button (click)="openMat()">OPEN MATERIAL</button>
-</p>
+<div class="app-content">
+  <p>
+    <button mat-stroked-button color="primary" (click)="openSimple()">Open simple</button>
+  </p>
+
+  <p>
+    <button mat-stroked-button color="primary" (click)="openMat()">Open Advanced</button>
+  </p>
+</div>

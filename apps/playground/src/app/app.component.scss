@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+.app-content {
+  padding: 16px;
+
+  & > *:first-child {
+    margin-top: 0;
+  }
+}

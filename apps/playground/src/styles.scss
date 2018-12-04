@@ -12,6 +12,8 @@ $theme: mat-light-theme($primary, $accent, $warn);
 
 body {
   font-family: Roboto, Arial, serif;
+  margin: 0;
+  padding: 0;
 }
 
 * {
