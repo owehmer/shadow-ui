@@ -17,7 +17,7 @@
     "baseUrl": ".",
     "paths": {
       "@shadow-ui/core": [
-        "libs/dialog/src/index.ts"
+        "libs/core/src/index.ts"
       ]
     }
   },

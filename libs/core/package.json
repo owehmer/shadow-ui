@@ -1,5 +1,5 @@
 {
-  "name": "@shadow-ui/core",
+  "name": "@shadowui/core",
   "description": "Core UI components of the Shadow-UI",
   "version": "0.0.1",
   "author": "Oliver Wehmer",
@@ -24,5 +24,6 @@
     "@angular/material": "^7.0.0",
     "@angular/forms": "^7.0.0",
     "rxjs": "^6.3.0"
-  }
+  },
+  "sideEffects": false
 }

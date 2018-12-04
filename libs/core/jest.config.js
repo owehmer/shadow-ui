@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'dialog',
+  name: 'core',
   preset: '../../jest.config.js',
-  coverageDirectory: '../../coverage/libs/dialog'
+  coverageDirectory: '../../coverage/libs/core'
 };
