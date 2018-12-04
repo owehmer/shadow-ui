@@ -11,12 +11,12 @@
       "node_modules/@types"
     ],
     "lib": [
-      "es2017",
+      "es2015",
       "dom"
     ],
     "baseUrl": ".",
     "paths": {
-      "@shadow-ui/dialog": [
+      "@shadow-ui/core": [
         "libs/dialog/src/index.ts"
       ]
     }

@@ -152,25 +152,25 @@
         }
       }
     },
-    "dialog": {
-      "root": "libs/dialog",
-      "sourceRoot": "libs/dialog/src",
+    "core": {
+      "root": "libs/core",
+      "sourceRoot": "libs/core/src",
       "projectType": "library",
       "prefix": "sdw",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "libs/dialog/tsconfig.lib.json",
-            "project": "libs/dialog/ng-package.json"
+            "tsConfig": "libs/core/tsconfig.lib.json",
+            "project": "libs/core/ng-package.json"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/dialog/tsconfig.lib.json",
-              "libs/dialog/tsconfig.spec.json"
+              "libs/core/tsconfig.lib.json",
+              "libs/core/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -180,9 +180,9 @@
         "test": {
           "builder": "@nrwl/builders:jest",
           "options": {
-            "jestConfig": "libs/dialog/jest.config.js",
-            "tsConfig": "libs/dialog/tsconfig.spec.json",
-            "setupFile": "libs/dialog/src/test-setup.ts"
+            "jestConfig": "libs/core/jest.config.js",
+            "tsConfig": "libs/core/tsconfig.spec.json",
+            "setupFile": "libs/core/src/test-setup.ts"
           }
         }
       }

@@ -11,8 +11,8 @@ import {
 import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { CdkPortalOutlet, ComponentType, PortalInjector } from '@angular/cdk/portal';
 import { SdwDialogBuilder } from '../dialog-builder';
-import { GenericDialogBase } from '../generic-dialog-base';
-import { determineValue, dlgAbortFn, dlgGetResult, dlgOkFn } from '../generic-dialog-content';
+import { SdwDialogBase } from '../dialog-base';
+import { determineValue, dlgAbortFn, dlgGetResult, dlgOkFn } from '../dialog-content-api';
 
 export class SdwSimpleDialogData<C = any, D = any> {
   data: D = null;
@@ -93,7 +93,7 @@ export class SdwSimpleDialogBuilder<C = any, D = any, R = any> extends SdwDialog
     'tabindex': '-1'
   }
 })
-export class SdwSimpleDialogComponent extends GenericDialogBase implements OnInit {
+export class SdwSimpleDialogComponent extends SdwDialogBase implements OnInit {
   public title: string;
   public text?: string;
 

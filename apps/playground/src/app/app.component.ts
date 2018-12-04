@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MyContentComponent } from './my-content/my-content.component';
-import { SdwAdvancedDialogBuilder, SdwSimpleDialogBuilder } from '@shadow-ui/dialog';
+import { SdwAdvancedDialogBuilder, SdwSimpleDialogBuilder } from '@shadow-ui/core';
 
 @Component({
   selector: 'app-playground-root',

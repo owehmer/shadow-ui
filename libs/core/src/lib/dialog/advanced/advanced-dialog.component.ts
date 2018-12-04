@@ -16,7 +16,7 @@ import {
 } from '@angular/material/dialog';
 import { CdkPortalOutlet, ComponentType, PortalInjector } from '@angular/cdk/portal';
 import { SdwDialogBuilder } from '../dialog-builder';
-import { GenericDialogBase } from '../generic-dialog-base';
+import { SdwDialogBase } from '../dialog-base';
 import {
   determineValue,
   dlgAbortFn,
@@ -24,7 +24,7 @@ import {
   dlgHasChanges,
   dlgOkFn,
   isNullOrEmpty
-} from '../generic-dialog-content';
+} from '../dialog-content-api';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { distinctUntilChanged, filter, takeUntil } from 'rxjs/operators';
 import { combineLatest, Subject, Subscription } from 'rxjs';
@@ -153,7 +153,7 @@ interface DataThatChanges<T = any> {
     'tabindex': '-1'
   }
 })
-export class SdwAdvancedDialogComponent extends GenericDialogBase implements OnInit, OnDestroy {
+export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit, OnDestroy {
   public contentChanged = false;
 
   public get isTitleCentered() {

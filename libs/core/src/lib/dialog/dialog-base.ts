@@ -3,7 +3,7 @@ import { CdkPortalOutlet, ComponentPortal, ComponentType, TemplatePortal } from 
 import { MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 
-export class GenericDialogBase implements OnDestroy {
+export class SdwDialogBase implements OnDestroy {
   protected _destroyed = new Subject();
 
   constructor(protected dialogRef: MatDialogRef<any>) {
