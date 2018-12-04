@@ -36,6 +36,7 @@ $mat-default-padding: 24px;
 
     .sdw-title-bar {
       margin: (-$mat-default-padding) (-$mat-default-padding) 0 (-$mat-default-padding);
+      padding: 0 $mat-default-padding;
       width: calc(100% + #{$mat-default-padding * 2});
       &.centered-title {
         justify-content: space-between;
@@ -45,6 +46,10 @@ $mat-default-padding: 24px;
           display: none;
         }
       }
+    }
+
+    .sdw-content {
+      padding-top: $mat-default-padding;
     }
 
     .mat-dialog-actions {

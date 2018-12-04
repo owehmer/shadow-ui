@@ -11,8 +11,8 @@ import { SdwAdvancedDialogBuilder, SdwSimpleDialogBuilder } from '@shadow-ui/dia
 export class AppComponent {
   public size = '500px';
   public component = MyContentComponent;
-  public title = 'Mein Title';
-  public data = {name: 'test'};
+  public title = 'My Title';
+  public data = {myData: 'test'};
 
   constructor(private dlgService: MatDialog) {
   }
