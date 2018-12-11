@@ -1,0 +1,32 @@
+<mat-toolbar class="sdw-title-bar"
+             [class.centered-title]="isTitleCentered"
+             [color]="titleColor">
+  <button mat-icon-button class="sdw-left-title-btn" [disabled]="!showLeftIcon">
+    <mat-icon *ngIf="showLeftIcon">{{contentChanged ? leftIcon?.changed : leftIcon?.unchanged}}</mat-icon>
+  </button>
+
+  <span>{{title}}</span>
+
+  <button mat-icon-button class="sdw-right-title-btn" [disabled]="!showRightIcon">
+    <mat-icon *ngIf="showRightIcon">{{contentChanged ? rightIcon?.changed : rightIcon?.unchanged}}</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div mat-dialog-content class="sdw-content" [ngStyle]="getContentStyles()">
+  <ng-template cdkPortalOutlet></ng-template>
+  <mat-horizontal-stepper #stepper (selectionChange)="stepChanged($event)" [style.height.px]="currentHeight">
+    <mat-step *ngFor="let dataStep of data">
+      <ng-template matStepLabel>Step Label</ng-template>
+      <div #step [innerHTML]="dataStep"></div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>
+
+<div mat-dialog-actions class="sdw-footer">
+  <button mat-button *ngIf="showAbortBtn" (click)="buttonClicked(false)" color="primary">
+    {{abortBtnText}}
+  </button>
+  <button mat-button *ngIf="showOkBtn" (click)="buttonClicked(true)" color="primary" cdkFocusInitial>
+    {{okBtnText}}
+  </button>
+</div>

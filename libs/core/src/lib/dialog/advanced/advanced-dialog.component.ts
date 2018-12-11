@@ -191,12 +191,12 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
   private readonly _titleHeight = 64;
   private readonly _footerHeight = 52;
 
-  constructor(private dlgService: MatDialog,
-              protected dialogRef: MatDialogRef<SdwAdvancedDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) private dlgData: SdwAdvancedDialogData,
-              private _injector: Injector,
-              private _bpObserver: BreakpointObserver,
-              private _elemRef: ElementRef) {
+  constructor(protected dlgService: MatDialog,
+              protected dialogRef: MatDialogRef<any>,
+              @Inject(MAT_DIALOG_DATA) protected dlgData: SdwAdvancedDialogData,
+              protected _injector: Injector,
+              protected _bpObserver: BreakpointObserver,
+              protected _elemRef: ElementRef) {
     super(dialogRef);
 
     this.initFullSizeObs();

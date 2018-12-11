@@ -1,0 +1,13 @@
+@import '../advanced/material-guidelines.scss';
+
+@include matDialogStyles(sdw-step-dialog);
+
+.sdw-step-dialog {
+  .sdw-content {
+    margin: (-$mat-default-padding) (-$mat-default-padding) 0 (-$mat-default-padding);
+    padding: 0;
+  }
+  mat-horizontal-stepper {
+    transition: all 100ms;
+  }
+}
