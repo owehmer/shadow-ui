@@ -9,8 +9,9 @@ export * from './simple/simple-dialog.module';
 export * from './advanced/advanced-dialog.component';
 export * from './advanced/advanced-dialog.module';
 
-export * from './step/step-dialog.component';
-export * from './step/step-dialog.module';
+// Not yet
+// export * from './step/step-dialog.component';
+// export * from './step/step-dialog.module';
 
-// API for displayed components
+export * from './dialog-internal-api';
 export * from './dialog-content-api';

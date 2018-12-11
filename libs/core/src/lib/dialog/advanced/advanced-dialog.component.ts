@@ -17,21 +17,16 @@ import {
 import { CdkPortalOutlet, ComponentType, PortalInjector } from '@angular/cdk/portal';
 import { SdwDialogBuilder } from '../dialog-builder';
 import { SdwDialogBase } from '../dialog-base';
-import {
-  determineValue,
-  dlgAbortFn,
-  dlgGetResult,
-  dlgHasChanges,
-  dlgOkFn,
-  isNullOrEmpty
-} from '../dialog-content-api';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { distinctUntilChanged, filter, takeUntil } from 'rxjs/operators';
 import { combineLatest, Subject, Subscription } from 'rxjs';
 import { SdwSimpleDialogBuilder } from '../simple/simple-dialog.component';
+import { determineValue, isNullOrEmpty } from '../helper';
+import { dlgAbortFn, dlgGetResult, dlgHasChanges, dlgOkFn } from '../dialog-internal-api';
 
 export class SdwAdvancedDialogData<C = any, D = any> {
   data: D = null;
+  disableClose = true; // Use own property to control the return value
   component: ComponentType<C> | TemplateRef<C> | null;
   injector?: Injector;
 
@@ -76,14 +71,19 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
     this._config.data = new SdwAdvancedDialogData<C, D>();
   }
 
+  setBackdropClickCanClose(allow: boolean) {
+    this.data.disableClose = allow;
+    return this;
+  }
+
   setDialogData(newData: D) {
     this.data.data = newData;
     return this;
   }
 
   open(): MatDialogRef<SdwAdvancedDialogComponent, R> {
-    if (this._config.panelClass == null || this._config.panelClass === '')
-      this.setPanelClasses();
+    this.setPanelClasses();
+
     return this._dialogService.open<SdwAdvancedDialogComponent, SdwAdvancedDialogData<C, D>, R>(SdwAdvancedDialogComponent, this._config);
   }
 
@@ -268,9 +268,9 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
         .showAbortButton(this.dlgData.discardDlgAbortText)
         .showOkButton(this.dlgData.discardDlgOkText)
       ;
-      builder.open().afterClosed().subscribe(({ closeOk }) => {
+      builder.open().afterClosed().subscribe(({mode}) => {
         let canClose: any = false;
-        if (closeOk) {
+        if (mode === 'confirm') {
           canClose = isOkBtn ? dlgOkFn(this._componentRef.instance) : dlgAbortFn(this._componentRef.instance);
         }
         determineValue(canClose, (canCloseCallback) => this.closeIfAllowed(canCloseCallback, isOkBtn));

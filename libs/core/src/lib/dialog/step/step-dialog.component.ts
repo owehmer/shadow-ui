@@ -4,7 +4,7 @@ import {
   ElementRef, HostBinding, HostListener,
   Inject,
   Injector,
-  OnInit, QueryList, ViewChild, ViewChildren,
+  OnInit, QueryList, ViewChildren,
   ViewEncapsulation
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -15,7 +15,6 @@ import {
 } from '../advanced/advanced-dialog.component';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { CdkPortalOutlet, PortalInjector } from '@angular/cdk/portal';
-import { dlgHasChanges } from '../dialog-content-api';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 
 export class SdwStepDialogBuilder<C = any, D = any, R = any> extends SdwAdvancedDialogBuilder {
@@ -68,10 +67,10 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
 
   private _currentSelectedStepIndex = 0;
 
-  @HostListener('click')
-  private test() {
-    console.warn('step', this._stepElems.toArray());
-  }
+  // @HostListener('click')
+  // private test() {
+  //   console.warn('step', this._stepElems.toArray());
+  // }
 
   constructor(protected dlgService: MatDialog,
               protected dialogRef: MatDialogRef<any>,

@@ -51,6 +51,9 @@ $mat-default-padding: 24px;
 
       .sdw-content {
         padding-top: $mat-default-padding;
+        & > *:first-child {
+          margin-top: 0;
+        }
       }
 
       .mat-dialog-actions {

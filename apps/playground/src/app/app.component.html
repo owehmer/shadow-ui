@@ -1,15 +1,30 @@
 <mat-toolbar color="primary">Shadow-UI playground</mat-toolbar>
 
 <div class="app-content">
+  <h2 class="mat-title">Simple dialog</h2>
   <p>
-    <button mat-stroked-button color="primary" (click)="openSimple()">Open simple</button>
+    <button mat-stroked-button color="primary" (click)="openSimple('comp')">Component</button>
+    <button mat-stroked-button color="primary" (click)="openSimple('ref')">Template</button>
+    <button mat-stroked-button color="primary" (click)="openSimple('text')">Simple text</button>
   </p>
 
+  <h2 class="mat-title">Advanced dialog</h2>
   <p>
-    <button mat-stroked-button color="primary" (click)="openAdv()">Open Advanced</button>
+    <button mat-stroked-button color="primary" (click)="openAdv()">Component</button>
   </p>
 
+  <h2 class="mat-title">Stepper dialog</h2>
   <p>
     <button mat-stroked-button color="primary" (click)="openStep()">Open Step</button>
   </p>
 </div>
+
+<ng-template #myDialogTemplate>
+  <h2>Glorious header</h2>
+  <p>
+    Some content here..
+  </p>
+  <p style="font-size: larger;">
+    Some bigger content there..
+  </p>
+</ng-template>

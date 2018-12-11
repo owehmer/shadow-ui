@@ -8,4 +8,19 @@
   & > *:first-child {
     margin-top: 0;
   }
+
+  p {
+    display: flex;
+    align-items: stretch;
+    button {
+      flex: 1;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+
+      &:not(:first-child) {
+        margin-left: 15px;
+      }
+    }
+  }
 }

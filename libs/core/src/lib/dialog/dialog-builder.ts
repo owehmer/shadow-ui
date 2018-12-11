@@ -5,15 +5,10 @@ export abstract class SdwDialogBuilder<D = any> {
   protected _config: MatDialogConfig<any>;
 
   constructor(protected _dialogService: MatDialog, _config: MatDialogConfig<any> = null) {
-    this._config = this._config ? this._config : new MatDialogConfig();
+    this._config = _config ? _config : new MatDialogConfig();
     this._config.role = this._config.role ? this._config.role : 'dialog';
     this._config.hasBackdrop = this._config.hasBackdrop ? this._config.hasBackdrop : true;
-    this._config.disableClose = this._config.disableClose != null ? this._config.disableClose : false;
-  }
-
-  setBackdropClickCanClose(allow = true) {
-    this._config.disableClose = !allow;
-    return this;
+    this._config.disableClose = true; // Use own property to check backdrop click close
   }
 
   setDimensions(width?: string, height?: string) {
@@ -36,10 +31,17 @@ export abstract class SdwDialogBuilder<D = any> {
 
   setPanelClasses(classes?: string | string[]) {
     const inputArr = coerceArray(classes);
-    inputArr.push('sdw-cdk-dialog');
+
+    const ownClass = 'sdw-cdk-dialog';
+
+    if (inputArr.findIndex(i => i === ownClass) === -1)
+      inputArr.push(ownClass);
+
     this._config.panelClass = inputArr;
     return this;
   }
+
+  abstract setBackdropClickCanClose(allow: boolean): SdwDialogBuilder;
 
   abstract setDialogData(data: D): SdwDialogBuilder;
 

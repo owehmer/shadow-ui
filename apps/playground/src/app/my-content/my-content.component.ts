@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
   DialogWithAbort,
   DialogWithOk,
-  DialogWithOpenChanges,
+  DialogWithOpenChanges, DialogWithResult,
   SdwAdvancedDialogComponent,
   SdwSimpleDialogComponent
 } from '@shadow-ui/core';
@@ -15,11 +15,14 @@ import { Observable, Subject } from 'rxjs';
   styleUrls: ['./my-content.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MyContentComponent implements DialogWithAbort, DialogWithOk, DialogWithOpenChanges {
+export class MyContentComponent implements DialogWithAbort, DialogWithOk, DialogWithOpenChanges, DialogWithResult {
   changes$: Subject<boolean> = new Subject<boolean>();
 
   public lastChange = false;
 
+  private _result: any = {
+    myContent: 'return some interesting results'
+  };
 
   constructor(@Optional() public dialogRef: MatDialogRef<SdwSimpleDialogComponent>,
               @Optional() public dlg: SdwAdvancedDialogComponent,
@@ -28,6 +31,8 @@ export class MyContentComponent implements DialogWithAbort, DialogWithOk, Dialog
   }
 
   onAbort(): Observable<boolean> | Promise<boolean> | boolean {
+    Object.assign(this._result, {abort: 'whoops'});
+
     const retval = new Promise<boolean>(((resolve, reject) => {
       setTimeout(() => resolve(true), 1000);
     }));
@@ -39,9 +44,12 @@ export class MyContentComponent implements DialogWithAbort, DialogWithOk, Dialog
     return true;
   }
 
-  public trigger(val?: string) {
-    console.warn(val, !this.lastChange);
+  public trigger() {
     this.changes$.next(true);
     this.lastChange = !this.lastChange;
+  }
+
+  getResult(): Observable<any> | Promise<any> | any {
+    return this._result;
   }
 }
