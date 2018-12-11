@@ -1,7 +1,7 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MyContentComponent } from './my-content/my-content.component';
-import { SdwAdvancedDialogBuilder, SdwSimpleDialogBuilder, SdwStepDialogBuilder } from '@shadow-ui/core';
+import { SdwAdvancedDialogBuilder, SdwSimpleDialogBuilder } from '@shadow-ui/core';
 
 @Component({
   selector: 'app-playground-root',
@@ -49,13 +49,13 @@ export class AppComponent {
     builder.open();
   }
 
-  public openStep() {
-    const builder = new SdwStepDialogBuilder(this.dlgService)
-      .setDimensions(this._size)
-      .setDisplayComponent(this._component)
-      .setTitle(this._title)
-      .setDialogData(this._data)
-    ;
-    builder.open();
-  }
+  // public openStep() {
+  //   const builder = new SdwStepDialogBuilder(this.dlgService)
+  //     .setDimensions(this._size)
+  //     .setDisplayComponent(this._component)
+  //     .setTitle(this._title)
+  //     .setDialogData(this._data)
+  //   ;
+  //   builder.open();
+  // }
 }
