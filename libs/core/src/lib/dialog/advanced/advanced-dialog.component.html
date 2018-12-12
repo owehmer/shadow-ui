@@ -1,26 +1,27 @@
-<mat-toolbar class="sdw-title-bar"
-             [class.centered-title]="isTitleCentered"
-             [color]="titleColor">
-  <button mat-icon-button class="sdw-left-title-btn" [disabled]="!showLeftIcon">
-    <mat-icon *ngIf="showLeftIcon">{{contentChanged ? leftIcon?.changed : leftIcon?.unchanged}}</mat-icon>
-  </button>
-
-  <span>{{title}}</span>
-
-  <button mat-icon-button class="sdw-right-title-btn" [disabled]="!showRightIcon">
-    <mat-icon *ngIf="showRightIcon">{{contentChanged ? rightIcon?.changed : rightIcon?.unchanged}}</mat-icon>
-  </button>
-</mat-toolbar>
+<sdw-title-bar [useSimpleTitleBar]="useSimpleTitleBar"
+               [hasChanges]="contentChanged"
+               [leftIcons]="leftIcons"
+               [rightIcons]="rightIcons"
+               [titleColor]="titleColor">
+  {{title}}
+</sdw-title-bar>
 
 <div mat-dialog-content class="sdw-content" [ngStyle]="getContentStyles()">
+  <span *ngIf="text" class="sdw-simple-content">{{text}}</span>
   <ng-template cdkPortalOutlet></ng-template>
 </div>
 
 <div mat-dialog-actions class="sdw-footer">
-  <button mat-button *ngIf="showAbortBtn" (click)="buttonClicked(false)" color="primary">
+  <button mat-button *ngIf="showAbortBtn"
+          [disabled]="abortBtnDisabled"
+          (click)="buttonClicked(false)"
+          color="primary">
     {{abortBtnText}}
   </button>
-  <button mat-button *ngIf="showOkBtn" (click)="buttonClicked(true)" color="primary" cdkFocusInitial>
+  <button mat-button *ngIf="showOkBtn"
+          [disabled]="okBtnDisabled"
+          (click)="buttonClicked(true)"
+          color="primary" cdkFocusInitial>
     {{okBtnText}}
   </button>
 </div>

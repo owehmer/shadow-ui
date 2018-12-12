@@ -23,25 +23,28 @@ import { combineLatest, Subject, Subscription } from 'rxjs';
 import { SdwSimpleDialogBuilder } from '../simple/simple-dialog.component';
 import { determineValue, isNullOrEmpty } from '../helper';
 import { dlgAbortFn, dlgGetResult, dlgHasChanges, dlgOkFn } from '../dialog-internal-api';
+import { DataThatChanges } from '../dialog-content-api';
 
 export class SdwAdvancedDialogData<C = any, D = any> {
   data: D = null;
   disableClose = true; // Use own property to control the return value
-  component: ComponentType<C> | TemplateRef<C> | null;
+  component?: ComponentType<C> | TemplateRef<C>;
+  text?: string;
   injector?: Injector;
 
   // Top section of dlg
-  showLeftIcon = false;
-  leftIcon: DataThatChanges<string> | null = { changed: 'clear', unchanged: 'keyboard_backspace' };
-  showRightIcon = false;
-  rightIcon: DataThatChanges<string> | null = { changed: 'done', unchanged: '' };
+  useSimpleTitleBar = false; // true => White top bar
+  leftIcons: DataThatChanges<string> | null = { changed: 'clear', unchanged: 'keyboard_backspace' };
+  rightIcons: DataThatChanges<string> | null = { changed: 'done', unchanged: '' };
   title = '';
   titleColor: 'primary' | 'accent' | 'warn' = 'primary';
 
   // Bottom section of dlg
   showAbortBtn = true;
+  abortBtnDisabled = false;
   abortBtnText = 'Abort';
   showOkBtn = true;
+  okBtnDisabled = false;
   okBtnText = 'Save';
 
   fullscreenOnMobile = true;
@@ -83,7 +86,7 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
 
   open(): MatDialogRef<SdwAdvancedDialogComponent, R> {
     this.setPanelClasses();
-
+    this._config.disableClose = true; // Make sure no one sets this property to false.
     return this._dialogService.open<SdwAdvancedDialogComponent, SdwAdvancedDialogData<C, D>, R>(SdwAdvancedDialogComponent, this._config);
   }
 
@@ -92,33 +95,49 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
     return this;
   }
 
-  showRightButton(text?: string, show = true) {
+  setOkButtonText(text?: string) {
     this.data.okBtnText = text ? text : undefined;
+    return this;
+  }
+
+  showOkButton(show = true) {
     this.data.showOkBtn = show;
     return this;
   }
 
-  showRightIcon(iconUnchanged?: string, iconChanged?: string, show = true) {
-    const changed = isNullOrEmpty(iconChanged) ? undefined : iconChanged;
-    const unchanged = isNullOrEmpty(iconUnchanged) ? undefined : iconUnchanged;
-
-    this.data.rightIcon = changed || unchanged ? { changed, unchanged } : undefined;
-    this.data.showRightIcon = show;
+  disableOkButton(disable = true) {
+    this.data.okBtnDisabled = disable;
     return this;
   }
 
-  showLeftButton(text?: string, show = true) {
+  setOkIcon(iconUnchanged?: string, iconChanged?: string) {
+    const changed = isNullOrEmpty(iconChanged) ? undefined : iconChanged;
+    const unchanged = isNullOrEmpty(iconUnchanged) ? undefined : iconUnchanged;
+
+    this.data.rightIcons = changed || unchanged ? { changed, unchanged } : undefined;
+    return this;
+  }
+
+  setAbortButtonText(text?: string) {
     this.data.abortBtnText = text ? text : undefined;
+    return this;
+  }
+
+  showAbortButton(show = true) {
     this.data.showAbortBtn = show;
     return this;
   }
 
-  showLeftIcon(iconUnchanged?: string, iconChanged?: string, show = true) {
+  disablAbortkButton(disable = true) {
+    this.data.abortBtnDisabled = disable;
+    return this;
+  }
+
+  setAbortIcon(iconUnchanged?: string, iconChanged?: string) {
     const changed = isNullOrEmpty(iconChanged) ? undefined : iconChanged;
     const unchanged = isNullOrEmpty(iconUnchanged) ? undefined : iconUnchanged;
 
-    this.data.leftIcon = changed || unchanged ? { changed, unchanged } : undefined;
-    this.data.showLeftIcon = show;
+    this.data.leftIcons = changed || unchanged ? { changed, unchanged } : undefined;
     return this;
   }
 
@@ -130,15 +149,15 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
     this.data.discardDlgAbortText = abortBtn;
   }
 
-  setDisplayComponent(component: ComponentType<C> | TemplateRef<C>) {
-    this.data.component = component;
+  setDisplay(display: ComponentType<C> | TemplateRef<C>) {
+    this.data.component = display;
     return this;
   }
-}
 
-interface DataThatChanges<T = any> {
-  unchanged: T,
-  changed: T
+  setText(text: string) {
+    this.data.text = text;
+    return this;
+  }
 }
 
 @Component({
@@ -156,26 +175,24 @@ interface DataThatChanges<T = any> {
 export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit, OnDestroy {
   public contentChanged = false;
 
-  public get isTitleCentered() {
-    if (this.showLeftIcon === false && this.showRightIcon === false)
-      return false;
-    const iconsLeft = this.leftIcon ? this.contentChanged ? this.leftIcon.changed : this.leftIcon.unchanged : undefined;
-    const iconsRight = this.rightIcon ? this.contentChanged ? this.rightIcon.changed : this.rightIcon.unchanged : undefined;
-
-    return !isNullOrEmpty(iconsLeft) || !isNullOrEmpty(iconsRight);
-  }
-
-  public showLeftIcon: boolean;
-  public leftIcon: DataThatChanges<string>;
-  public showRightIcon: boolean;
-  public rightIcon: DataThatChanges<string>;
-  public title: string;
+  // Title bar
+  public useSimpleTitleBar: boolean;
+  public leftIcons: DataThatChanges<string>;
+  public rightIcons: DataThatChanges<string>;
   public titleColor: 'primary' | 'accent' | 'warn';
+  public title: string;
 
+  // Content
+  public text?: string;
+
+  // Footer
   public showAbortBtn: boolean;
   public abortBtnText: string;
+  public abortBtnDisabled: boolean;
+
   public showOkBtn: boolean;
   public okBtnText: string;
+  public okBtnDisabled: boolean;
 
   public promtOnDiscard: boolean;
 
@@ -198,26 +215,39 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
               protected _bpObserver: BreakpointObserver,
               protected _elemRef: ElementRef) {
     super(dialogRef);
+    if (this.dialogRef._containerInstance._config.disableClose === false)
+      console.error('Never set the @angular/material dialog "disableClose" to false with this dialog. It will break this dialogs backdrop close mechanism!');
 
     this.initFullSizeObs();
 
-    this.showLeftIcon = dlgData.showLeftIcon;
-    this.leftIcon = dlgData.leftIcon;
-
-    this.showRightIcon = dlgData.showRightIcon;
-    this.rightIcon = dlgData.rightIcon;
+    // Title bar
+    this.useSimpleTitleBar = dlgData.useSimpleTitleBar;
+    this.leftIcons = dlgData.leftIcons;
+    this.rightIcons = dlgData.rightIcons;
     this.title = dlgData.title;
     this.titleColor = dlgData.titleColor;
 
+    // Content
+    this.text = dlgData.text;
+
+    // Footer
     this.showAbortBtn = dlgData.showAbortBtn;
     this.abortBtnText = dlgData.abortBtnText;
+    this.abortBtnDisabled = dlgData.abortBtnDisabled;
     this.showOkBtn = dlgData.showOkBtn;
     this.okBtnText = dlgData.okBtnText;
+    this.okBtnDisabled = dlgData.okBtnDisabled;
 
     this.promtOnDiscard = dlgData.promtOnDiscard;
   }
 
   ngOnInit() {
+    this.dialogRef.backdropClick().subscribe(() => {
+      if (!this.dlgData.disableClose) {
+        this.determineIfCanClose('backdrop');
+      }
+    });
+
     const parentInjector = this.dlgData.injector ? this.dlgData.injector : this._injector;
     const dialogInjector = new PortalInjector(parentInjector, new WeakMap<any, any>([
       [MAT_DIALOG_DATA, this.dlgData.data]
@@ -268,7 +298,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
         .showAbortButton(this.dlgData.discardDlgAbortText)
         .showOkButton(this.dlgData.discardDlgOkText)
       ;
-      builder.open().afterClosed().subscribe(({mode}) => {
+      builder.open().afterClosed().subscribe(({ mode }) => {
         let canClose: any = false;
         if (mode === 'confirm') {
           canClose = isOkBtn ? dlgOkFn(this._componentRef.instance) : dlgAbortFn(this._componentRef.instance);

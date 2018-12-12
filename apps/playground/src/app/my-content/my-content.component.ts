@@ -24,7 +24,7 @@ export class MyContentComponent implements DialogWithAbort, DialogWithOk, Dialog
     myContent: 'return some interesting results'
   };
 
-  constructor(@Optional() public dialogRef: MatDialogRef<SdwSimpleDialogComponent>,
+  constructor(@Optional() public dialogRef: MatDialogRef<SdwAdvancedDialogComponent>,
               @Optional() public dlg: SdwAdvancedDialogComponent,
               @Inject(MAT_DIALOG_DATA) public data: any) {
 
@@ -47,6 +47,7 @@ export class MyContentComponent implements DialogWithAbort, DialogWithOk, Dialog
   public trigger() {
     this.changes$.next(true);
     this.lastChange = !this.lastChange;
+    this.dlg.useSimpleTitleBar = !this.dlg.useSimpleTitleBar;
   }
 
   getResult(): Observable<any> | Promise<any> | any {

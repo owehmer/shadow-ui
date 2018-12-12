@@ -42,7 +42,7 @@ export class AppComponent {
   public openAdv() {
     const builder = new SdwAdvancedDialogBuilder(this.dlgService)
       .setDimensions(this._size)
-      .setDisplayComponent(this._component)
+      .setDisplay(this._component)
       .setTitle(this._title)
       .setDialogData(this._data)
     ;
@@ -52,7 +52,7 @@ export class AppComponent {
   // public openStep() {
   //   const builder = new SdwStepDialogBuilder(this.dlgService)
   //     .setDimensions(this._size)
-  //     .setDisplayComponent(this._component)
+  //     .setDisplay(this._component)
   //     .setTitle(this._title)
   //     .setDialogData(this._data)
   //   ;

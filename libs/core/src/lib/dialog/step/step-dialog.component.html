@@ -2,13 +2,13 @@
              [class.centered-title]="isTitleCentered"
              [color]="titleColor">
   <button mat-icon-button class="sdw-left-title-btn" [disabled]="!showLeftIcon">
-    <mat-icon *ngIf="showLeftIcon">{{contentChanged ? leftIcon?.changed : leftIcon?.unchanged}}</mat-icon>
+    <mat-icon *ngIf="showLeftIcon">{{contentChanged ? leftIcons?.changed : leftIcons?.unchanged}}</mat-icon>
   </button>
 
   <span>{{title}}</span>
 
   <button mat-icon-button class="sdw-right-title-btn" [disabled]="!showRightIcon">
-    <mat-icon *ngIf="showRightIcon">{{contentChanged ? rightIcon?.changed : rightIcon?.unchanged}}</mat-icon>
+    <mat-icon *ngIf="showRightIcon">{{contentChanged ? rightIcons?.changed : rightIcons?.unchanged}}</mat-icon>
   </button>
 </mat-toolbar>
 

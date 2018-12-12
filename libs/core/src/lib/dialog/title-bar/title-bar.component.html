@@ -1,0 +1,23 @@
+<mat-toolbar *ngIf="!useSimpleTitleBar; else simpleTitle"
+             class="sdw-title-container sdw-toolbar-title-container"
+             [class.centered-title]="isTitleCentered"
+             [color]="titleColor">
+  <button mat-icon-button class="sdw-left-title-btn" [disabled]="!leftIcon">
+    <mat-icon *ngIf="leftIcon || rightIcon">{{leftIcon}}</mat-icon>
+  </button>
+
+  <span><ng-container *ngTemplateOutlet="content"></ng-container></span>
+
+  <button mat-icon-button class="sdw-right-title-btn" [disabled]="!rightIcon">
+    <mat-icon *ngIf="leftIcon || rightIcon">{{rightIcon}}</mat-icon>
+  </button>
+</mat-toolbar>
+
+<ng-template #simpleTitle>
+  <h1 mat-dialog-title class="sdw-title-container sdw-simple-title-container">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </h1>
+</ng-template>
+
+<!--There can only be one standard <ng-content> in a template-->
+<ng-template #content><ng-content></ng-content></ng-template>

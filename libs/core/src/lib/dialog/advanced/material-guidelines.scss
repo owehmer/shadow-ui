@@ -30,23 +30,9 @@ $mat-default-padding: 24px;
       padding: $mat-default-padding;
       overflow: hidden;
 
-      &, .sdw-title-bar, .sdw-content, .sdw-footer {
+      &, .sdw-content, .sdw-footer {
         box-sizing: border-box;
         outline: none;
-      }
-
-      .sdw-title-bar {
-        margin: (-$mat-default-padding) (-$mat-default-padding) 0 (-$mat-default-padding);
-        padding: 0 $mat-default-padding;
-        width: calc(100% + #{$mat-default-padding * 2});
-        &.centered-title {
-          justify-content: space-between;
-        }
-        &:not(.centered-title) {
-          & > .sdw-left-title-btn, & > .sdw-right-title-btn {
-            display: none;
-          }
-        }
       }
 
       .sdw-content {

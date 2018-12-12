@@ -6,6 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { PortalModule } from '@angular/cdk/portal';
 import { SdwAdvancedDialogComponent } from './advanced-dialog.component';
+import { SdwTitleBarComponent } from '../title-bar/title-bar.component';
 
 const MATERIAL = [
   MatDialogModule,
@@ -24,7 +25,14 @@ const CDK = [
     MATERIAL,
     CDK
   ],
-  declarations: [SdwAdvancedDialogComponent],
+  declarations: [
+    SdwAdvancedDialogComponent,
+    SdwTitleBarComponent
+  ],
+  exports: [
+    SdwAdvancedDialogComponent,
+    SdwTitleBarComponent
+  ],
   entryComponents: [SdwAdvancedDialogComponent]
 })
 export class SdwAdvancedDialogModule {

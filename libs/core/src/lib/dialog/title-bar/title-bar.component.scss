@@ -1,0 +1,29 @@
+@import '../advanced/material-guidelines.scss';
+
+.sdw-title-bar {
+  display: block;
+  box-sizing: border-box;
+  outline: none;
+
+  margin: (-$mat-default-padding) (-$mat-default-padding) 0 (-$mat-default-padding);
+  width: calc(100% + #{$mat-default-padding * 2});
+
+  .sdw-title-container {
+    &.sdw-toolbar-title-container {
+      padding: 0 $mat-default-padding;
+      &.centered-title {
+        justify-content: space-between;
+      }
+
+      &:not(.centered-title) {
+        & > .sdw-left-title-btn, & > .sdw-right-title-btn {
+          display: none;
+        }
+      }
+    }
+    &.sdw-simple-title-container {
+      margin: 0;
+      padding: $mat-default-padding $mat-default-padding 0 $mat-default-padding;
+    }
+  }
+}

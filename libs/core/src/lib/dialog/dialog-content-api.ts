@@ -25,3 +25,8 @@ export interface SdwDialogCloseResult<R = any> {
   mode: SdwCloseMode;
   result: R;
 }
+
+export interface DataThatChanges<T = any> {
+  unchanged: T,
+  changed: T
+}

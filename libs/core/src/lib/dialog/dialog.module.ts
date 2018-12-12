@@ -8,7 +8,8 @@ import { SdwStepDialogModule } from './step/step-dialog.module';
     SdwSimpleDialogModule,
     SdwAdvancedDialogModule,
     SdwStepDialogModule
-  ]
+  ],
+  declarations: []
 })
 export class SdwDialogModule {
 }
