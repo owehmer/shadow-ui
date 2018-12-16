@@ -21,12 +21,21 @@ export class AppComponent {
   }
 
   public openSimple(type?: 'comp' | 'ref' | 'text') {
+    this.openDlg('simple', type);
+  }
+
+  public openAdv(type?: 'comp' | 'ref' | 'text') {
+    this.openDlg('adv', type);
+  }
+
+  private openDlg(dlgType: 'adv' | 'simple', type?: 'comp' | 'ref' | 'text') {
     const builder = new SdwAdvancedDialogBuilder(this.dlgService)
       .setDimensions(this._size)
       .setTitle(this._title)
       .setDialogData(this._data)
-      .simpleDialogStyle()
     ;
+    if (dlgType === 'simple')
+      builder.simpleDialogStyle();
 
     if (type === 'comp')
       builder.setDisplay(this._component);
@@ -37,16 +46,6 @@ export class AppComponent {
 
     const dialog = builder.open();
     dialog.afterClosed().subscribe(({mode, result}) => console.info('Dialog closed', mode, 'Data: ', result))
-  }
-
-  public openAdv() {
-    const builder = new SdwAdvancedDialogBuilder(this.dlgService)
-      .setDimensions(this._size)
-      .setDisplay(this._component)
-      .setTitle(this._title)
-      .setDialogData(this._data)
-    ;
-    builder.open();
   }
 
   // public openStep() {

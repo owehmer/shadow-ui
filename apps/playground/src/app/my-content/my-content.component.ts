@@ -47,7 +47,6 @@ export class MyContentComponent implements DialogWithAbort, DialogWithOk, Dialog
   public trigger() {
     this.changes$.next(true);
     this.lastChange = !this.lastChange;
-    this.dlg.simpleTitleBar = !this.dlg.simpleTitleBar;
   }
 
   getResult(): Observable<any> | Promise<any> | any {

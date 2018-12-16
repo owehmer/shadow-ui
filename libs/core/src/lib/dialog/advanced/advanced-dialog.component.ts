@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ChangeDetectorRef,
   Component, ComponentRef, ElementRef,
   Inject,
   Injector, OnDestroy,
@@ -207,20 +207,16 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
   public okBtnText: string;
   public okBtnDisabled: boolean;
 
-  public get buttonActionHappening() {
-    return this._waitForButtonResult;
-  }
-
   public promtOnDiscard: boolean;
 
-  public readonly fullscreenOnMobile$ = new Subject<boolean>();
+  public buttonActionHappening = false;
 
+  public readonly fullscreenOnMobile$ = new Subject<boolean>();
   @ViewChild(CdkPortalOutlet)
   private _outlet: CdkPortalOutlet;
-  private _componentRef: ComponentRef<any>;
 
+  private _componentRef: ComponentRef<any>;
   private _changes$$: Subscription;
-  private _waitForButtonResult = false;
 
   private readonly _titleHeight = 64;
   private readonly _footerHeight = 52;
@@ -230,7 +226,8 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
               @Inject(MAT_DIALOG_DATA) protected dlgData: SdwAdvancedDialogData,
               protected _injector: Injector,
               protected _bpObserver: BreakpointObserver,
-              protected _elemRef: ElementRef) {
+              protected _elemRef: ElementRef,
+              protected cd: ChangeDetectorRef) {
     super(dialogRef);
     if (this.dialogRef._containerInstance._config.disableClose === false)
       console.error('Never set the @angular/material dialog "disableClose" to false with this dialog. It will break this dialogs backdrop close mechanism!');
@@ -307,10 +304,10 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
   }
 
   public buttonClicked(isOkBtn: boolean) {
-    if (this._waitForButtonResult)
+    if (this.buttonActionHappening)
       return;
 
-    this._waitForButtonResult = true;
+    this.buttonActionHappening = true;
 
     if (!isOkBtn && this.promtOnDiscard && this.contentChanged) {
       const builder = new SdwAdvancedDialogBuilder(this.dlgService)
@@ -323,8 +320,10 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
       builder.open().afterClosed().subscribe(({ mode }) => {
         if (mode === 'confirm')
           this.determineIfCanClose(mode);
-        else
-          this._waitForButtonResult = false;
+        else {
+          this.buttonActionHappening = false;
+          this.cd.markForCheck();
+        }
       });
     } else {
       this.determineIfCanClose(isOkBtn ? 'confirm' : 'abort');
@@ -354,7 +353,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
       const closeData = dlgGetResult(this._componentRef ? this._componentRef.instance : undefined);
       this.closeDialog({ mode: closedBy, result: closeData } as SdwDialogCloseResult<any>);
     }
-    this._waitForButtonResult = false;
+    this.buttonActionHappening = false;
   }
 
   /**
