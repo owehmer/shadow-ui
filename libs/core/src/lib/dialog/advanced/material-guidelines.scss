@@ -30,7 +30,7 @@ $mat-default-padding: 24px;
       padding: $mat-default-padding;
       overflow: hidden;
 
-      &, .sdw-content, .sdw-footer {
+      &, .sdw-content {
         box-sizing: border-box;
         outline: none;
       }
@@ -39,17 +39,6 @@ $mat-default-padding: 24px;
         padding-top: $mat-default-padding;
         & > *:first-child {
           margin-top: 0;
-        }
-      }
-
-      .mat-dialog-actions {
-        justify-content: flex-end;
-        margin: 0 (-$mat-default-padding) (-$mat-default-padding) (-$mat-default-padding);
-        width: calc(100% + #{$mat-default-padding * 2});
-        padding-right: 8px;
-
-        .mat-button-wrapper {
-          text-transform: uppercase;
         }
       }
     }

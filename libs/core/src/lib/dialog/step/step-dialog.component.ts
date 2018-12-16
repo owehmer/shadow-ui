@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ChangeDetectorRef,
   Component, ComponentRef,
   ElementRef, HostBinding, HostListener,
   Inject,
@@ -77,8 +77,9 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
               @Inject(MAT_DIALOG_DATA) protected dlgData: SdwAdvancedDialogData,
               protected _injector: Injector,
               protected _bpObserver: BreakpointObserver,
-              protected _elemRef: ElementRef) {
-    super(dlgService, dialogRef as MatDialogRef<any>, dlgData, _injector, _bpObserver, _elemRef);
+              protected _elemRef: ElementRef,
+              protected cd: ChangeDetectorRef) {
+    super(dlgService, dialogRef as MatDialogRef<any>, dlgData, _injector, _bpObserver, _elemRef, cd);
   }
 
   ngOnInit() {

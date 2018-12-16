@@ -13,17 +13,11 @@
   <ng-template cdkPortalOutlet></ng-template>
 </div>
 
-<div mat-dialog-actions class="sdw-footer">
-  <button mat-button *ngIf="showAbortBtn"
-          [disabled]="abortBtnDisabled || buttonActionHappening"
-          (click)="buttonClicked(false)"
-          color="primary">
-    {{abortBtnText}}
-  </button>
-  <button mat-button *ngIf="showOkBtn"
-          [disabled]="okBtnDisabled || buttonActionHappening"
-          (click)="buttonClicked(true)"
-          color="primary" cdkFocusInitial>
-    {{okBtnText}}
-  </button>
-</div>
+<sdw-footer [abortBtnText]="abortBtnText"
+            [okBtnText]="okBtnText"
+            [abortBtnDisabled]="abortBtnDisabled || buttonActionHappening"
+            [okBtnDisabled]="okBtnDisabled || buttonActionHappening"
+            [showAbortBtn]="showAbortBtn"
+            [showOkBtn]="showOkBtn"
+            (buttonClick)="buttonClicked($event)"
+></sdw-footer>

@@ -1,0 +1,18 @@
+@import '../advanced/material-guidelines.scss';
+
+.sdw-footer {
+  display: flex;
+  box-sizing: border-box;
+  outline: none;
+
+  &.mat-dialog-actions {
+    justify-content: flex-end;
+    margin: 0 (-$mat-default-padding) (-$mat-default-padding) (-$mat-default-padding);
+    width: calc(100% + #{$mat-default-padding * 2});
+    padding-right: 8px;
+
+    .mat-button-wrapper {
+      text-transform: uppercase;
+    }
+  }
+}
