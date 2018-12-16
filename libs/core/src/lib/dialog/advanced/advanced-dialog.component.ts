@@ -186,40 +186,38 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
   }
 })
 export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit, OnDestroy {
-  public contentChanged = false;
+  contentChanged = false;
 
   // Title bar
-  public simpleTitleBar: boolean;
-  public leftIcons: DataThatChanges<string>;
-  public rightIcons: DataThatChanges<string>;
-  public titleColor: 'primary' | 'accent' | 'warn';
-  public title: string;
+  simpleTitleBar: boolean;
+  leftIcons: DataThatChanges<string>;
+  rightIcons: DataThatChanges<string>;
+  titleColor: 'primary' | 'accent' | 'warn';
+  title: string;
 
   // Content
-  public text?: string;
+  text?: string;
 
   // Footer
-  public showAbortBtn: boolean;
-  public abortBtnText: string;
-  public abortBtnDisabled: boolean;
+  showAbortBtn: boolean;
+  abortBtnText: string;
+  abortBtnDisabled: boolean;
 
-  public showOkBtn: boolean;
-  public okBtnText: string;
-  public okBtnDisabled: boolean;
+  showOkBtn: boolean;
+  okBtnText: string;
+  okBtnDisabled: boolean;
 
-  public promtOnDiscard: boolean;
+  promtOnDiscard: boolean;
 
-  public buttonActionHappening = false;
+  buttonActionHappening = false;
 
-  public readonly fullscreenOnMobile$ = new Subject<boolean>();
+  readonly fullscreenOnMobile$ = new Subject<boolean>();
+
   @ViewChild(CdkPortalOutlet)
   private _outlet: CdkPortalOutlet;
 
   private _componentRef: ComponentRef<any>;
   private _changes$$: Subscription;
-
-  private readonly _titleHeight = 64;
-  private readonly _footerHeight = 52;
 
   constructor(protected dlgService: MatDialog,
               protected dialogRef: MatDialogRef<any>,
@@ -232,7 +230,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
     if (this.dialogRef._containerInstance._config.disableClose === false)
       console.error('Never set the @angular/material dialog "disableClose" to false with this dialog. It will break this dialogs backdrop close mechanism!');
 
-    this.initFullSizeObs();
+    this._initFullSizeObs();
 
     // Title bar
     this.simpleTitleBar = dlgData.simpleTitleBar;
@@ -258,7 +256,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
   ngOnInit() {
     this.dialogRef.backdropClick().subscribe(() => {
       if (!this.dlgData.disableClose) {
-        this.determineIfCanClose('backdrop');
+        this._determineIfCanClose('backdrop');
       }
     });
 
@@ -290,20 +288,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
       this._changes$$.unsubscribe();
   }
 
-  /**
-   * Adapt styles set in the config so the content doesn't overflow.
-   */
-  public getContentStyles() {
-    const _config = this.dialogRef._containerInstance._config;
-    const heightSubtraction = `${this._titleHeight + this._footerHeight}px`;
-    return {
-      height: _config.height && _config.height !== '' ? `calc(${_config.height} - ${heightSubtraction})` : undefined,
-      'max-height': _config.maxHeight ? `calc(${_config.maxHeight} - ${heightSubtraction})` : undefined,
-      'min-height': _config.minHeight ? `calc(${_config.minHeight} - ${heightSubtraction})` : undefined
-    };
-  }
-
-  public buttonClicked(isOkBtn: boolean) {
+  buttonClicked(isOkBtn: boolean) {
     if (this.buttonActionHappening)
       return;
 
@@ -319,14 +304,14 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
 
       builder.open().afterClosed().subscribe(({ mode }) => {
         if (mode === 'confirm')
-          this.determineIfCanClose(mode);
+          this._determineIfCanClose(mode);
         else {
           this.buttonActionHappening = false;
           this.cd.markForCheck();
         }
       });
     } else {
-      this.determineIfCanClose(isOkBtn ? 'confirm' : 'abort');
+      this._determineIfCanClose(isOkBtn ? 'confirm' : 'abort');
     }
   }
 
@@ -334,11 +319,11 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
    * Checks if the content allows the user to be closed. Calls the onAbort/onOk Methods of the content.
    * @param closedBy How the dialog is beeing closed
    */
-  private determineIfCanClose(closedBy: SdwCloseMode) {
+  private _determineIfCanClose(closedBy: SdwCloseMode) {
     const canClose = closedBy === 'confirm'
       ? dlgOkFn(this._componentRef ? this._componentRef.instance : undefined)
       : dlgAbortFn(this._componentRef ? this._componentRef.instance : undefined);
-    determineValue(canClose, (canCloseCallback) => this.closeIfAllowed(canCloseCallback, closedBy));
+    determineValue(canClose, (canCloseCallback) => this._closeIfAllowed(canCloseCallback, closedBy));
   }
 
   /**
@@ -348,7 +333,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
    *
    * Resets the 'wait for button' state.
    */
-  private closeIfAllowed(canClose: boolean, closedBy: SdwCloseMode) {
+  private _closeIfAllowed(canClose: boolean, closedBy: SdwCloseMode) {
     if (canClose) {
       const closeData = dlgGetResult(this._componentRef ? this._componentRef.instance : undefined);
       this.closeDialog({ mode: closedBy, result: closeData } as SdwDialogCloseResult<any>);
@@ -360,7 +345,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
    * Initiates the constant check if mobile is set
    * TODO: Erst abfragen, wenn man wirklich diese Option anstellt. Wenn aus muss auch wieder unsubscribed werden!
    */
-  private initFullSizeObs() {
+  private _initFullSizeObs() {
     combineLatest(
       this._bpObserver.observe([Breakpoints.HandsetPortrait]),
       this.fullscreenOnMobile$

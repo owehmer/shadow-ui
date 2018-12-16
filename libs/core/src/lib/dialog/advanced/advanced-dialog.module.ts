@@ -8,6 +8,7 @@ import { PortalModule } from '@angular/cdk/portal';
 import { SdwAdvancedDialogComponent } from './advanced-dialog.component';
 import { SdwTitleBarComponent } from '../title-bar/title-bar.component';
 import { SdwFooterComponent } from '../footer/footer.component';
+import { SdwContentComponent } from '../content/content.component';
 
 const MATERIAL = [
   MatDialogModule,
@@ -29,12 +30,14 @@ const CDK = [
   declarations: [
     SdwAdvancedDialogComponent,
     SdwTitleBarComponent,
-    SdwFooterComponent
+    SdwFooterComponent,
+    SdwContentComponent
   ],
   exports: [
     SdwAdvancedDialogComponent,
     SdwTitleBarComponent,
-    SdwFooterComponent
+    SdwFooterComponent,
+    SdwContentComponent
   ],
   entryComponents: [SdwAdvancedDialogComponent]
 })

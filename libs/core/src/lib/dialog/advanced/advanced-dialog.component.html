@@ -8,10 +8,10 @@
   {{title}}
 </sdw-title-bar>
 
-<div mat-dialog-content class="sdw-content" [ngStyle]="getContentStyles()">
+<sdw-content>
   <span *ngIf="text" class="sdw-simple-content">{{text}}</span>
   <ng-template cdkPortalOutlet></ng-template>
-</div>
+</sdw-content>
 
 <sdw-footer [abortBtnText]="abortBtnText"
             [okBtnText]="okBtnText"
