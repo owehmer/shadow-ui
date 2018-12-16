@@ -1,8 +1,10 @@
-<sdw-title-bar [useSimpleTitleBar]="useSimpleTitleBar"
+<sdw-title-bar [useSimpleTitleBar]="simpleTitleBar"
                [hasChanges]="contentChanged"
                [leftIcons]="leftIcons"
                [rightIcons]="rightIcons"
-               [titleColor]="titleColor">
+               [titleColor]="titleColor"
+               [disabled]="buttonActionHappening"
+               (buttonClick)="buttonClicked($event)">
   {{title}}
 </sdw-title-bar>
 
@@ -13,13 +15,13 @@
 
 <div mat-dialog-actions class="sdw-footer">
   <button mat-button *ngIf="showAbortBtn"
-          [disabled]="abortBtnDisabled"
+          [disabled]="abortBtnDisabled || buttonActionHappening"
           (click)="buttonClicked(false)"
           color="primary">
     {{abortBtnText}}
   </button>
   <button mat-button *ngIf="showOkBtn"
-          [disabled]="okBtnDisabled"
+          [disabled]="okBtnDisabled || buttonActionHappening"
           (click)="buttonClicked(true)"
           color="primary" cdkFocusInitial>
     {{okBtnText}}

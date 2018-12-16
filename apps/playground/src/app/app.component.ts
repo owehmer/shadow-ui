@@ -21,19 +21,19 @@ export class AppComponent {
   }
 
   public openSimple(type?: 'comp' | 'ref' | 'text') {
-    const builder = new SdwSimpleDialogBuilder(this.dlgService)
+    const builder = new SdwAdvancedDialogBuilder(this.dlgService)
       .setDimensions(this._size)
       .setTitle(this._title)
       .setDialogData(this._data)
+      .simpleDialogStyle()
     ;
-    builder.setBackdropClickCanClose(false);
 
     if (type === 'comp')
-      builder.setDisplayComponent(this._component);
+      builder.setDisplay(this._component);
     if (type === 'ref')
-      builder.setDisplayComponent(this._template);
+      builder.setDisplay(this._template);
     else if (type === 'text')
-      builder.setText('This custom text is really nice. HTML is <b>supported</b>');
+      builder.setText('This custom text is really nice.');
 
     const dialog = builder.open();
     dialog.afterClosed().subscribe(({mode, result}) => console.info('Dialog closed', mode, 'Data: ', result))

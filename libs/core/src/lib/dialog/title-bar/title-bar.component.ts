@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component, EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewEncapsulation
+} from '@angular/core';
 import { isNullOrEmpty } from '../helper';
 import { DataThatChanges } from '../dialog-content-api';
 
@@ -29,6 +37,12 @@ export class SdwTitleBarComponent implements OnChanges {
   @Input()
   public rightIcons: DataThatChanges<string>;
 
+  @Input()
+  public disabled = false;
+
+  @Output()
+  public buttonClick = new EventEmitter<boolean>();
+
   public leftIcon?: string;
   public rightIcon?: string;
 
@@ -43,6 +57,10 @@ export class SdwTitleBarComponent implements OnChanges {
 
     this.leftIcon = this.displayIcon(leftIcons, hasChanges);
     this.rightIcon = this.displayIcon(rightIcons, hasChanges);
+  }
+
+  iconClicked(isOkBtn: boolean) {
+    this.buttonClick.emit(isOkBtn);
   }
 
   private displayIcon(icon: DataThatChanges<string>, hasChanges: boolean) {

@@ -2,13 +2,19 @@
              class="sdw-title-container sdw-toolbar-title-container"
              [class.centered-title]="isTitleCentered"
              [color]="titleColor">
-  <button mat-icon-button class="sdw-left-title-btn" [disabled]="!leftIcon">
+  <button mat-icon-button class="sdw-left-title-btn"
+          [disabled]="!leftIcon || disabled"
+          (click)="iconClicked(false)"
+  >
     <mat-icon *ngIf="leftIcon || rightIcon">{{leftIcon}}</mat-icon>
   </button>
 
   <span><ng-container *ngTemplateOutlet="content"></ng-container></span>
 
-  <button mat-icon-button class="sdw-right-title-btn" [disabled]="!rightIcon">
+  <button mat-icon-button class="sdw-right-title-btn"
+          [disabled]="!rightIcon || disabled"
+          (click)="iconClicked(true)"
+  >
     <mat-icon *ngIf="leftIcon || rightIcon">{{rightIcon}}</mat-icon>
   </button>
 </mat-toolbar>

@@ -20,10 +20,9 @@ import { SdwDialogBase } from '../dialog-base';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { distinctUntilChanged, filter, takeUntil } from 'rxjs/operators';
 import { combineLatest, Subject, Subscription } from 'rxjs';
-import { SdwSimpleDialogBuilder } from '../simple/simple-dialog.component';
 import { determineValue, isNullOrEmpty } from '../helper';
 import { dlgAbortFn, dlgGetResult, dlgHasChanges, dlgOkFn } from '../dialog-internal-api';
-import { DataThatChanges } from '../dialog-content-api';
+import { DataThatChanges, SdwCloseMode, SdwDialogCloseResult } from '../dialog-content-api';
 
 export class SdwAdvancedDialogData<C = any, D = any> {
   data: D = null;
@@ -33,7 +32,7 @@ export class SdwAdvancedDialogData<C = any, D = any> {
   injector?: Injector;
 
   // Top section of dlg
-  useSimpleTitleBar = false; // true => White top bar
+  simpleTitleBar = false; // true => White top bar
   leftIcons: DataThatChanges<string> | null = { changed: 'clear', unchanged: 'keyboard_backspace' };
   rightIcons: DataThatChanges<string> | null = { changed: 'done', unchanged: '' };
   title = '';
@@ -75,7 +74,7 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
   }
 
   setBackdropClickCanClose(allow: boolean) {
-    this.data.disableClose = allow;
+    this.data.disableClose = !allow;
     return this;
   }
 
@@ -158,6 +157,20 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
     this.data.text = text;
     return this;
   }
+
+  setSimpleTitleBar(useSimpleBar = true) {
+    this.data.simpleTitleBar = useSimpleBar;
+    return this;
+  }
+
+  simpleDialogStyle() {
+    this.setSimpleTitleBar(true);
+    this.setBackdropClickCanClose(true);
+    this.setDiscardChangesPromt(false);
+    this.setAbortIcon();
+    this.setOkIcon();
+    return this;
+  }
 }
 
 @Component({
@@ -176,7 +189,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
   public contentChanged = false;
 
   // Title bar
-  public useSimpleTitleBar: boolean;
+  public simpleTitleBar: boolean;
   public leftIcons: DataThatChanges<string>;
   public rightIcons: DataThatChanges<string>;
   public titleColor: 'primary' | 'accent' | 'warn';
@@ -193,6 +206,10 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
   public showOkBtn: boolean;
   public okBtnText: string;
   public okBtnDisabled: boolean;
+
+  public get buttonActionHappening() {
+    return this._waitForButtonResult;
+  }
 
   public promtOnDiscard: boolean;
 
@@ -221,7 +238,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
     this.initFullSizeObs();
 
     // Title bar
-    this.useSimpleTitleBar = dlgData.useSimpleTitleBar;
+    this.simpleTitleBar = dlgData.simpleTitleBar;
     this.leftIcons = dlgData.leftIcons;
     this.rightIcons = dlgData.rightIcons;
     this.title = dlgData.title;
@@ -248,20 +265,24 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
       }
     });
 
-    const parentInjector = this.dlgData.injector ? this.dlgData.injector : this._injector;
-    const dialogInjector = new PortalInjector(parentInjector, new WeakMap<any, any>([
-      [MAT_DIALOG_DATA, this.dlgData.data]
-    ]));
+    if (this.dlgData.component != null) {
+      const parentInjector = this.dlgData.injector ? this.dlgData.injector : this._injector;
+      const dialogInjector = new PortalInjector(parentInjector, new WeakMap<any, any>([
+        [MAT_DIALOG_DATA, this.dlgData.data]
+      ]));
 
-    this._componentRef = this.generateComponentInOutlet(
-      this.dlgData.component,
-      this._outlet,
-      dialogInjector,
-      this.dlgData.data
-    );
+      this._componentRef = this.generateComponentInOutlet(
+        this.dlgData.component,
+        this._outlet,
+        dialogInjector,
+        this.dlgData.data
+      );
 
-    this._changes$$ = dlgHasChanges(this._componentRef.instance,
-      (val) => this.contentChanged = val);
+      if (this._componentRef && this._componentRef.instance) {
+        this._changes$$ = dlgHasChanges(this._componentRef.instance,
+          (val) => this.contentChanged = val);
+      }
+    }
 
     this.fullscreenOnMobile$.next(this.dlgData.fullscreenOnMobile || true);
   }
@@ -292,23 +313,33 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
     this._waitForButtonResult = true;
 
     if (!isOkBtn && this.promtOnDiscard && this.contentChanged) {
-      const builder = new SdwSimpleDialogBuilder(this.dlgService)
+      const builder = new SdwAdvancedDialogBuilder(this.dlgService)
         .setTitle(this.dlgData.discardDlgTitle)
         .setText(this.dlgData.discardDlgText)
-        .showAbortButton(this.dlgData.discardDlgAbortText)
-        .showOkButton(this.dlgData.discardDlgOkText)
-      ;
+        .setAbortButtonText(this.dlgData.discardDlgAbortText)
+        .setOkButtonText(this.dlgData.discardDlgOkText)
+        .simpleDialogStyle();
+
       builder.open().afterClosed().subscribe(({ mode }) => {
-        let canClose: any = false;
-        if (mode === 'confirm') {
-          canClose = isOkBtn ? dlgOkFn(this._componentRef.instance) : dlgAbortFn(this._componentRef.instance);
-        }
-        determineValue(canClose, (canCloseCallback) => this.closeIfAllowed(canCloseCallback, isOkBtn));
+        if (mode === 'confirm')
+          this.determineIfCanClose(mode);
+        else
+          this._waitForButtonResult = false;
       });
     } else {
-      const canClose = isOkBtn ? dlgOkFn(this._componentRef.instance) : dlgAbortFn(this._componentRef.instance);
-      determineValue(canClose, (canCloseCallback) => this.closeIfAllowed(canCloseCallback, isOkBtn));
+      this.determineIfCanClose(isOkBtn ? 'confirm' : 'abort');
     }
+  }
+
+  /**
+   * Checks if the content allows the user to be closed. Calls the onAbort/onOk Methods of the content.
+   * @param closedBy How the dialog is beeing closed
+   */
+  private determineIfCanClose(closedBy: SdwCloseMode) {
+    const canClose = closedBy === 'confirm'
+      ? dlgOkFn(this._componentRef ? this._componentRef.instance : undefined)
+      : dlgAbortFn(this._componentRef ? this._componentRef.instance : undefined);
+    determineValue(canClose, (canCloseCallback) => this.closeIfAllowed(canCloseCallback, closedBy));
   }
 
   /**
@@ -317,13 +348,11 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
    * dialog data if any is specified.
    *
    * Resets the 'wait for button' state.
-   * @param canClose
-   * @param isOkBtn
    */
-  private closeIfAllowed(canClose: boolean, isOkBtn: boolean) {
+  private closeIfAllowed(canClose: boolean, closedBy: SdwCloseMode) {
     if (canClose) {
-      const closeData = dlgGetResult(this._componentRef.instance);
-      this.closeDialog({ closeOk: isOkBtn, data: closeData });
+      const closeData = dlgGetResult(this._componentRef ? this._componentRef.instance : undefined);
+      this.closeDialog({ mode: closedBy, result: closeData } as SdwDialogCloseResult<any>);
     }
     this._waitForButtonResult = false;
   }

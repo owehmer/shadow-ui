@@ -13,6 +13,7 @@
       padding: 0 $mat-default-padding;
       &.centered-title {
         justify-content: space-between;
+        padding: 0 $mat-default-padding / 2;
       }
 
       &:not(.centered-title) {
