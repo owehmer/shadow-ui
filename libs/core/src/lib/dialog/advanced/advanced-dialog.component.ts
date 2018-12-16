@@ -230,8 +230,6 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
     if (this.dialogRef._containerInstance._config.disableClose === false)
       console.error('Never set the @angular/material dialog "disableClose" to false with this dialog. It will break this dialogs backdrop close mechanism!');
 
-    this._initFullSizeObs();
-
     // Title bar
     this.simpleTitleBar = dlgData.simpleTitleBar;
     this.leftIcons = dlgData.leftIcons;
@@ -250,36 +248,14 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
     this.okBtnText = dlgData.okBtnText;
     this.okBtnDisabled = dlgData.okBtnDisabled;
 
+    // Misc
     this.promtOnDiscard = dlgData.promtOnDiscard;
   }
 
   ngOnInit() {
-    this.dialogRef.backdropClick().subscribe(() => {
-      if (!this.dlgData.disableClose) {
-        this._determineIfCanClose('backdrop');
-      }
-    });
-
-    if (this.dlgData.component != null) {
-      const parentInjector = this.dlgData.injector ? this.dlgData.injector : this._injector;
-      const dialogInjector = new PortalInjector(parentInjector, new WeakMap<any, any>([
-        [MAT_DIALOG_DATA, this.dlgData.data]
-      ]));
-
-      this._componentRef = this.generateComponentInOutlet(
-        this.dlgData.component,
-        this._outlet,
-        dialogInjector,
-        this.dlgData.data
-      );
-
-      if (this._componentRef && this._componentRef.instance) {
-        this._changes$$ = dlgHasChanges(this._componentRef.instance,
-          (val) => this.contentChanged = val);
-      }
-    }
-
-    this.fullscreenOnMobile$.next(this.dlgData.fullscreenOnMobile || true);
+    this.initBackdropClose();
+    this.initFullscreenOnMobile();
+    this.initDynamicContent();
   }
 
   ngOnDestroy(): void {
@@ -315,11 +291,45 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
     }
   }
 
+  protected initBackdropClose() {
+    this.dialogRef.backdropClick().subscribe(() => {
+      if (!this.dlgData.disableClose) {
+        this._determineIfCanClose('backdrop');
+      }
+    });
+  }
+
+  protected initDynamicContent() {
+    if (this.dlgData.component != null) {
+      const parentInjector = this.dlgData.injector ? this.dlgData.injector : this._injector;
+      const dialogInjector = new PortalInjector(parentInjector, new WeakMap<any, any>([
+        [MAT_DIALOG_DATA, this.dlgData.data]
+      ]));
+
+      this._componentRef = this.generateComponentInOutlet(
+        this.dlgData.component,
+        this._outlet,
+        dialogInjector,
+        this.dlgData.data
+      );
+
+      if (this._componentRef && this._componentRef.instance) {
+        this._changes$$ = dlgHasChanges(this._componentRef.instance,
+          (val) => this.contentChanged = val);
+      }
+    }
+  }
+
+  protected initFullscreenOnMobile() {
+    this._initFullSizeObs();
+    this.fullscreenOnMobile$.next(this.dlgData.fullscreenOnMobile || true);
+  }
+
   /**
    * Checks if the content allows the user to be closed. Calls the onAbort/onOk Methods of the content.
    * @param closedBy How the dialog is beeing closed
    */
-  private _determineIfCanClose(closedBy: SdwCloseMode) {
+  protected _determineIfCanClose(closedBy: SdwCloseMode) {
     const canClose = closedBy === 'confirm'
       ? dlgOkFn(this._componentRef ? this._componentRef.instance : undefined)
       : dlgAbortFn(this._componentRef ? this._componentRef.instance : undefined);
@@ -333,7 +343,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
    *
    * Resets the 'wait for button' state.
    */
-  private _closeIfAllowed(canClose: boolean, closedBy: SdwCloseMode) {
+  protected _closeIfAllowed(canClose: boolean, closedBy: SdwCloseMode) {
     if (canClose) {
       const closeData = dlgGetResult(this._componentRef ? this._componentRef.instance : undefined);
       this.closeDialog({ mode: closedBy, result: closeData } as SdwDialogCloseResult<any>);
@@ -345,7 +355,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
    * Initiates the constant check if mobile is set
    * TODO: Erst abfragen, wenn man wirklich diese Option anstellt. Wenn aus muss auch wieder unsubscribed werden!
    */
-  private _initFullSizeObs() {
+  protected _initFullSizeObs() {
     combineLatest(
       this._bpObserver.observe([Breakpoints.HandsetPortrait]),
       this.fullscreenOnMobile$

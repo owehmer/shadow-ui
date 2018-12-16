@@ -18,7 +18,7 @@ export class SdwContentComponent {
   private readonly _footerHeight = 52;
 
   constructor(private sanitizer: DomSanitizer,
-    private dialogRef: MatDialogRef<any>) {
+              private dialogRef: MatDialogRef<any>) {
   }
 
   /**

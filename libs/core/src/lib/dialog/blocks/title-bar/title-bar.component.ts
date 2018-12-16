@@ -7,8 +7,8 @@ import {
   SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
-import { isNullOrEmpty } from '../helper';
-import { DataThatChanges } from '../dialog-content-api';
+import { isNullOrEmpty } from '../../helper';
+import { DataThatChanges } from '../../dialog-content-api';
 
 @Component({
   selector: 'sdw-title-bar',

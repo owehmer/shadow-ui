@@ -5,7 +5,6 @@ import {
   DialogWithOk,
   DialogWithOpenChanges, DialogWithResult,
   SdwAdvancedDialogComponent,
-  SdwSimpleDialogComponent
 } from '@shadow-ui/core';
 import { Observable, Subject } from 'rxjs';
 
