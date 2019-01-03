@@ -1,32 +1,35 @@
-<mat-toolbar class="sdw-title-bar"
-             [class.centered-title]="isTitleCentered"
-             [color]="titleColor">
-  <button mat-icon-button class="sdw-left-title-btn" [disabled]="!showLeftIcon">
-    <mat-icon *ngIf="showLeftIcon">{{contentChanged ? leftIcons?.changed : leftIcons?.unchanged}}</mat-icon>
-  </button>
+<sdw-title-bar [useSimpleTitleBar]="simpleTitleBar"
+               [hasChanges]="contentChanged"
+               [leftIcons]="leftIcons"
+               [rightIcons]="rightIcons"
+               [titleColor]="titleColor"
+               [disabled]="buttonActionHappening"
+               (buttonClick)="buttonClicked($event)">
+  {{title}}
+</sdw-title-bar>
 
-  <span>{{title}}</span>
+<sdw-content [padded]="false">
+  <mat-horizontal-stepper #stepper
+                          [style.height.px]="stepHeight"
+                          [class.animated-stepper]="animateStepChanges"
+                          [class.resizing]="stepHeight != null"
+                          (selectionChange)="stepChanged($event)">
+    <mat-step *ngFor="let oneStep of stepData">
+      <ng-template matStepLabel><div>{{oneStep.title}}</div></ng-template>
 
-  <button mat-icon-button class="sdw-right-title-btn" [disabled]="!showRightIcon">
-    <mat-icon *ngIf="showRightIcon">{{contentChanged ? rightIcons?.changed : rightIcons?.unchanged}}</mat-icon>
-  </button>
-</mat-toolbar>
-
-<div mat-dialog-content class="sdw-content" [ngStyle]="getContentStyles()">
-  <ng-template cdkPortalOutlet></ng-template>
-  <mat-horizontal-stepper #stepper (selectionChange)="stepChanged($event)" [style.height.px]="currentHeight">
-    <mat-step *ngFor="let dataStep of data">
-      <ng-template matStepLabel>Step Label</ng-template>
-      <div #step [innerHTML]="dataStep"></div>
+      <div #step>
+        <ng-template cdkPortalOutlet></ng-template>
+      </div>
     </mat-step>
   </mat-horizontal-stepper>
-</div>
+</sdw-content>
 
-<div mat-dialog-actions class="sdw-footer">
-  <button mat-button *ngIf="showAbortBtn" (click)="buttonClicked(false)" color="primary">
-    {{abortBtnText}}
-  </button>
-  <button mat-button *ngIf="showOkBtn" (click)="buttonClicked(true)" color="primary" cdkFocusInitial>
-    {{okBtnText}}
-  </button>
-</div>
+<sdw-footer [abortBtnText]="abortBtnText"
+            [okBtnText]="okBtnText"
+            [abortBtnDisabled]="abortBtnDisabled || buttonActionHappening"
+            [okBtnDisabled]="okBtnDisabled || buttonActionHappening"
+            [showAbortBtn]="showAbortBtn"
+            [showOkBtn]="showOkBtn"
+            (buttonClick)="buttonClicked($event)"
+></sdw-footer>
+

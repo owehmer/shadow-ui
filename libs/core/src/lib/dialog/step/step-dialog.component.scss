@@ -3,11 +3,19 @@
 @include matDialogStyles(sdw-step-dialog);
 
 .sdw-step-dialog {
-  .sdw-content {
-    margin: (-$mat-default-padding) (-$mat-default-padding) 0 (-$mat-default-padding);
-    padding: 0;
-  }
-  mat-horizontal-stepper {
-    transition: all 100ms;
+  .mat-stepper-horizontal {
+    &.resizing {
+      overflow: hidden;
+    }
+    &.animated-stepper {
+      transition: all 200ms;
+    }
+
+    .mat-horizontal-stepper-header-container {
+      position: sticky;
+      top: 0;
+      background: #FFFFFF;
+      z-index: 5;
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
@@ -14,6 +14,10 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
   }
 })
 export class SdwContentComponent {
+  @HostBinding('class.sdw-content-padded')
+  @Input()
+  padded = true;
+
   private readonly _titleHeight = 64;
   private readonly _footerHeight = 52;
 

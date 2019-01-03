@@ -169,6 +169,7 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
     this.setDiscardChangesPromt(false);
     this.setAbortIcon();
     this.setOkIcon();
+    this.data.fullscreenOnMobile = false; // TODO: Add Method + Hide Footer
     return this;
   }
 }
@@ -301,8 +302,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
 
   protected initDynamicContent() {
     if (this.dlgData.component != null) {
-      const parentInjector = this.dlgData.injector ? this.dlgData.injector : this._injector;
-      const dialogInjector = new PortalInjector(parentInjector, new WeakMap<any, any>([
+      const dialogInjector = new PortalInjector(this._injector, new WeakMap<any, any>([
         [MAT_DIALOG_DATA, this.dlgData.data]
       ]));
 
@@ -322,7 +322,8 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
 
   protected initFullscreenOnMobile() {
     this._initFullSizeObs();
-    this.fullscreenOnMobile$.next(this.dlgData.fullscreenOnMobile || true);
+    const isSet = this.dlgData.fullscreenOnMobile;
+    this.fullscreenOnMobile$.next(isSet != null ? isSet : true);
   }
 
   /**

@@ -1,0 +1,18 @@
+@import '../../advanced/material-guidelines.scss';
+
+.sdw-content {
+  display: block;
+  box-sizing: border-box;
+  outline: none;
+
+  &:not(.sdw-content-padded) {
+    padding: 0;
+  }
+  &.sdw-content-padded {
+    padding: $mat-default-padding $mat-default-padding 0 $mat-default-padding;
+  }
+
+  & > *:first-child {
+    margin-top: 0;
+  }
+}

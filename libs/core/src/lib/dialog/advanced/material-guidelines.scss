@@ -34,13 +34,6 @@ $mat-default-padding: 24px;
         box-sizing: border-box;
         outline: none;
       }
-
-      .sdw-content {
-        padding-top: $mat-default-padding;
-        & > *:first-child {
-          margin-top: 0;
-        }
-      }
     }
   }
 

@@ -1,7 +1,9 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MyContentComponent } from './my-content/my-content.component';
-import { SdwAdvancedDialogBuilder } from '@shadow-ui/core';
+import { SdwAdvancedDialogBuilder, SdwStepDialogBuilder } from '@shadow-ui/core';
+import { MyContentComponentShort } from './my-content-short/my-content-short.component';
+import { DynamicComponent } from './dynamic/dynamic.component';
 
 @Component({
   selector: 'app-playground-root',
@@ -21,14 +23,45 @@ export class AppComponent {
   }
 
   public openSimple(type?: 'comp' | 'ref' | 'text') {
-    this.openDlg('simple', type);
+    const dialog =  this.buildDLg('simple', type).open();
+    dialog.afterClosed().subscribe(({mode, result}) => console.info('Dialog closed', mode, 'Data: ', result))
   }
 
   public openAdv(type?: 'comp' | 'ref' | 'text') {
-    this.openDlg('adv', type);
+    const dialog = this.buildDLg('adv', type).open();
+    dialog.afterClosed().subscribe(({mode, result}) => console.info('Dialog closed', mode, 'Data: ', result))
   }
 
-  private openDlg(dlgType: 'adv' | 'simple', type?: 'comp' | 'ref' | 'text') {
+  public openStep() {
+    const builder = new SdwStepDialogBuilder(this.dlgService)
+      .setDimensions(this._size)
+      .setTitle(this._title)
+      .setDialogData(this._data)
+      .setSteps([
+        {
+          title: 'First Step',
+          subtitle: 'My subtitle',
+          component: this._component
+        },
+        {
+          title: 'Hold it right there',
+          component: MyContentComponentShort
+        }
+      ])
+      .animateStepChanges(true)
+    ;
+    const dlg = builder.open();
+    setTimeout(() => {
+      dlg.componentInstance.addStep({
+        title: 'dynamic added',
+        subtitle: '2nd subtitle',
+        component: DynamicComponent
+      })
+    }, 1500);
+
+  }
+
+  private buildDLg(dlgType: 'adv' | 'simple', type?: 'comp' | 'ref' | 'text' | 'step') {
     const builder = new SdwAdvancedDialogBuilder(this.dlgService)
       .setDimensions(this._size)
       .setTitle(this._title)
@@ -39,22 +72,11 @@ export class AppComponent {
 
     if (type === 'comp')
       builder.setDisplay(this._component);
-    if (type === 'ref')
+    else if (type === 'ref')
       builder.setDisplay(this._template);
     else if (type === 'text')
       builder.setText('This custom text is really nice.');
 
-    const dialog = builder.open();
-    dialog.afterClosed().subscribe(({mode, result}) => console.info('Dialog closed', mode, 'Data: ', result))
+    return builder;
   }
-
-  // public openStep() {
-  //   const builder = new SdwStepDialogBuilder(this.dlgService)
-  //     .setDimensions(this._size)
-  //     .setDisplay(this._component)
-  //     .setTitle(this._title)
-  //     .setDialogData(this._data)
-  //   ;
-  //   builder.open();
-  // }
 }

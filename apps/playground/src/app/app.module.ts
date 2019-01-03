@@ -7,9 +7,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SdwDialogModule } from '@shadow-ui/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MyContentComponentShort } from './my-content-short/my-content-short.component';
+import { DynamicComponent } from './dynamic/dynamic.component';
 
 @NgModule({
-  declarations: [AppComponent, MyContentComponent],
+  declarations: [AppComponent, MyContentComponent, MyContentComponentShort, DynamicComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -21,7 +23,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [
-    MyContentComponent
+    MyContentComponent,
+    MyContentComponentShort,
+    DynamicComponent
   ]
 })
 export class AppModule {}

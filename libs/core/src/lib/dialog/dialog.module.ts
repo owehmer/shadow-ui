@@ -1,23 +1,26 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { PortalModule } from '@angular/cdk/portal';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { PortalModule } from '@angular/cdk/portal';
+import { MatStepperModule } from '@angular/material/stepper';
 
 import { SdwTitleBarComponent } from './blocks/title-bar/title-bar.component';
 import { SdwFooterComponent } from './blocks/footer/footer.component';
 import { SdwContentComponent } from './blocks/content/content.component';
 
-import { SdwStepDialogModule } from './step/step-dialog.module';
 import { SdwAdvancedDialogComponent } from './advanced/advanced-dialog.component';
-import { CommonModule } from '@angular/common';
+import { SdwStepDialogComponent } from './step/step-dialog.component';
 
 const MATERIAL = [
   MatDialogModule,
   MatButtonModule,
   MatToolbarModule,
-  MatIconModule
+  MatIconModule,
+  MatStepperModule
 ];
 
 const CDK = [
@@ -31,7 +34,8 @@ export const BUILDING_BLOCKS = [
 ];
 
 export const DIALOG_TYPES = [
-  SdwAdvancedDialogComponent
+  SdwAdvancedDialogComponent,
+  SdwStepDialogComponent
 ];
 
 @NgModule({
@@ -39,14 +43,12 @@ export const DIALOG_TYPES = [
     CommonModule,
     MATERIAL,
     CDK,
-    SdwStepDialogModule
   ],
   declarations: [
     BUILDING_BLOCKS,
     DIALOG_TYPES
   ],
   exports: [
-    BUILDING_BLOCKS,
     DIALOG_TYPES
   ],
   entryComponents: [
