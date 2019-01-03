@@ -8,7 +8,7 @@
       overflow: hidden;
     }
     &.animated-stepper {
-      transition: all 200ms;
+      transition: height 200ms;
     }
 
     .mat-horizontal-stepper-header-container {

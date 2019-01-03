@@ -5,6 +5,10 @@
   box-sizing: border-box;
   outline: none;
 
+  &.with-top-border {
+    border-top: 1px solid #e0e0e0;
+  }
+
   &.mat-dialog-actions {
     justify-content: flex-end;
     margin: 0 (-$mat-default-padding) (-$mat-default-padding) (-$mat-default-padding);

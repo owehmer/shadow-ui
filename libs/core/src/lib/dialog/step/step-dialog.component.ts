@@ -5,7 +5,7 @@ import {
   ElementRef,
   Inject,
   Injector, OnDestroy,
-  OnInit, QueryList, TemplateRef, ViewChildren,
+  OnInit, QueryList, TemplateRef, Type, ViewChildren,
   ViewEncapsulation
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
@@ -58,7 +58,6 @@ export interface SdwStep<C = any> {
 }
 
 export interface SdwStepInternal<C = any> extends SdwStep<C>{
-  index: number,
   instance: any,
   outlet: CdkPortalOutlet,
   completed: boolean
@@ -77,6 +76,15 @@ export interface SdwStepInternal<C = any> extends SdwStep<C>{
   }
 })
 export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implements OnInit, AfterViewInit, OnDestroy {
+  private static _mapStepToInternalStep(step: SdwStep): SdwStepInternal {
+    return {
+      ...step,
+      instance: undefined,
+      outlet: undefined,
+      completed: false
+    };
+  }
+
   stepData: SdwStepInternal[];
   animateStepChanges: boolean;
   stepHeight: number;
@@ -102,7 +110,7 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
 
     this.animateStepChanges = dlgData.animateStepChanges != null ? dlgData.animateStepChanges : false;
 
-    this.stepData = this.dlgData.steps.map(this._mapStepToInternalStep);
+    this.stepData = this.dlgData.steps.map(SdwStepDialogComponent._mapStepToInternalStep);
   }
 
   ngOnInit(): void {
@@ -154,10 +162,23 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
   }
 
   insertStep(index: number, step: SdwStep) {
-    this.stepData.splice(index, 0, this._mapStepToInternalStep(step, index));
+    this.stepData.splice(index, 0, SdwStepDialogComponent._mapStepToInternalStep(step));
     this.cd.detectChanges();
-    const test = this._outlets.toArray();
     this.initDynamicContent();
+  }
+
+  getNextStep<C = any>(instance: any): SdwStep<C> {
+    const index = this._getStepIndexByInstance(instance);
+    return index >= 0 && index < this.stepData.length ? this.getStepAtIndex(index + 1) : null;
+  }
+
+  getPreviousStep<C = any>(instance: any): SdwStep<C> {
+    const index = this._getStepIndexByInstance(instance);
+    return index > 0 ? this.getStepAtIndex(index - 1) : null;
+  }
+
+  getStepAtIndex<C = any>(index: number): SdwStep<C> {
+    return index != null && index >= 0 ? this.stepData[index] : null;
   }
 
   protected initDynamicContent() {
@@ -187,17 +208,11 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
     }
   }
 
-  private _mapStepToInternalStep(step: SdwStep, index: number): SdwStepInternal {
-    return {
-      ...step,
-      instance: undefined,
-      outlet: undefined,
-      index,
-      completed: false
-    };
-  }
-
   private _getNextFreeOutlet(): CdkPortalOutlet {
     return this._outlets.find((o) => !o.hasAttached());
+  }
+
+  private _getStepIndexByInstance(instance: any): any {
+    return this.stepData.findIndex(d => d.instance === instance);
   }
 }

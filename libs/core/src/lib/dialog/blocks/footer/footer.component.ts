@@ -1,9 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
-  Output,
+  EventEmitter, HostBinding,
+  Input, OnChanges,
+  Output, SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
 
@@ -18,7 +18,7 @@ import {
     'class': 'sdw-footer mat-dialog-actions'
   }
 })
-export class SdwFooterComponent {
+export class SdwFooterComponent implements OnChanges {
   @Input()
   abortBtnText = 'Abort';
 
@@ -37,10 +37,28 @@ export class SdwFooterComponent {
   @Input()
   okBtnDisabled = false;
 
+  @Input()
+  topBorder = true;
+
   @Output()
   buttonClick = new EventEmitter<boolean>();
 
+  @HostBinding('class.with-top-border')
+  showTopBorder = true;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const showAbortBtn = this.getCurrentValue<boolean>(changes, 'showAbortBtn');
+    const showOkBtn = this.getCurrentValue<boolean>(changes, 'showOkBtn');
+    const topBorder = this.getCurrentValue<boolean>(changes, 'topBorder');
+
+    this.showTopBorder = (showAbortBtn || showOkBtn) && topBorder;
+  }
+
   buttonClicked(isOkBtn: boolean) {
     this.buttonClick.emit(isOkBtn);
+  }
+
+  private getCurrentValue<T>(changes: SimpleChanges, propKey: string): T {
+    return changes[propKey] ? changes[propKey].currentValue : this[propKey];
   }
 }

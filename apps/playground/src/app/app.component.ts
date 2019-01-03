@@ -34,7 +34,8 @@ export class AppComponent {
 
   public openStep() {
     const builder = new SdwStepDialogBuilder(this.dlgService)
-      .setDimensions(this._size)
+      .setDimensions('80vw')
+      .setMaxDimensions('800px')
       .setTitle(this._title)
       .setDialogData(this._data)
       .setSteps([
@@ -52,7 +53,7 @@ export class AppComponent {
     ;
     const dlg = builder.open();
     setTimeout(() => {
-      dlg.componentInstance.addStep({
+      dlg.componentInstance.insertStep(1, {
         title: 'dynamic added',
         subtitle: '2nd subtitle',
         component: DynamicComponent
