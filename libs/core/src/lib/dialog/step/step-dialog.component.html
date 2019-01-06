@@ -14,8 +14,17 @@
                           [class.animated-stepper]="animateStepChanges"
                           [class.resizing]="stepHeight != null"
                           (selectionChange)="stepChanged($event)">
-    <mat-step *ngFor="let oneStep of stepData">
-      <ng-template matStepLabel><div>{{oneStep.title}}</div></ng-template>
+    <mat-step *ngFor="let oneStep of stepData"
+              [state]="oneStep.state"
+              [completed]="oneStep.completed"
+              [errorMessage]="oneStep.errorSubtitle"
+              [aria-label]="oneStep.title"
+    >
+
+      <ng-template matStepLabel>
+        <div *ngIf="oneStep.title">{{oneStep.title}}</div>
+        <div class="sdw-step-subtitle" *ngIf="oneStep.subtitle && oneStep.state != 'error'">{{oneStep.subtitle}}</div>
+      </ng-template>
 
       <div #step>
         <ng-template cdkPortalOutlet></ng-template>

@@ -1,8 +1,8 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy, ChangeDetectorRef,
-  Component,
-  ElementRef,
+  Component, ComponentRef,
+  ElementRef, HostBinding, HostListener,
   Inject,
   Injector, OnDestroy,
   OnInit, QueryList, TemplateRef, Type, ViewChildren,
@@ -16,10 +16,10 @@ import {
 } from '../advanced/advanced-dialog.component';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { CdkPortalOutlet, ComponentType, PortalInjector } from '@angular/cdk/portal';
-import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent, StepState } from '@angular/cdk/stepper';
 import { dlgHasChanges } from '../dialog-internal-api';
-import { concat, EMPTY, of, ReplaySubject, Subject, Subscription } from 'rxjs';
-import { auditTime, concatMap, debounceTime, delay, takeUntil } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { DialogWithValidation } from './step-dialog-content-api';
 
 export class SdwStepperDialogData<C = any, D = any> extends SdwAdvancedDialogData<C, D> {
   steps: SdwStep<C>[];
@@ -53,14 +53,16 @@ export class SdwStepDialogBuilder<C = any, D = any, R = any> extends SdwAdvanced
 export interface SdwStep<C = any> {
   title: string,
   subtitle?: string,
+  errorSubtitle?: string,
   required?: boolean;
   component: ComponentType<C> | TemplateRef<C>
 }
 
 export interface SdwStepInternal<C = any> extends SdwStep<C>{
-  instance: any,
+  componentRef: ComponentRef<any>,
   outlet: CdkPortalOutlet,
-  completed: boolean
+  completed: boolean,
+  state: StepState
 }
 
 @Component({
@@ -73,15 +75,22 @@ export interface SdwStepInternal<C = any> extends SdwStep<C>{
   host: {
     'class': 'sdw-step-dialog',
     'tabindex': '-1'
-  }
+  },
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { displayDefaultIndicatorType: false, showError: true }
+    }
+  ]
 })
 export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implements OnInit, AfterViewInit, OnDestroy {
   private static _mapStepToInternalStep(step: SdwStep): SdwStepInternal {
     return {
       ...step,
-      instance: undefined,
+      componentRef: undefined,
       outlet: undefined,
-      completed: false
+      completed: false,
+      state: 'number'
     };
   }
 
@@ -134,8 +143,12 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
     if (!this.animateStepChanges || !this._stepElems || this._stepElems.length === 0)
       return;
 
+    this._setStepStateByValidity(this._currentSelectedStepIndex);
+
     const currentHeight = stepElems[this._currentSelectedStepIndex].nativeElement.clientHeight;
+
     this._currentSelectedStepIndex = event.selectedIndex;
+    this._setStepStateByValidity(this._currentSelectedStepIndex, 'number');
 
     const newHeight = stepElems[this._currentSelectedStepIndex].nativeElement.clientHeight;
     const stepHeaderSize = 112;
@@ -167,6 +180,30 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
     this.initDynamicContent();
   }
 
+  /**
+   *
+   * @param instance Instance or index
+   * @param subtitle
+   */
+  changeStepSubtitle(instanceOrIndex: any | number, subtitle: string) {
+    const step = typeof instanceOrIndex === 'number'
+      ? this.getStepAtIndex(instanceOrIndex)
+      : this.getStepAtIndex(this._getStepIndexByInstance(instanceOrIndex));
+    step.subtitle = subtitle;
+  }
+
+  /**
+   *
+   * @param instance Instance or index
+   * @param subtitle
+   */
+  changeStepErrorSubtitle(instanceOrIndex: any | number, subtitle: string) {
+    const step = typeof instanceOrIndex === 'number'
+      ? this.getStepAtIndex(instanceOrIndex)
+      : this.getStepAtIndex(this._getStepIndexByInstance(instanceOrIndex));
+    step.errorSubtitle = subtitle;
+  }
+
   getNextStep<C = any>(instance: any): SdwStep<C> {
     const index = this._getStepIndexByInstance(instance);
     return index >= 0 && index < this.stepData.length ? this.getStepAtIndex(index + 1) : null;
@@ -192,15 +229,15 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
       this.stepData.forEach((s) => {
         if (s.outlet === undefined) {
           s.outlet = this._getNextFreeOutlet();
-          s.instance = this.generateComponentInOutlet( // TODO: Add simple text
+          s.componentRef = this.generateComponentInOutlet( // TODO: Add simple text
             s.component,
             s.outlet,
             dialogInjector,
             this.dlgData.data
           );
-          if (s.instance) {
+          if (s.componentRef) {
             this._changesArr$$.push(
-              dlgHasChanges(s.instance, (val) => this.contentChanged = val)
+              dlgHasChanges(s.componentRef.instance, (val) => this.contentChanged = val)
             );
           }
         }
@@ -212,7 +249,24 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
     return this._outlets.find((o) => !o.hasAttached());
   }
 
-  private _getStepIndexByInstance(instance: any): any {
-    return this.stepData.findIndex(d => d.instance === instance);
+  private _getStepIndexByInstance(instance: any): number {
+    return this.stepData.findIndex(d => d.componentRef.instance === instance);
+  }
+
+  private _isStepValid(index: number): boolean {
+    const step = this.stepData[index];
+    const component = step.componentRef.instance as DialogWithValidation;
+
+    return component == null || component.isValid == null
+      ? true
+      : component.isValid();
+  }
+
+  private _setStepStateByValidity(index: number, forceState?: StepState) {
+    if (this.stepData != null && index >= 0 && index < this.stepData.length) {
+      this.stepData[index].state = forceState
+        ? forceState
+        : this._isStepValid(index) ? 'done' : 'error';
+    }
   }
 }

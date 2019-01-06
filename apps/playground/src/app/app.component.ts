@@ -56,6 +56,7 @@ export class AppComponent {
       dlg.componentInstance.insertStep(1, {
         title: 'dynamic added',
         subtitle: '2nd subtitle',
+        errorSubtitle: 'Fill me',
         component: DynamicComponent
       })
     }, 1500);

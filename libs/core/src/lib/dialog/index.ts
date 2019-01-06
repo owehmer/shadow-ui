@@ -10,6 +10,7 @@ export * from './blocks/footer/footer.component';
 // Dialogs
 export * from './advanced/advanced-dialog.component';
 export * from './step/step-dialog.component';
+export * from './step/step-dialog-content-api';
 
 
 export * from './dialog-internal-api';
