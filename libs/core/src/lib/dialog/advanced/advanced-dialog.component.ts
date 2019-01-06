@@ -18,8 +18,8 @@ import { CdkPortalOutlet, ComponentType, PortalInjector } from '@angular/cdk/por
 import { SdwDialogBuilder } from '../dialog-builder';
 import { SdwDialogBase } from '../dialog-base';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { distinctUntilChanged, filter, takeUntil } from 'rxjs/operators';
-import { combineLatest, Subject, Subscription } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import { determineValue, isNullOrEmpty } from '../helper';
 import { dlgAbortFn, dlgGetResult, dlgHasChanges, dlgOkFn } from '../dialog-internal-api';
 import { DataThatChanges, SdwCloseMode, SdwDialogCloseResult } from '../dialog-content-api';
@@ -29,7 +29,6 @@ export class SdwAdvancedDialogData<C = any, D = any> {
   disableClose = true; // Use own property to control the return value
   component?: ComponentType<C> | TemplateRef<C>;
   text?: string;
-  injector?: Injector;
 
   // Top section of dlg
   simpleTitleBar = false; // true => White top bar
@@ -47,6 +46,7 @@ export class SdwAdvancedDialogData<C = any, D = any> {
   okBtnText = 'Save';
 
   fullscreenOnMobile = true;
+  fullscreenMediaqueries: string[] = [Breakpoints.HandsetPortrait];
   promtOnDiscard = true;
   discardDlgTitle = 'Discard changes?';
   discardDlgText: string | null = null;
@@ -187,6 +187,21 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
   }
 })
 export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit, OnDestroy {
+  get fullscreenOnMobile(): boolean {
+    return this._fullscreenOnMobile;
+  }
+
+  set fullscreenOnMobile(value: boolean) {
+    this.setFullscreenOnMobile(null, value);
+  }
+
+  get fullscreenMediaqueries(): string[] {
+    return this._fullscreenMediaqueries;
+  }
+
+  set fullscreenMediaqueries(value: string[]) {
+    this.setFullscreenOnMobile(value, null);
+  }
   contentChanged = false;
 
   // Title bar
@@ -212,13 +227,18 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
 
   buttonActionHappening = false;
 
-  readonly fullscreenOnMobile$ = new Subject<boolean>();
+  // Misc
+  isFullsize = false;
 
   @ViewChild(CdkPortalOutlet)
   private _outlet: CdkPortalOutlet;
 
   private _componentRef: ComponentRef<any>;
   private _changes$$: Subscription;
+  private _fullSize$$: Subscription;
+
+  private _fullscreenOnMobile: boolean;
+  private _fullscreenMediaqueries: string[];
 
   constructor(protected dlgService: MatDialog,
               protected dialogRef: MatDialogRef<any>,
@@ -251,11 +271,13 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
 
     // Misc
     this.promtOnDiscard = dlgData.promtOnDiscard;
+    this._fullscreenOnMobile = dlgData.fullscreenOnMobile;
+    this._fullscreenMediaqueries = dlgData.fullscreenMediaqueries
   }
 
   ngOnInit() {
     this.initBackdropClose();
-    this.initFullscreenOnMobile();
+    this.setFullscreenOnMobile();
     this.initDynamicContent();
   }
 
@@ -263,6 +285,8 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
     super.ngOnDestroy();
     if (this._changes$$)
       this._changes$$.unsubscribe();
+    if (this._fullSize$$)
+      this._fullSize$$.unsubscribe();
   }
 
   buttonClicked(isOkBtn: boolean) {
@@ -290,6 +314,21 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
     } else {
       this._determineIfCanClose(isOkBtn ? 'confirm' : 'abort');
     }
+  }
+
+  /**
+   * If no ForceSet is provided it will check the dlgData.fullscreenOnMobile setting
+   * @param sizes CSS mediaquery breakpoints
+   * @param forceSet
+   */
+  setFullscreenOnMobile(sizes?: string[], forceSet?: boolean) {
+    forceSet = forceSet != null ? forceSet : this.fullscreenOnMobile;
+    sizes = sizes != null ? sizes : this.fullscreenMediaqueries;
+
+    this._fullscreenOnMobile = forceSet;
+    this._fullscreenMediaqueries = sizes;
+
+    this._updateFullscreenObs(sizes, forceSet);
   }
 
   protected initBackdropClose() {
@@ -320,12 +359,6 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
     }
   }
 
-  protected initFullscreenOnMobile() {
-    this._initFullSizeObs();
-    const isSet = this.dlgData.fullscreenOnMobile;
-    this.fullscreenOnMobile$.next(isSet != null ? isSet : true);
-  }
-
   /**
    * Checks if the content allows the user to be closed. Calls the onAbort/onOk Methods of the content.
    * @param closedBy How the dialog is beeing closed
@@ -354,20 +387,22 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
 
   /**
    * Initiates the constant check if mobile is set
-   * TODO: Erst abfragen, wenn man wirklich diese Option anstellt. Wenn aus muss auch wieder unsubscribed werden!
    */
-  protected _initFullSizeObs() {
-    combineLatest(
-      this._bpObserver.observe([Breakpoints.HandsetPortrait]),
-      this.fullscreenOnMobile$
-    ).pipe(
-      filter(([result, fullscreenOnMobile]) => fullscreenOnMobile),
-      distinctUntilChanged(([preResult], [nowResult]) => preResult.matches === nowResult.matches),
-      takeUntil(this._destroyed)
-    ).subscribe(([result]) => {
+  protected _updateFullscreenObs(sizes: string[], set: boolean) {
+    if (this._fullSize$$)
+      this._fullSize$$.unsubscribe();
+
+    if (!set)
+      return;
+
+    this._fullSize$$ = this._bpObserver.observe(sizes).pipe(
+      distinctUntilChanged((preResult, nowResult) => preResult.matches === nowResult.matches)
+    ).subscribe((result) => {
       const fullscreenClass = 'sdw-fullscreen-dialog';
       const parent = this._elemRef.nativeElement.parentNode;
       const parentParent = parent.parentNode as HTMLElement;
+
+      this.isFullsize = result.matches;
 
       if (result.matches) {
         // If hight attribute is set take that. Else take the current height
@@ -385,6 +420,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
           parentParent.style.height = height ? height : '';
         }, 250);
       }
+      this.cd.detectChanges();
     });
   }
 }

@@ -8,17 +8,11 @@ $mat-default-padding: 24px;
     &.sdw-fullscreen-dialog {
       max-height: 100vh !important;
       height: 100vh !important;
+      max-width: 100vw !important;
+      width: 100vw !important;
 
-      &, .sdw-content {
-        max-width: 100vw !important;
-        width: 100vw !important;
-      }
       & > .mat-dialog-container {
         border-radius: 0;
-      }
-      .sdw-content {
-        max-height: calc(100vh - 116px) !important;
-        height: calc(100vh - 116px) !important;
       }
     }
 

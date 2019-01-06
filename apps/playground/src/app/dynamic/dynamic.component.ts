@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { DialogWithValidation, SdwStepDialogComponent } from '@shadow-ui/core';
+import { Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'shadow-ui-dynamic',
@@ -24,6 +25,6 @@ export class DynamicComponent implements DialogWithValidation {
     //   subtitle: '2nd subtitle',
     //   component: DynamicComponent
     // });
-
+    this.dlg.setFullscreenOnMobile([Breakpoints.Large])
   }
 }

@@ -3,6 +3,7 @@
              [class.centered-title]="isTitleCentered"
              [color]="titleColor">
   <button mat-icon-button class="sdw-left-title-btn"
+          *ngIf="displayButtons"
           [disabled]="!leftIcon || disabled"
           (click)="iconClicked(false)"
   >
@@ -12,6 +13,7 @@
   <span><ng-container *ngTemplateOutlet="content"></ng-container></span>
 
   <button mat-icon-button class="sdw-right-title-btn"
+          *ngIf="displayButtons"
           [disabled]="!rightIcon || disabled"
           (click)="iconClicked(true)"
   >

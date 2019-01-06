@@ -2,10 +2,10 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component, ComponentRef,
-  ElementRef, HostBinding, HostListener,
+  ElementRef,
   Inject,
   Injector, OnDestroy,
-  OnInit, QueryList, TemplateRef, Type, ViewChildren,
+  OnInit, QueryList, TemplateRef, ViewChildren,
   ViewEncapsulation
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
@@ -124,7 +124,7 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
 
   ngOnInit(): void {
     this.initBackdropClose();
-    this.initFullscreenOnMobile();
+    this.setFullscreenOnMobile();
   }
 
   ngAfterViewInit(): void {

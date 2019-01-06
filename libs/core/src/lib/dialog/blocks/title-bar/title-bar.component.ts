@@ -1,6 +1,6 @@
 import {
   ChangeDetectionStrategy,
-  Component, EventEmitter,
+  Component, EventEmitter, HostBinding,
   Input,
   OnChanges,
   Output,
@@ -22,6 +22,7 @@ import { DataThatChanges } from '../../dialog-content-api';
   }
 })
 export class SdwTitleBarComponent implements OnChanges {
+  @HostBinding('class.sdw-simple-title-bar')
   @Input()
   public useSimpleTitleBar = false;
 
@@ -40,6 +41,9 @@ export class SdwTitleBarComponent implements OnChanges {
   @Input()
   public disabled = false;
 
+  @Input()
+  public displayButtons = true;
+
   @Output()
   public buttonClick = new EventEmitter<boolean>();
 
@@ -47,7 +51,7 @@ export class SdwTitleBarComponent implements OnChanges {
   public rightIcon?: string;
 
   public get isTitleCentered() {
-    return this.leftIcon || this.rightIcon;
+    return (this.leftIcon || this.rightIcon) && this.displayButtons;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
