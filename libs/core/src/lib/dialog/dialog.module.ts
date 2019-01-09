@@ -14,13 +14,16 @@ import { SdwContentComponent } from './blocks/content/content.component';
 
 import { SdwAdvancedDialogComponent } from './advanced/advanced-dialog.component';
 import { SdwStepDialogComponent } from './step/step-dialog.component';
+import { SdwExtendedOkComponent } from './blocks/extended-ok/extended-ok.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 const MATERIAL = [
   MatDialogModule,
   MatButtonModule,
   MatToolbarModule,
   MatIconModule,
-  MatStepperModule
+  MatStepperModule,
+  MatMenuModule
 ];
 
 const CDK = [
@@ -30,7 +33,8 @@ const CDK = [
 export const BUILDING_BLOCKS = [
   SdwTitleBarComponent,
   SdwFooterComponent,
-  SdwContentComponent
+  SdwContentComponent,
+  SdwExtendedOkComponent
 ];
 
 export const DIALOG_TYPES = [
@@ -49,6 +53,7 @@ export const DIALOG_TYPES = [
     DIALOG_TYPES
   ],
   exports: [
+    BUILDING_BLOCKS,
     DIALOG_TYPES
   ],
   entryComponents: [

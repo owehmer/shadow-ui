@@ -9,22 +9,30 @@
   width: calc(100% + #{$mat-default-padding * 2});
 
   .sdw-title-container {
+
     &.sdw-toolbar-title-container {
       padding: 0 $mat-default-padding;
-      &.centered-title {
-        justify-content: space-between;
-        padding: 0 $mat-default-padding / 2;
-      }
-
-      &:not(.centered-title) {
-        & > .sdw-left-title-btn, & > .sdw-right-title-btn {
-          display: none;
-        }
-      }
     }
     &.sdw-simple-title-container {
       margin: 0;
       padding: $mat-default-padding $mat-default-padding 0 $mat-default-padding;
+    }
+
+    .sdw-title-text {
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .sdw-left-title-btn {
+      margin-left: -($mat-default-padding / 2);
+      margin-right: $mat-default-padding;
+    }
+
+    & > .sdw-extended-ok, & > .sdw-right-title-btn {
+      margin-left: 8px;
+      &:last-child {
+        margin-right: -($mat-default-padding / 2);
+      }
     }
   }
 }

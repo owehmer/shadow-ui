@@ -13,7 +13,7 @@ import { DynamicComponent } from './dynamic/dynamic.component';
 export class AppComponent {
   private _size = '500px';
   private _component = MyContentComponent;
-  private _title = 'My Title';
+  private _title = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do';
   private _data = {myData: 'test'};
 
   @ViewChild('myDialogTemplate', {read: TemplateRef})

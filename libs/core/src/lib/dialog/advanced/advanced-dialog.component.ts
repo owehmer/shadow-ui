@@ -23,6 +23,7 @@ import { Subscription } from 'rxjs';
 import { determineValue, isNullOrEmpty } from '../helper';
 import { dlgAbortFn, dlgGetResult, dlgHasChanges, dlgOkFn } from '../dialog-internal-api';
 import { DataThatChanges, SdwCloseMode, SdwDialogCloseResult } from '../dialog-content-api';
+import { SdwExtendedOkConfig } from '../blocks/extended-ok/extended-ok.component';
 
 export class SdwAdvancedDialogData<C = any, D = any> {
   data: D = null;
@@ -36,6 +37,7 @@ export class SdwAdvancedDialogData<C = any, D = any> {
   rightIcons: DataThatChanges<string> | null = { changed: 'done', unchanged: '' };
   title = '';
   titleColor: 'primary' | 'accent' | 'warn' = 'primary';
+  extendedConfig: SdwExtendedOkConfig;
 
   // Bottom section of dlg
   showAbortBtn = true;
@@ -180,6 +182,7 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
   styleUrls: ['./advanced-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  providers: [{ provide: SdwDialogBase, useClass: SdwAdvancedDialogComponent }],
   // tslint:disable-next-line:use-host-property-decorator
   host: {
     'class': 'sdw-advanced-dialog',
@@ -202,6 +205,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
   set fullscreenMediaqueries(value: string[]) {
     this.setFullscreenOnMobile(value, null);
   }
+
   contentChanged = false;
 
   // Title bar
@@ -210,6 +214,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
   rightIcons: DataThatChanges<string>;
   titleColor: 'primary' | 'accent' | 'warn';
   title: string;
+  extendedConfig: SdwExtendedOkConfig;
 
   // Content
   text?: string;
@@ -258,6 +263,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
     this.rightIcons = dlgData.rightIcons;
     this.title = dlgData.title;
     this.titleColor = dlgData.titleColor;
+    this.extendedConfig = dlgData.extendedConfig;
 
     // Content
     this.text = dlgData.text;

@@ -20,6 +20,7 @@ import { STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent, StepState } from '@angul
 import { dlgHasChanges } from '../dialog-internal-api';
 import { Subscription } from 'rxjs';
 import { DialogWithValidation } from './step-dialog-content-api';
+import { SdwDialogBase } from '../dialog-base';
 
 export class SdwStepperDialogData<C = any, D = any> extends SdwAdvancedDialogData<C, D> {
   steps: SdwStep<C>[];
@@ -58,7 +59,7 @@ export interface SdwStep<C = any> {
   component: ComponentType<C> | TemplateRef<C>
 }
 
-export interface SdwStepInternal<C = any> extends SdwStep<C>{
+export interface SdwStepInternal<C = any> extends SdwStep<C> {
   componentRef: ComponentRef<any>,
   outlet: CdkPortalOutlet,
   completed: boolean,
@@ -80,7 +81,8 @@ export interface SdwStepInternal<C = any> extends SdwStep<C>{
     {
       provide: STEPPER_GLOBAL_OPTIONS,
       useValue: { displayDefaultIndicatorType: false, showError: true }
-    }
+    },
+    { provide: SdwDialogBase, useClass: SdwStepDialogComponent }
   ]
 })
 export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -236,9 +238,9 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
             this.dlgData.data
           );
           if (s.componentRef) {
-            this._changesArr$$.push(
-              dlgHasChanges(s.componentRef.instance, (val) => this.contentChanged = val)
-            );
+            const changes$$ = dlgHasChanges(s.componentRef.instance, (val) => this.contentChanged = val);
+            if (changes$$)
+              this._changesArr$$.push(changes$$);
           }
         }
       });

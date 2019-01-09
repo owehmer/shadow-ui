@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { isNullOrEmpty } from '../../helper';
 import { DataThatChanges } from '../../dialog-content-api';
+import { SdwExtendedOkConfig } from '../extended-ok/extended-ok.component';
 
 @Component({
   selector: 'sdw-title-bar',
@@ -44,15 +45,14 @@ export class SdwTitleBarComponent implements OnChanges {
   @Input()
   public displayButtons = true;
 
+  @Input()
+  extendedConfig: SdwExtendedOkConfig;
+
   @Output()
   public buttonClick = new EventEmitter<boolean>();
 
   public leftIcon?: string;
   public rightIcon?: string;
-
-  public get isTitleCentered() {
-    return (this.leftIcon || this.rightIcon) && this.displayButtons;
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     const hasChanges = this.getCurrentValue<boolean>(changes, 'hasChanges');
