@@ -1,6 +1,6 @@
 import {
   ChangeDetectionStrategy, ChangeDetectorRef,
-  Component, ComponentRef, ElementRef,
+  Component, ComponentRef, ElementRef, HostBinding,
   Inject,
   Injector, OnDestroy,
   OnInit,
@@ -228,6 +228,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
   buttonActionHappening = false;
 
   // Misc
+  @HostBinding('class.is-fullscreen')
   isFullsize = false;
 
   @ViewChild(CdkPortalOutlet)
@@ -272,7 +273,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
     // Misc
     this.promtOnDiscard = dlgData.promtOnDiscard;
     this._fullscreenOnMobile = dlgData.fullscreenOnMobile;
-    this._fullscreenMediaqueries = dlgData.fullscreenMediaqueries
+    this._fullscreenMediaqueries = dlgData.fullscreenMediaqueries;
   }
 
   ngOnInit() {

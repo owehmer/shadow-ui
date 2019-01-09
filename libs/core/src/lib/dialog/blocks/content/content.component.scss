@@ -1,19 +1,23 @@
 @import '../../advanced/material-guidelines.scss';
 
 .sdw-fullscreen-dialog {
+  $titleBig: 64px;
+  $titleSmall: 56px;
+
   .sdw-content {
     max-width: 100vw !important;
     width: 100vw !important;
   }
+
   .sdw-title-bar:not(.sdw-simple-title-bar) + .sdw-content {
     @media (max-width: 599.99px) and (orientation: portrait) {
-      max-height: calc(100vh - 110px) !important;
-      height: calc(100vh - 110px) !important;
+      max-height: calc(100vh - #{$titleSmall}) !important;
+      height: calc(100vh - #{$titleSmall}) !important;
     }
   }
   .sdw-title-bar.sdw-simple-title-bar + .sdw-content, .sdw-content {
-    max-height: calc(100vh - 116px) !important;
-    height: calc(100vh - 116px) !important;
+    max-height: calc(100vh - #{$titleBig}) !important;
+    height: calc(100vh - #{$titleBig}) !important;
   }
 }
 
