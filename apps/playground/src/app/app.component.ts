@@ -1,9 +1,9 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MyContentComponent } from './my-content/my-content.component';
+import { MyContentComponent } from './dialog-demo/my-content/my-content.component';
 import { SdwAdvancedDialogBuilder, SdwStepDialogBuilder } from '@shadow-ui/core';
-import { MyContentComponentShort } from './my-content-short/my-content-short.component';
-import { DynamicComponent } from './dynamic/dynamic.component';
+import { MyContentComponentShort } from './dialog-demo/my-content-short/my-content-short.component';
+import { DynamicComponent } from './dialog-demo/dynamic/dynamic.component';
 import { FormOneComponent } from './form-dlgs/form-one/form-one.component';
 
 @Component({
