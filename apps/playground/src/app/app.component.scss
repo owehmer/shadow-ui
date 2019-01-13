@@ -2,7 +2,24 @@
   display: block;
 }
 
-.app-content {
+.mat-toolbar {
+  margin-bottom: 16px;
+}
+
+.nav {
+  display: flex;
+  padding-bottom: 16px;
+  border-bottom: 1px solid black;
+
+  & > button:not(:last-child) {
+    margin-right: 16px;
+    &:first-child {
+      margin-left: 16px;
+    }
+  }
+}
+
+::ng-deep .app-content {
   padding: 16px;
   max-width: 800px;
 

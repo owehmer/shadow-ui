@@ -1,34 +1,16 @@
 <mat-toolbar color="primary">Shadow-UI playground</mat-toolbar>
-
-<div class="app-content">
-  <h2 class="mat-title">Simple dialog</h2>
-  <p>
-    <button mat-stroked-button color="primary" (click)="openSimple('comp')">Component</button>
-    <button mat-stroked-button color="primary" (click)="openSimple('ref')">Template</button>
-    <button mat-stroked-button color="primary" (click)="openSimple('text')">Simple text</button>
-  </p>
-
-  <h2 class="mat-title">Advanced dialog</h2>
-  <p>
-    <button mat-stroked-button color="primary" (click)="openAdv('comp')">Component</button>
-    <button mat-stroked-button color="primary" (click)="openAdv('ref')">Template</button>
-    <button mat-stroked-button color="primary" (click)="openAdv('text')">Simple text</button>
-  </p>
-
-  <h2 class="mat-title">Stepper dialog</h2>
-  <p>
-    <button mat-stroked-button color="primary" (click)="openStep('simple')">Simple</button>
-    <button mat-stroked-button color="primary" (click)="openStep('dynamic')">Dynamic add</button>
-    <button mat-stroked-button color="primary" (click)="openStep('forms')">Forms</button>
-  </p>
+<div class="nav">
+  <button mat-stroked-button [routerLink]="''">
+    <a [routerLink]="''">All</a>
+  </button>
+  <button mat-stroked-button [routerLink]="'dialog'">
+    <a [routerLink]="'dialog'">Dialogs</a>
+  </button>
+  <button mat-stroked-button [routerLink]="'form'">
+    <a [routerLink]="'form'">Forms</a>
+  </button>
 </div>
 
-<ng-template #myDialogTemplate>
-  <h2>Glorious header</h2>
-  <p>
-    Some content here..
-  </p>
-  <p style="font-size: larger;">
-    Some bigger content there..
-  </p>
-</ng-template>
+<div class="app-content">
+  <router-outlet></router-outlet>
+</div>
