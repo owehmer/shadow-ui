@@ -4,6 +4,7 @@ import { MyContentComponent } from './my-content/my-content.component';
 import { SdwAdvancedDialogBuilder, SdwStepDialogBuilder } from '@shadow-ui/core';
 import { MyContentComponentShort } from './my-content-short/my-content-short.component';
 import { DynamicComponent } from './dynamic/dynamic.component';
+import { FormOneComponent } from './form-dlgs/form-one/form-one.component';
 
 @Component({
   selector: 'app-playground-root',
@@ -32,7 +33,7 @@ export class AppComponent {
     dialog.afterClosed().subscribe(({mode, result}) => console.info('Dialog closed', mode, 'Data: ', result))
   }
 
-  public openStep() {
+  public openStep(type?: 'simple' | 'dynamic' | 'forms') {
     const builder = new SdwStepDialogBuilder(this.dlgService)
       .setDimensions('80vw')
       .setMaxDimensions('800px')
@@ -42,24 +43,27 @@ export class AppComponent {
         {
           title: 'First Step',
           subtitle: 'My subtitle',
-          component: this._component
+          component: type === 'forms' ? FormOneComponent : this._component
         },
         {
           title: 'Hold it right there',
-          component: MyContentComponentShort
+          component: type === 'forms' ? FormOneComponent : MyContentComponentShort
         }
       ])
       .animateStepChanges(true)
     ;
     const dlg = builder.open();
-    setTimeout(() => {
-      dlg.componentInstance.insertStep(1, {
-        title: 'dynamic added',
-        subtitle: '2nd subtitle',
-        errorSubtitle: 'Fill me',
-        component: DynamicComponent
-      })
-    }, 1500);
+
+    if (type === 'dynamic') {
+      setTimeout(() => {
+        dlg.componentInstance.insertStep(1, {
+          title: 'dynamic added',
+          subtitle: '2nd subtitle',
+          errorSubtitle: 'Fill me',
+          component: DynamicComponent
+        })
+      }, 1500);
+    }
 
   }
 

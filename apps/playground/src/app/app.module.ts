@@ -9,14 +9,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MyContentComponentShort } from './my-content-short/my-content-short.component';
 import { DynamicComponent } from './dynamic/dynamic.component';
+import { FormOneComponent } from './form-dlgs/form-one/form-one.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule, MatInputModule } from '@angular/material';
 
 @NgModule({
-  declarations: [AppComponent, MyContentComponent, MyContentComponentShort, DynamicComponent],
+  declarations: [AppComponent, MyContentComponent, MyContentComponentShort, DynamicComponent, FormOneComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     SdwDialogModule,
+    ReactiveFormsModule,
 
+    MatFormFieldModule,
+    MatInputModule,
     MatButtonModule,
     MatToolbarModule
   ],
@@ -25,7 +31,8 @@ import { DynamicComponent } from './dynamic/dynamic.component';
   entryComponents: [
     MyContentComponent,
     MyContentComponentShort,
-    DynamicComponent
+    DynamicComponent,
+    FormOneComponent
   ]
 })
 export class AppModule {}

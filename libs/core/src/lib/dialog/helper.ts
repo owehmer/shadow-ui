@@ -1,8 +1,18 @@
-import { Observable, of } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
 
 export function isFn(fn: any) {
   return fn != null && fn instanceof Function;
+}
+
+export function convertToObs(valueToDetermine: Observable<boolean> | Promise<boolean> | boolean): Observable<boolean> {
+  if (typeof valueToDetermine === 'boolean') {
+    return of(valueToDetermine);
+  } else if (valueToDetermine instanceof Observable) {
+    return valueToDetermine;
+  } else {
+    return from(valueToDetermine);
+  }
 }
 
 /**

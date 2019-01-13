@@ -17,10 +17,13 @@ import {
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { CdkPortalOutlet, ComponentType, PortalInjector } from '@angular/cdk/portal';
 import { STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent, StepState } from '@angular/cdk/stepper';
-import { dlgHasChanges } from '../dialog-internal-api';
-import { Subscription } from 'rxjs';
+import { dlgAbortFn, dlgHasChanges, dlgOkFn } from '../dialog-internal-api';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { DialogWithValidation } from './step-dialog-content-api';
 import { SdwDialogBase } from '../dialog-base';
+import { SdwCloseMode } from '@shadow-ui/core';
+import { convertToObs, determineValue } from '../helper';
+import { map, tap } from 'rxjs/operators';
 
 export class SdwStepperDialogData<C = any, D = any> extends SdwAdvancedDialogData<C, D> {
   steps: SdwStep<C>[];
@@ -40,7 +43,7 @@ export class SdwStepDialogBuilder<C = any, D = any, R = any> extends SdwAdvanced
     return this._dialogService.open<SdwStepDialogComponent, SdwStepperDialogData<C, D>, R>(SdwStepDialogComponent, this._config);
   }
 
-  setSteps(steps: SdwStep<C>[]) {
+  setSteps(steps: SdwStep<C>[]): SdwStepDialogBuilder {
     this.data.steps = steps;
     return this;
   }
@@ -142,7 +145,7 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
   stepChanged(event: StepperSelectionEvent): void {
     const stepElems = this._stepElems.toArray();
 
-    if (!this.animateStepChanges || !this._stepElems || this._stepElems.length === 0)
+    if (!this._stepElems || this._stepElems.length === 0)
       return;
 
     this._setStepStateByValidity(this._currentSelectedStepIndex);
@@ -151,6 +154,9 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
 
     this._currentSelectedStepIndex = event.selectedIndex;
     this._setStepStateByValidity(this._currentSelectedStepIndex, 'number');
+
+    if (!this.animateStepChanges)
+      return;
 
     const newHeight = stepElems[this._currentSelectedStepIndex].nativeElement.clientHeight;
     const stepHeaderSize = 112;
@@ -220,6 +226,35 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
     return index != null && index >= 0 ? this.stepData[index] : null;
   }
 
+  buttonClicked(isOkBtn: boolean) {
+    if (this.buttonActionHappening)
+      return;
+
+    this.buttonActionHappening = true;
+
+    this._setStepStateByValidity();
+
+    if (!isOkBtn && this.promtOnDiscard && this.contentChanged) {
+      const builder = new SdwAdvancedDialogBuilder(this.dlgService)
+        .setTitle(this.dlgData.discardDlgTitle)
+        .setText(this.dlgData.discardDlgText)
+        .setAbortButtonText(this.dlgData.discardDlgAbortText)
+        .setOkButtonText(this.dlgData.discardDlgOkText)
+        .simpleDialogStyle();
+
+      builder.open().afterClosed().subscribe(({ mode }) => {
+        if (mode === 'confirm')
+          this._determineIfCanClose(mode);
+        else {
+          this.buttonActionHappening = false;
+          this.cd.markForCheck();
+        }
+      });
+    } else {
+      this._determineIfCanClose(isOkBtn ? 'confirm' : 'abort');
+    }
+  }
+
   protected initDynamicContent() {
     if (this.dlgData.steps != null && this.dlgData.steps.length > 0) {
       const dialogInjector = new PortalInjector(this._injector, new WeakMap<any, any>([
@@ -247,6 +282,25 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
     }
   }
 
+  /**
+   * Checks if the content allows the user to be closed. Calls the onAbort/onOk Methods of the content.
+   * @param closedBy How the dialog is beeing closed
+   */
+  protected _determineIfCanClose(closedBy: SdwCloseMode) {
+    const instances = this.stepData.map(step => step.componentRef ? step.componentRef.instance : undefined);
+
+    const returnObs: Array<Observable<boolean>> = instances.map(instance => {
+      const canClose = closedBy === 'confirm' ? dlgOkFn(instance) : dlgAbortFn(instance);
+      return convertToObs(canClose);
+    });
+
+    const canCloseAll$ = combineLatest(...returnObs).pipe(
+      map(obs => !obs.some(val => val === false))
+    );
+
+    determineValue(canCloseAll$, (canCloseCallback) => this._closeIfAllowed(canCloseCallback, closedBy));
+  }
+
   private _getNextFreeOutlet(): CdkPortalOutlet {
     return this._outlets.find((o) => !o.hasAttached());
   }
@@ -264,11 +318,22 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
       : component.isValid();
   }
 
-  private _setStepStateByValidity(index: number, forceState?: StepState) {
-    if (this.stepData != null && index >= 0 && index < this.stepData.length) {
-      this.stepData[index].state = forceState
-        ? forceState
-        : this._isStepValid(index) ? 'done' : 'error';
+  private _setStepStateByValidity(index?: number, forceState?: StepState) {
+    if (this.stepData == null || this.stepData.length === 0)
+      return;
+
+    if (index != null) {
+      if (index >= 0 && index < this.stepData.length) {
+        this.stepData[index].state = forceState
+          ? forceState
+          : this._isStepValid(index) ? 'done' : 'error';
+      }
+    } else {
+      for (index = 0; index <= this.stepData.length; index++) {
+        this.stepData[index].state = forceState
+          ? forceState
+          : this._isStepValid(index) ? 'done' : 'error';
+      }
     }
   }
 }

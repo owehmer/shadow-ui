@@ -3,6 +3,6 @@
  * If a component doesn't implement this the result 'true' is assumed.
  */
 export interface DialogWithValidation {
-  isValid: () => boolean;
+  isValid(): boolean;
 }
 
