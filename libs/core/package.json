@@ -1,7 +1,7 @@
 {
   "name": "@shadowui/core",
   "description": "Core UI components of the Shadow-UI",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "Oliver Wehmer",
   "repository": {
     "type": "git",
