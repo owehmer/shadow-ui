@@ -1,13 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormComponent } from './form/form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SdwFormComponent } from './form/form.component';
+import { SdwFormElementComponent } from './form-element/form-element.component';
+import { FormInputElementModule } from './form-element/form-input-element/form-input-element.module';
+import { PortalModule } from '@angular/cdk/portal';
 
 @NgModule({
-  declarations: [FormComponent],
+  declarations: [SdwFormComponent, SdwFormElementComponent],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    FormsModule,
+    PortalModule,
+    ReactiveFormsModule,
+    FormInputElementModule,
+  ],
+  exports: [
+    SdwFormComponent,
+    SdwFormElementComponent
   ]
 })
 export class SdwFormsModule { }

@@ -161,7 +161,6 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
     const newHeight = stepElems[this._currentSelectedStepIndex].nativeElement.clientHeight;
     const stepHeaderSize = 112;
 
-    // TODO: Nicer ways?
     setTimeout(() => {
       this.stepHeight = currentHeight + stepHeaderSize;
       this.cd.detectChanges();
@@ -266,7 +265,7 @@ export class SdwStepDialogComponent extends SdwAdvancedDialogComponent implement
       this.stepData.forEach((s) => {
         if (s.outlet === undefined) {
           s.outlet = this._getNextFreeOutlet();
-          s.componentRef = this.generateComponentInOutlet( // TODO: Add simple text
+          s.componentRef = this.generateComponentInOutlet(
             s.component,
             s.outlet,
             dialogInjector,

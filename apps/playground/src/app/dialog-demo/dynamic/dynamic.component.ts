@@ -1,5 +1,4 @@
 import { Component, HostListener } from '@angular/core';
-import { DialogWithValidation, SdwStepDialogComponent } from '@shadow-ui/core';
 import { Breakpoints } from '@angular/cdk/layout';
 
 @Component({
@@ -7,15 +6,10 @@ import { Breakpoints } from '@angular/cdk/layout';
   templateUrl: './dynamic.component.html',
   styleUrls: ['./dynamic.component.css']
 })
-export class DynamicComponent implements DialogWithValidation {
+export class DynamicComponent {
   private contentIsValid = false;
 
-  constructor(private dlg: SdwStepDialogComponent) {
-  }
-
-  isValid(): boolean {
-    this.dlg.changeStepSubtitle(this, 'test');
-    return this.contentIsValid;
+  constructor() {
   }
 
   @HostListener('click')
@@ -25,6 +19,6 @@ export class DynamicComponent implements DialogWithValidation {
     //   subtitle: '2nd subtitle',
     //   component: DynamicComponent
     // });
-    this.dlg.setFullscreenOnMobile([Breakpoints.Large])
+
   }
 }

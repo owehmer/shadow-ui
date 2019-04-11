@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { SdwAdvancedDialogBuilder, SdwStepDialogBuilder } from '@shadow-ui/core';
+import { SdwAdvancedDialogBuilder } from '@shadow-ui/core';
 import { FormOneComponent } from '../form-dlgs/form-one/form-one.component';
 import { MyContentComponentShort } from '../my-content-short/my-content-short.component';
 import { DynamicComponent } from '../dynamic/dynamic.component';
@@ -31,40 +31,6 @@ export class DialogDemoComponent {
   public openAdv(type?: 'comp' | 'ref' | 'text') {
     const dialog = this.buildDLg('adv', type).open();
     dialog.afterClosed().subscribe(({mode, result}) => console.info('Dialog closed', mode, 'Data: ', result))
-  }
-
-  public openStep(type?: 'simple' | 'dynamic' | 'forms') {
-    const builder = new SdwStepDialogBuilder(this.dlgService)
-      .setDimensions('80vw')
-      .setMaxDimensions('800px')
-      .setTitle(this._title)
-      .setDialogData(this._data)
-      .setSteps([
-        {
-          title: 'First Step',
-          subtitle: 'My subtitle',
-          component: type === 'forms' ? FormOneComponent : this._component
-        },
-        {
-          title: 'Hold it right there',
-          component: type === 'forms' ? FormOneComponent : MyContentComponentShort
-        }
-      ])
-      .animateStepChanges(true)
-    ;
-    const dlg = builder.open();
-
-    if (type === 'dynamic') {
-      setTimeout(() => {
-        dlg.componentInstance.insertStep(1, {
-          title: 'dynamic added',
-          subtitle: '2nd subtitle',
-          errorSubtitle: 'Fill me',
-          component: DynamicComponent
-        })
-      }, 1500);
-    }
-
   }
 
   private buildDLg(dlgType: 'adv' | 'simple', type?: 'comp' | 'ref' | 'text' | 'step') {

@@ -16,6 +16,7 @@ import { RouterModule } from '@angular/router';
 import { AllDemosComponent } from './all-demos/all-demos.component';
 import { DialogDemoComponent } from './dialog-demo/dialog-demo/dialog-demo.component';
 import { FormDemoComponent } from './forms-demo/form-demo/form-demo.component';
+import { FormInputElementModule } from '../../../../libs/core/src/lib/forms/form-element/form-input-element/form-input-element.module';
 
 @NgModule({
   declarations: [AppComponent, MyContentComponent, MyContentComponentShort, DynamicComponent, FormOneComponent, AllDemosComponent, DialogDemoComponent, FormDemoComponent],
@@ -24,6 +25,7 @@ import { FormDemoComponent } from './forms-demo/form-demo/form-demo.component';
     BrowserAnimationsModule,
     SdwDialogModule,
     SdwFormsModule,
+    FormInputElementModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
       {path: 'dialog', component: DialogDemoComponent},

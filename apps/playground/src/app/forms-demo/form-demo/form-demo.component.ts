@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'shadow-ui-form-demo',
@@ -6,6 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./form-demo.component.css']
 })
 export class FormDemoComponent implements OnInit {
+  name = 'test1';
+
+  placeholder = 'place';
+
+  // @HostListener('click')
+  // test() {
+  //   this.placeholder = 'neuer place';
+  // }
 
   constructor() { }
 

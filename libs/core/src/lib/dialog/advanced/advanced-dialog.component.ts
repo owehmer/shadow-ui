@@ -75,8 +75,49 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
     this._config.data = new SdwAdvancedDialogData<C, D>();
   }
 
-  setBackdropClickCanClose(allow: boolean) {
-    this.data.disableClose = !allow;
+  //region Appearance
+  simpleDialogStyle() {
+    this.setSimpleTitleBar(true);
+    this.setBackdropClickCanClose(true);
+    this.setDiscardChangesPromt(false);
+    this.setAbortIcon();
+    this.setOkIcon();
+    this.data.fullscreenOnMobile = false;
+    return this;
+  }
+
+  setSimpleTitleBar(useSimpleBar = true) {
+    this.data.simpleTitleBar = useSimpleBar;
+    return this;
+  }
+  //endregion
+
+  //region Title
+  setTitle(title: string) {
+    this.data.title = title;
+    return this;
+  }
+
+  setOkIcon(iconUnchanged?: string, iconChanged?: string) {
+    const changed = isNullOrEmpty(iconChanged) ? undefined : iconChanged;
+    const unchanged = isNullOrEmpty(iconUnchanged) ? undefined : iconUnchanged;
+
+    this.data.rightIcons = changed || unchanged ? { changed, unchanged } : undefined;
+    return this;
+  }
+
+  setAbortIcon(iconUnchanged?: string, iconChanged?: string) {
+    const changed = isNullOrEmpty(iconChanged) ? undefined : iconChanged;
+    const unchanged = isNullOrEmpty(iconUnchanged) ? undefined : iconUnchanged;
+
+    this.data.leftIcons = changed || unchanged ? { changed, unchanged } : undefined;
+    return this;
+  }
+  //endregion
+
+  //region Content
+  setDisplay(display: ComponentType<C> | TemplateRef<C>) {
+    this.data.component = display;
     return this;
   }
 
@@ -85,17 +126,13 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
     return this;
   }
 
-  open(): MatDialogRef<SdwAdvancedDialogComponent, R> {
-    this.setPanelClasses();
-    this._config.disableClose = true; // Make sure no one sets this property to false.
-    return this._dialogService.open<SdwAdvancedDialogComponent, SdwAdvancedDialogData<C, D>, R>(SdwAdvancedDialogComponent, this._config);
-  }
-
-  setTitle(title: string) {
-    this.data.title = title;
+  setText(text: string) {
+    this.data.text = text;
     return this;
   }
+  //endregion
 
+  //region Footer
   setOkButtonText(text?: string) {
     this.data.okBtnText = text ? text : undefined;
     return this;
@@ -111,14 +148,6 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
     return this;
   }
 
-  setOkIcon(iconUnchanged?: string, iconChanged?: string) {
-    const changed = isNullOrEmpty(iconChanged) ? undefined : iconChanged;
-    const unchanged = isNullOrEmpty(iconUnchanged) ? undefined : iconUnchanged;
-
-    this.data.rightIcons = changed || unchanged ? { changed, unchanged } : undefined;
-    return this;
-  }
-
   setAbortButtonText(text?: string) {
     this.data.abortBtnText = text ? text : undefined;
     return this;
@@ -129,16 +158,15 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
     return this;
   }
 
-  disablAbortkButton(disable = true) {
+  disableAbortButton(disable = true) {
     this.data.abortBtnDisabled = disable;
     return this;
   }
+  //endregion
 
-  setAbortIcon(iconUnchanged?: string, iconChanged?: string) {
-    const changed = isNullOrEmpty(iconChanged) ? undefined : iconChanged;
-    const unchanged = isNullOrEmpty(iconUnchanged) ? undefined : iconUnchanged;
-
-    this.data.leftIcons = changed || unchanged ? { changed, unchanged } : undefined;
+  //region Special features
+  setBackdropClickCanClose(allow: boolean) {
+    this.data.disableClose = !allow;
     return this;
   }
 
@@ -149,30 +177,12 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
     this.data.discardDlgOkText = okBtn;
     this.data.discardDlgAbortText = abortBtn;
   }
+  //endregion
 
-  setDisplay(display: ComponentType<C> | TemplateRef<C>) {
-    this.data.component = display;
-    return this;
-  }
-
-  setText(text: string) {
-    this.data.text = text;
-    return this;
-  }
-
-  setSimpleTitleBar(useSimpleBar = true) {
-    this.data.simpleTitleBar = useSimpleBar;
-    return this;
-  }
-
-  simpleDialogStyle() {
-    this.setSimpleTitleBar(true);
-    this.setBackdropClickCanClose(true);
-    this.setDiscardChangesPromt(false);
-    this.setAbortIcon();
-    this.setOkIcon();
-    this.data.fullscreenOnMobile = false; // TODO: Add Method + Hide Footer
-    return this;
+  open(): MatDialogRef<SdwAdvancedDialogComponent, R> {
+    this.setPanelClasses();
+    this._config.disableClose = true; // Make sure no one sets this property to false.
+    return this._dialogService.open<SdwAdvancedDialogComponent, SdwAdvancedDialogData<C, D>, R>(SdwAdvancedDialogComponent, this._config);
   }
 }
 

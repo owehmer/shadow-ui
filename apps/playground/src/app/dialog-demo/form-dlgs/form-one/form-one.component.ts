@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { DialogWithOk, DialogWithValidation } from '@shadow-ui/core';
+import { DialogWithOk } from '@shadow-ui/core';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   templateUrl: './form-one.component.html',
   styleUrls: ['./form-one.component.scss']
 })
-export class FormOneComponent implements OnInit, DialogWithValidation, DialogWithOk {
+export class FormOneComponent implements OnInit, DialogWithOk {
   static ID = 0;
   profileForm = this._fb.group({
     firstName: ['', Validators.required],

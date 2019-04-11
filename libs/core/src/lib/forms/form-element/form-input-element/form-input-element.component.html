@@ -1,0 +1,9 @@
+<mat-form-field [floatLabel]="floatLabel">
+  <mat-label *ngIf="label">{{label}}</mat-label>
+  <input matInput
+         [type]="type"
+         [placeholder]="placeholder"
+  >
+</mat-form-field>
+
+PL: {{placeholder}}

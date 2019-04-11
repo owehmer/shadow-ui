@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SdwFormComponent } from './form.component';
+import { SdwFormElementComponent } from './form-element.component';
 
-describe('SdwFormComponent', () => {
-  let component: SdwFormComponent;
-  let fixture: ComponentFixture<SdwFormComponent>;
+describe('SdwFormElementComponent', () => {
+  let component: SdwFormElementComponent;
+  let fixture: ComponentFixture<SdwFormElementComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SdwFormComponent ]
+      declarations: [ SdwFormElementComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SdwFormComponent);
+    fixture = TestBed.createComponent(SdwFormElementComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
