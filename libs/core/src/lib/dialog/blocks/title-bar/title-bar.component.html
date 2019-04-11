@@ -8,7 +8,9 @@
           [disabled]="disabled"
           (click)="iconClicked(false)"
   >
-    <mat-icon *ngIf="leftIcon">{{leftIcon}}</mat-icon>
+    <mat-icon *ngIf="leftIcon" [svgIcon]="settings.iconSource == 'svg' ? leftIcon : null">
+      {{settings.iconSource == 'font' ? leftIcon : null}}
+    </mat-icon>
   </button>
 
   <div class="sdw-title-text">

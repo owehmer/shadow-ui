@@ -51,7 +51,7 @@ export class SdwContentComponent implements OnDestroy {
       ? `calc(${_config.height} - ${heightSubtraction})`
       : undefined;
 
-    const maxHeight = _config.maxHeight ? `calc(${_config.maxHeight} - ${heightSubtraction})` : undefined;
+    const maxHeight = _config.maxHeight ? `calc(${_config.maxHeight} - ${heightSubtraction})` : `calc(100vh - ${heightSubtraction})`;
     const minHeight = _config.minHeight ? `calc(${_config.minHeight} - ${heightSubtraction})` : undefined;
 
     return this.sanitizer.bypassSecurityTrustStyle(

@@ -1,6 +1,6 @@
 import {
   ChangeDetectionStrategy,
-  Component, EventEmitter, HostBinding,
+  Component, EventEmitter, HostBinding, Inject, InjectionToken,
   Input,
   OnChanges,
   Output,
@@ -10,6 +10,16 @@ import {
 import { isNullOrEmpty } from '../../helper';
 import { DataThatChanges } from '../../dialog-content-api';
 import { SdwExtendedOkConfig } from '../extended-ok/extended-ok.component';
+
+export interface SdwDialogTitleSettings {
+  iconSource: 'font' | 'svg';
+}
+
+export const SDW_DLG_TITLE_SETTINGS = new InjectionToken<SdwDialogTitleSettings>('sdwDialogTitleSettings');
+
+export const SDW_DEFAULT_DLG_TITLE_SETTINGS: SdwDialogTitleSettings = {
+  iconSource: 'font'
+};
 
 @Component({
   selector: 'sdw-title-bar',
@@ -53,6 +63,9 @@ export class SdwTitleBarComponent implements OnChanges {
 
   public leftIcon?: string;
   public rightIcon?: string;
+
+  constructor(@Inject(SDW_DLG_TITLE_SETTINGS) public settings: SdwDialogTitleSettings) {
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     const hasChanges = this.getCurrentValue<boolean>(changes, 'hasChanges');

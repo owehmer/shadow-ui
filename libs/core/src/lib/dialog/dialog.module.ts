@@ -8,7 +8,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatStepperModule } from '@angular/material/stepper';
 
-import { SdwTitleBarComponent } from './blocks/title-bar/title-bar.component';
+import {
+  SDW_DEFAULT_DLG_TITLE_SETTINGS,
+  SDW_DLG_TITLE_SETTINGS,
+  SdwTitleBarComponent
+} from './blocks/title-bar/title-bar.component';
 import { SdwFooterComponent } from './blocks/footer/footer.component';
 import { SdwContentComponent } from './blocks/content/content.component';
 
@@ -46,7 +50,7 @@ export const DIALOG_TYPES = [
   imports: [
     CommonModule,
     MATERIAL,
-    CDK,
+    CDK
   ],
   declarations: [
     BUILDING_BLOCKS,
@@ -58,6 +62,9 @@ export const DIALOG_TYPES = [
   ],
   entryComponents: [
     DIALOG_TYPES
+  ],
+  providers: [
+    { provide: SDW_DLG_TITLE_SETTINGS, useValue: SDW_DEFAULT_DLG_TITLE_SETTINGS }
   ]
 })
 export class SdwDialogModule {

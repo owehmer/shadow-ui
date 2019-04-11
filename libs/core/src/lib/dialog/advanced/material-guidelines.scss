@@ -3,7 +3,7 @@ $mat-default-padding: 24px;
 @mixin matDialogStyles($customClass) {
   // CDK Element
   .sdw-cdk-dialog {
-    transition: height 0.25s ease;
+    transition: height 0.15s ease;
 
     &.sdw-fullscreen-dialog {
       max-height: 100vh !important;
