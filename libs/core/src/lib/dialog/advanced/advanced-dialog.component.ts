@@ -177,6 +177,13 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
     this.data.discardDlgOkText = okBtn;
     this.data.discardDlgAbortText = abortBtn;
   }
+
+  setFullscreenSize(active = true, mediaQueries = [Breakpoints.HandsetPortrait]) {
+    this.data.fullscreenOnMobile = active;
+    this.data.fullscreenMediaqueries = mediaQueries;
+
+    return this;
+  }
   //endregion
 
   open(): MatDialogRef<SdwAdvancedDialogComponent, R> {
