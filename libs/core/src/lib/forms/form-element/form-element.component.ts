@@ -3,15 +3,15 @@ import {
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component, ComponentRef, EmbeddedViewRef, InjectionToken, Injector,
   Input,
-  OnChanges,
+  OnChanges, OnInit,
   SimpleChanges, TemplateRef, ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { SdwFormComponent } from '../form/form.component';
-import { FormControl } from '@angular/forms';
+import { AbstractControlOptions, AsyncValidatorFn, FormControl, ValidatorFn } from '@angular/forms';
 import { CdkPortalOutlet, ComponentPortal, ComponentType, PortalInjector, TemplatePortal } from '@angular/cdk/portal';
-import { ValidateFn } from 'codelyzer/walkerFactory/walkerFn';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { skip } from 'rxjs/operators';
 
 export const FORM_ELEMENT_DATA = new InjectionToken<any>('sdwFormElementData');
 
@@ -26,51 +26,39 @@ export const FORM_ELEMENT_DATA = new InjectionToken<any>('sdwFormElementData');
     'class': 'sdw-form-element'
   }
 })
-export class SdwFormElementComponent implements AfterViewInit, OnChanges {
-  @Input()
-  get name(): string {
-    return this._name;
-  }
+export class SdwFormElementComponent implements OnInit, AfterViewInit, OnChanges {
+  @Input() name: string;
+  @Input() value: any;
 
-  set name(value: string) {
-    this._name = value;
-  }
+  @Input() validatorOrOpts: ValidatorFn | ValidatorFn[] | AbstractControlOptions;
+  @Input() asyncValidator: AsyncValidatorFn | AsyncValidatorFn[];
+  @Input() componentOrTemplate: ComponentType<any> | TemplateRef<any>;
 
   @Input()
-  get validators(): ValidateFn<any>[] {
-    return this._validators;
+  set componentOrTemplateData(value: any) {
+    this._componentOrTemplateData = value;
+    this._componentDataChanged$.next(value);
   }
 
-  set validators(value: ValidateFn<any>[]) {
-    this._validators = value;
-  }
+  // TODO: Add to 'validatorOrOpts'
+  // @Input()
+  // set required(val: boolean) {
+  //
+  // }
 
-  @Input()
-  get componentOrTemplate(): ComponentType<any> | TemplateRef<any> {
-    return this._componentOrTemplate;
-  }
-
-  set componentOrTemplate(value: ComponentType<any> | TemplateRef<any>) {
-    this._componentOrTemplate = value;
-  }
-
-  @Input()
   get componentOrTemplateData(): any {
     return this._componentOrTemplateData;
   }
 
-  set componentOrTemplateData(value: any) {
-    this._componentOrTemplateData = value;
-    this.inputChanged$.next(value);
+  // TODO: skip everything pre init?
+  get componentDataChanged$(): Observable<any> {
+    return this._componentDataChanged$.pipe();
   }
-
-  inputChanged$ = new Subject();
 
   formControl: FormControl;
 
-  private _name: string;
-  private _validators: ValidateFn<any>[];
-  private _componentOrTemplate: ComponentType<any> | TemplateRef<any>;
+  private _componentDataChanged$ = new BehaviorSubject<any>(null);
+
   private _componentOrTemplateData: any;
 
   @ViewChild(CdkPortalOutlet)
@@ -83,9 +71,15 @@ export class SdwFormElementComponent implements AfterViewInit, OnChanges {
               private _cd: ChangeDetectorRef) {
   }
 
+  ngOnInit(): void {
+    this.formControl = new FormControl(this.value, this.validatorOrOpts, this.asyncValidator);
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     const name = changes['name'];
-    const validators = changes['validators'];
+    const value = changes['value'];
+    const validatorOrOpts = changes['validatorOrOpts'];
+    const asyncValidator = changes['asyncValidator'];
     const compOrTemplate = changes['componentOrTemplate'];
     const componentOrTemplateData = changes['componentOrTemplateData'];
 
@@ -93,27 +87,29 @@ export class SdwFormElementComponent implements AfterViewInit, OnChanges {
       this._form.formGroup.removeControl(name.previousValue);
       this._form.formGroup.addControl(name.currentValue, this.formControl);
     }
-    if (validators != null && !validators.isFirstChange()) {
-
+    if (value != null && !value.isFirstChange()) {
+      // this.formControl.setValue(value);
+    }
+    if (validatorOrOpts != null && !validatorOrOpts.isFirstChange()) {
+    }
+    if (asyncValidator != null && !asyncValidator.isFirstChange()) {
     }
     if (compOrTemplate != null && !compOrTemplate.isFirstChange()) {
-
     }
     if (componentOrTemplateData != null && !componentOrTemplateData.isFirstChange()) {
-
     }
   }
 
   ngAfterViewInit(): void {
-    // if (this.name == null)
-    //   throw new Error('You need to pass in a name into a SdwFormElementComponent to init this component!');
-    //
+    if (this.name == null)
+      throw new Error('You need to pass in a name into a SdwFormElementComponent to init this component!');
+
     // if (this.formControl == null)
     //   throw new Error(`Can't create an instance of SdwFormElementComponent. The content has no FormControl!`);
 
-    this._generateComponentInOutlet(this._componentOrTemplate, this._componentOrTemplateData);
+    this._generateComponentInOutlet(this.componentOrTemplate, this._componentOrTemplateData);
 
-    // this._form.formGroup.addControl(this.name, this.formControl);
+    this._form.formGroup.addControl(this.name, this.formControl);
   }
 
   private _generateComponentInOutlet(compOrTemp: ComponentType<any> | TemplateRef<any>, data?: any) {

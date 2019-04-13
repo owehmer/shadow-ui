@@ -16,15 +16,20 @@ export class SdwFormInputDirective implements OnChanges {
   label: string;
 
   @Input()
-  type: SdwFormElementTypes;
+  type: SdwFormElementTypes = 'text';
 
   constructor(@Self() private _formElement: SdwFormElementComponent,
               private _cd: ChangeDetectorRef) {
     this._formElement.componentOrTemplate = SdwFormInputElementComponent;
-    this._formElement.componentOrTemplateData = this as SdwFormInputData;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this._formElement.inputChanged$.next({placeholder: this.placeholder});
+    const changeMap = {};
+    Object.keys(changes).forEach(key => changeMap[key] = changes[key].currentValue);
+    this._setFormData(changeMap);
+  }
+
+  private _setFormData(dataMap: {[property: string]: any}) {
+    this._formElement.componentOrTemplateData = dataMap as SdwFormInputData;
   }
 }

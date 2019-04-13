@@ -5,11 +5,14 @@ import {
   Input,
   OnChanges,
   OnInit,
-  Optional,
+  Optional, ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { FORM_ELEMENT_DATA, SdwFormElementComponent } from '../form-element.component';
-import { interval } from 'rxjs';
+import { BehaviorSubject, interval } from 'rxjs';
+import { FloatLabelType, MatFormField } from '@angular/material';
+import { FormControl } from '@angular/forms';
+import { hasFormControlRequiredValidator } from '../../helpers';
 
 export type SdwFormElementTypes = 'number' | 'text' | 'email';
 
@@ -32,71 +35,40 @@ export interface SdwFormInputData {
   }
 })
 export class SdwFormInputElementComponent {
-  get placeholder(): string {
-    return this._placeholder;
-  }
-
   set placeholder(value: string) {
-    this._placeholder = value;
-    this._cd.markForCheck();
+    this.placeholder$.next(value);
   }
 
-  get floatLabel(): boolean {
-    return this._floatLabel;
-  }
-
-  set floatLabel(value: boolean) {
-    this._floatLabel = value;
-  }
-
-  get label(): string {
-    return this._label;
+  set floatLabel(value: FloatLabelType) {
+    this.floatLabel$.next(value);
   }
 
   set label(value: string) {
-    this._label = value;
-  }
-
-  get type(): SdwFormElementTypes {
-    return this._type;
+    this.label$.next(value);
   }
 
   set type(value: SdwFormElementTypes) {
-    this._type = value;
+    this.type$.next(value);
   }
 
-  private _placeholder: string;
-  private _floatLabel: boolean;
-  private _label: string;
-  private _type: SdwFormElementTypes;
+  get formControl(): FormControl {
+    return this._formElement.formControl;
+  }
+
+  get showRequiredMarker(): boolean {
+    return hasFormControlRequiredValidator(this.formControl);
+  }
+
+  placeholder$ = new BehaviorSubject<string>(null);
+  floatLabel$ = new BehaviorSubject<FloatLabelType>('auto');
+  label$ = new BehaviorSubject<string>(null);
+  type$ = new BehaviorSubject<SdwFormElementTypes>('text');
 
   constructor(@Optional() @Inject(FORM_ELEMENT_DATA) _data: SdwFormInputData,
               private _formElement: SdwFormElementComponent,
               private _cd: ChangeDetectorRef) {
-    if (_data) {
-      Object.assign(this, _data);
-    }
-    this._formElement.inputChanged$.subscribe((i: any) => {
-      console.warn('i cahnged', i);
-      this._placeholder = i.placeholder;
-      // this._cd.detectChanges();
+    this._formElement.componentDataChanged$.subscribe(data => {
+      Object.assign(this, data);
     });
-  }
-
-  ngOnInit() {
-
-  }
-
-  ngAfterViewInit() {
-    interval(1000).pipe(
-
-    ).subscribe((i) => {
-      this.placeholder = `${i}`;
-      console.info('cd', i);
-    });
-  }
-
-  ngDoCheck() {
-    console.warn('CHANGE');
   }
 }

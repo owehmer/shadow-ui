@@ -1,9 +1,9 @@
-<mat-form-field [floatLabel]="floatLabel">
-  <mat-label *ngIf="label">{{label}}</mat-label>
+<mat-form-field [floatLabel]="floatLabel$ | async">
+  <mat-label *ngIf="label$ | async">{{label$ | async}}</mat-label>
   <input matInput
-         [type]="type"
-         [placeholder]="placeholder"
+         [type]="type$ | async"
+         [placeholder]="placeholder$ | async"
+         [formControl]="formControl"
+         [required]="showRequiredMarker"
   >
 </mat-form-field>
-
-PL: {{placeholder}}

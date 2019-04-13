@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { filter } from 'rxjs/operators';
 
@@ -14,6 +14,7 @@ import { filter } from 'rxjs/operators';
   }
 })
 export class SdwFormComponent implements OnInit, AfterViewInit {
+  @Input()
   formGroup = this._fb.group({});
 
   private _init = false;
@@ -21,12 +22,13 @@ export class SdwFormComponent implements OnInit, AfterViewInit {
   constructor(private _fb: FormBuilder) { }
 
   ngOnInit() {
-    this.formGroup.valueChanges.pipe(
-      filter(_ => this._init)
-    ).subscribe(v => console.warn('SDW-FORM VALUE CHANGE', this.formGroup.getRawValue()));
+
   }
 
   ngAfterViewInit(): void {
     this._init = true;
+    this.formGroup.valueChanges.pipe(
+      filter(_ => this._init)
+    ).subscribe(v => console.warn('SDW-FORM VALUE CHANGE', this.formGroup.getRawValue()));
   }
 }
