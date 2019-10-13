@@ -1,22 +1,25 @@
-<sdw-form>
-  <sdw-form-element sdwFormInput
-                    [name]="name"
-                    [type]="'text'"
-                    [label]="label"
-                    [placeholder]="placeholder"
-                    [validatorOrOpts]="requiredValidator"
-  ></sdw-form-element>
+<sdw-form [sdwFormGroup]="formGroup">
+  <sdw-form-input-element [name]="name"
+                          [type]="'text'"
+                          [label]="label"
+                          [placeholder]="placeholder"
+                          [validatorOrOpts]="requiredValidator"
+  >
+  </sdw-form-input-element>
 
-  <sdw-form-element sdwFormInput
-                    [name]="name + '2'"
-                    [type]="'text'"
-                    [label]="label"
-                    [placeholder]="placeholder"
-  ></sdw-form-element>
+<!--  <sdw-form-element sdwFormInput-->
+<!--                    [name]="name + '2'"-->
+<!--                    [type]="'text'"-->
+<!--                    [label]="label"-->
+<!--                    [placeholder]="placeholder"-->
+<!--  ></sdw-form-element>-->
 </sdw-form>
 
 <button (click)="editPlaceholder()">{{placeholder}}</button>
-<button (click)="editLabel()">{{label}}</button>
+<button (click)="editLabel()">Edit Label. Current: '{{label}}'</button>
+<button (click)="removeValidator()">Remove validator</button>
+<button (click)="changeGroup()">Change FB Group</button>
+<button (click)="setValue()">SET VALUE</button>
 
 <div class="form-result">
   {{formResult | json}}

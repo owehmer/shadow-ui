@@ -35,7 +35,7 @@ export class SdwExtendedOkComponent {
   @Input()
   disabled: boolean;
 
-  @ViewChild(MatMenuTrigger)
+  @ViewChild(MatMenuTrigger, {static: true})
   private _trigger: MatMenuTrigger;
 
   constructor(private _dialog: SdwDialogBase) {

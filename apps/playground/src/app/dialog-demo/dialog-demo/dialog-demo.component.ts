@@ -17,7 +17,7 @@ export class DialogDemoComponent {
   private _title = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do';
   private _data = {myData: 'test'};
 
-  @ViewChild('myDialogTemplate', {read: TemplateRef})
+  @ViewChild('myDialogTemplate', {read: TemplateRef, static: true})
   private _template: TemplateRef<any>;
 
   constructor(private dlgService: MatDialog) {

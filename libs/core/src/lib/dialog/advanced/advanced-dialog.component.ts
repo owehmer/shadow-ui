@@ -253,7 +253,7 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
   @HostBinding('class.is-fullscreen')
   isFullsize = false;
 
-  @ViewChild(CdkPortalOutlet)
+  @ViewChild(CdkPortalOutlet, {static: true})
   private _outlet: CdkPortalOutlet;
 
   private _componentRef: ComponentRef<any>;
