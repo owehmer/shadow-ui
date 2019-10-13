@@ -8,7 +8,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { SdwFormComponent } from '../form/form.component';
-import { AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormControl, ValidatorFn } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormControl, ValidatorFn } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { skip, takeUntil } from 'rxjs/operators';
 
@@ -25,7 +25,7 @@ import { skip, takeUntil } from 'rxjs/operators';
 })
 export class SdwFormElementComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   @Input() name: string;
-  @Input() validatorOrOpts: ValidatorFn | ValidatorFn[] | AbstractControlOptions;
+  @Input() validatorOrOpts: ValidatorFn | ValidatorFn[];
 
   @Input() asyncValidator: AsyncValidatorFn | AsyncValidatorFn[];
 
@@ -49,6 +49,14 @@ export class SdwFormElementComponent implements OnInit, AfterViewInit, OnChanges
         this.formControl = new FormControl(undefined);
         this._form.sdwFormGroup.addControl(this.name, this.formControl);
       }
+
+      if (this.validatorOrOpts != null) {
+        this.formControl.setValidators(this.validatorOrOpts);
+      }
+      if (this.asyncValidator != null) {
+        this.formControl.setAsyncValidators(this.asyncValidator);
+      }
+
       this._cd.markForCheck();
     })
   }
