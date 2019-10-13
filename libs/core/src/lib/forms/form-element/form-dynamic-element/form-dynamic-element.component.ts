@@ -25,7 +25,6 @@ export const FORM_DYNAMIC_ELEMENT_DATA = new InjectionToken<any>('sdwFormDynamic
   `,
   styles: [':host { display: block; }' ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: {
     'class': 'sdw-form-dynamic-element'

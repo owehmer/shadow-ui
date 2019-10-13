@@ -16,7 +16,6 @@ export type SdwFormElementTypes = 'number' | 'text' | 'email';
   templateUrl: './form-input-element.component.html',
   styleUrls: ['./form-input-element.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: {
     'class': 'sdw-form-input-element',

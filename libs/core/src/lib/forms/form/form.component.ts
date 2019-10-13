@@ -16,7 +16,6 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: {
     'class': 'sdw-form',
