@@ -11,6 +11,7 @@ import { SdwFormComponent } from '../form/form.component';
 import { AbstractControl, AsyncValidatorFn, FormControl, ValidatorFn } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { skip, takeUntil } from 'rxjs/operators';
+import { hasFormControlRequiredValidator } from '../helpers';
 
 @Component({
   selector: 'sdw-form-element',
@@ -30,6 +31,10 @@ export class SdwFormElementComponent implements OnInit, AfterViewInit, OnChanges
   @Input() asyncValidator: AsyncValidatorFn | AsyncValidatorFn[];
 
   formControl: AbstractControl;
+
+  get showRequiredMarker(): boolean {
+    return hasFormControlRequiredValidator(this.formControl);
+  }
 
   private _destroyed$ = new Subject();
 

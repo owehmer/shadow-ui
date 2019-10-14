@@ -1,0 +1,16 @@
+<mat-form-field (click)="openPickerIfSet()"
+>
+  <input matInput
+         [formControl]="formControl"
+         [matDatepicker]="picker"
+         [matDatepickerFilter]="matDatepickerFilter"
+         [max]="max"
+         [min]="min"
+  >
+  <mat-datepicker-toggle matSuffix *ngIf="showToggleButton" [for]="picker">
+      <ng-container matDatepickerToggleIcon *ngIf="toggleButtonTemplate">
+        <ng-container *ngTemplateOutlet="toggleButtonTemplate.templateRef"></ng-container>
+      </ng-container>
+  </mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>

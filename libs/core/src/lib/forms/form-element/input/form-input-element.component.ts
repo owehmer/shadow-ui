@@ -1,13 +1,12 @@
 import {
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
-  Input,
-  ViewEncapsulation
+  Input, ViewChild,
 } from '@angular/core';
 import { SdwFormElementComponent } from '../form-element.component';
-import { hasFormControlRequiredValidator } from '../../helpers';
 import { FloatLabelType } from '@angular/material/core';
 import { SdwFormComponent } from '../../form/form.component';
+import { MatInput } from '@angular/material/input';
 
 export type SdwFormElementTypes = 'number' | 'text' | 'email';
 
@@ -18,26 +17,20 @@ export type SdwFormElementTypes = 'number' | 'text' | 'email';
   changeDetection: ChangeDetectionStrategy.OnPush,
   // tslint:disable-next-line:use-host-property-decorator
   host: {
-    'class': 'sdw-form-input-element',
+    'class': 'sdw-form-element sdw-input',
   }
 })
+
 export class SdwFormInputElementComponent extends SdwFormElementComponent {
   @Input() placeholder: string;
   @Input() floatLabel: FloatLabelType;
   @Input() label: string;
   @Input() type: SdwFormElementTypes = 'text';
 
-  get showRequiredMarker(): boolean {
-    return hasFormControlRequiredValidator(this.formControl);
-  }
+  @ViewChild(MatInput, {static: true}) readonly matInput: MatInput;
 
   constructor(form: SdwFormComponent,
               cd: ChangeDetectorRef) {
     super(form, cd);
-  }
-
-  ngAfterViewInit(): void {
-    super.ngAfterViewInit();
-    this._form.sdwFormGroup$.subscribe(_ => console.warn('AA', _));
   }
 }

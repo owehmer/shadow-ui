@@ -16,7 +16,11 @@ import { RouterModule } from '@angular/router';
 import { AllDemosComponent } from './all-demos/all-demos.component';
 import { DialogDemoComponent } from './dialog-demo/dialog-demo/dialog-demo.component';
 import { FormDemoComponent } from './forms-demo/form-demo/form-demo.component';
-import { FormInputElementModule } from '../../../../libs/core/src/lib/forms/form-element/form-input-element/form-input-element.module';
+import { SdwFormInputElementModule } from '../../../../libs/core/src/lib/forms/form-element/input/form-input-element.module';
+import { SdwFormCheckboxModule } from '../../../../libs/core/src/lib/forms/form-element/checkbox/form-checkbox.module';
+import { SdwFormSelectModule } from '../../../../libs/core/src/lib/forms/form-element/select/form-select.module';
+import { SdwFormRadioModule } from '../../../../libs/core/src/lib/forms/form-element/radio/form-radio.module';
+import { SdwFormDatepickerModule } from '../../../../libs/core/src/lib/forms/form-element/datepicker/form-datepicker.module';
 
 @NgModule({
   declarations: [AppComponent, MyContentComponent, MyContentComponentShort, DynamicComponent, FormOneComponent, AllDemosComponent, DialogDemoComponent, FormDemoComponent],
@@ -25,18 +29,22 @@ import { FormInputElementModule } from '../../../../libs/core/src/lib/forms/form
     BrowserAnimationsModule,
     SdwDialogModule,
     SdwFormsModule,
-    FormInputElementModule,
+    SdwFormInputElementModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      {path: 'dialog', component: DialogDemoComponent},
-      {path: 'form', component: FormDemoComponent},
-      {path: '**', component: AllDemosComponent},
+      { path: 'dialog', component: DialogDemoComponent },
+      { path: 'form', component: FormDemoComponent },
+      { path: '**', component: AllDemosComponent }
     ]),
 
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatToolbarModule
+    MatToolbarModule,
+    SdwFormCheckboxModule,
+    SdwFormSelectModule,
+    SdwFormRadioModule,
+    SdwFormDatepickerModule
   ],
   providers: [],
   bootstrap: [AppComponent],

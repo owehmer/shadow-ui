@@ -1,11 +1,42 @@
 <sdw-form [sdwFormGroup]="formGroup">
   <sdw-form-input-element [name]="name"
-                          [type]="'number'"
+                          [type]="'text'"
                           [label]="label"
                           [placeholder]="placeholder"
                           [validatorOrOpts]="requiredValidator"
   >
   </sdw-form-input-element>
+
+  <sdw-form-input-element [name]="'inputNumber'"
+                          [type]="'number'"
+                          [label]="label"
+                          [placeholder]="placeholder"
+  >
+  </sdw-form-input-element>
+
+  <sdw-form-checkbox [name]="'check'" [labelPosition]="'after'">
+    Test
+  </sdw-form-checkbox>
+
+  <sdw-form-select [name]="'select'" [label]="'Choose wisely'" [options]="selectOptions">
+    <ng-template sdwFormSelectTemplate let-option>
+      <span>{{option.label}}</span>
+      <span>aaa</span>
+    </ng-template>
+  </sdw-form-select>
+
+  <sdw-form-radio [name]="'radio'" [options]="radioOptions">
+    <ng-template sdwFormRadioTemplate let-option>
+      <{{option.label}}>
+    </ng-template>
+  </sdw-form-radio>
+
+  <sdw-form-datepicker [name]="'datepickerA'">
+<!--    <ng-template sdwFormDatepicketButtonTemplate>-->
+<!--      A-->
+<!--    </ng-template>-->
+  </sdw-form-datepicker>
+
 
 <!--  <sdw-form-element sdwFormInput-->
 <!--                    [name]="name + '2'"-->

@@ -18,4 +18,4 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   entryComponents: [SdwFormInputElementComponent]
 })
-export class FormInputElementModule { }
+export class SdwFormInputElementModule { }

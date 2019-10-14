@@ -27,7 +27,7 @@ export const FORM_DYNAMIC_ELEMENT_DATA = new InjectionToken<any>('sdwFormDynamic
   changeDetection: ChangeDetectionStrategy.OnPush,
   // tslint:disable-next-line:use-host-property-decorator
   host: {
-    'class': 'sdw-form-dynamic-element'
+    'class': 'sdw-dynamic'
   }
 })
 export class SdwFormDynamicElementComponent extends SdwFormElementComponent implements OnInit, AfterViewInit, OnChanges {
