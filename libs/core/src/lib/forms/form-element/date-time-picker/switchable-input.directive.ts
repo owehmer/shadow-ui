@@ -22,7 +22,10 @@ export class SwitchableInputDirective {
 
   @HostBinding('class.empty-input')
   get inputIsEmpty(): boolean {
-    return !this._elementRef.nativeElement.value;
+    const element = this._elementRef.nativeElement;
+    const value = element.value;
+    const size = element.size || 2;
+    return !value || value.length !== size;
   }
 
   constructor(
