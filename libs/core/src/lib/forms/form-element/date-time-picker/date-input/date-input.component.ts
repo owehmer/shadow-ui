@@ -200,10 +200,6 @@ export class DateInputComponent implements ControlValueAccessor, MatFormFieldCon
   dayChange() {
     if (!this._resetIncorrectValues(this._dayCtrl.nativeElement, this._currentValidValues.day, 31)) {
       this._handleInput();
-
-      if (this._dayCtrl.nativeElement.selectionStart === 2) {
-        this._monthCtrl.nativeElement.focus();
-      }
     }
   }
 
