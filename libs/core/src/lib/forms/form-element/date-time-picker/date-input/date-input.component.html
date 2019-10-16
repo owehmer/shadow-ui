@@ -1,0 +1,46 @@
+<div [formGroup]="dateParts" class="date-input-container">
+
+  <input #dayCtrl
+         class="date-input-control date-day-input"
+         formControlName="day" size="2"
+         aria-label="Tag"
+         type="text"
+         min="1"
+         max="31"
+
+         sdwSwitchableInput
+         (input)="dayChange()"
+         (valueChange)="dayChange()"
+         [postInputCtrl]="monthCtrl"
+  >
+
+  <span class="date-input-spacer">{{spacerChar}}</span>
+
+  <input #monthCtrl
+         class="date-input-control month-day-input"
+         formControlName="month"
+         size="2"
+         aria-label="Monat"
+
+         sdwSwitchableInput
+         (input)="monthChange()"
+         (valueChange)="monthChange()"
+         [preInputCtrl]="dayCtrl"
+         [postInputCtrl]="yearCtrl"
+  >
+
+  <span class="date-input-spacer">{{spacerChar}}</span>
+
+  <input #yearCtrl
+         class="date-input-control year-day-input"
+         formControlName="year"
+         size="4"
+         aria-label="Jahr"
+
+         sdwSwitchableInput
+         (input)="yearChange()"
+         (valueChange)="yearChange()"
+         [preInputCtrl]="monthCtrl"
+         [autoFillSize]="false"
+  >
+</div>

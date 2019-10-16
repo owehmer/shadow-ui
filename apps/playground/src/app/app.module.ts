@@ -21,6 +21,7 @@ import { SdwFormCheckboxModule } from '../../../../libs/core/src/lib/forms/form-
 import { SdwFormSelectModule } from '../../../../libs/core/src/lib/forms/form-element/select/form-select.module';
 import { SdwFormRadioModule } from '../../../../libs/core/src/lib/forms/form-element/radio/form-radio.module';
 import { SdwFormDatepickerModule } from '../../../../libs/core/src/lib/forms/form-element/datepicker/form-datepicker.module';
+import { SdwFormDateTimePickerModule } from '../../../../libs/core/src/lib/forms/form-element/date-time-picker/form-date-time-picker.module';
 
 @NgModule({
   declarations: [AppComponent, MyContentComponent, MyContentComponentShort, DynamicComponent, FormOneComponent, AllDemosComponent, DialogDemoComponent, FormDemoComponent],
@@ -44,7 +45,8 @@ import { SdwFormDatepickerModule } from '../../../../libs/core/src/lib/forms/for
     SdwFormCheckboxModule,
     SdwFormSelectModule,
     SdwFormRadioModule,
-    SdwFormDatepickerModule
+    SdwFormDatepickerModule,
+    SdwFormDateTimePickerModule
   ],
   providers: [],
   bootstrap: [AppComponent],
