@@ -1,4 +1,14 @@
-import { Directive, ElementRef, EventEmitter, HostListener, Input, Optional, Output, Self } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  Optional,
+  Output,
+  Self
+} from '@angular/core';
 
 @Directive({
   selector: '[sdwSwitchableInput]'
@@ -9,6 +19,11 @@ export class SwitchableInputDirective {
   @Input() autoFillSize = true;
 
   @Output() blurValueChange = new EventEmitter<string>();
+
+  @HostBinding('class.empty-input')
+  get inputIsEmpty(): boolean {
+    return !this._elementRef.nativeElement.value;
+  }
 
   constructor(
     @Self() private _elementRef: ElementRef<HTMLInputElement>

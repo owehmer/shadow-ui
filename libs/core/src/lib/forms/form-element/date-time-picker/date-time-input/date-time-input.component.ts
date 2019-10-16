@@ -46,6 +46,7 @@ export class SdwFormDateTimeModel {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.floating-placeholder]': 'shouldLabelFloat',
+    '[class.date-time-with-background]': 'useBackgroundColor',
     '[id]': 'id',
     '[attr.aria-describedby]': 'describedBy'
   }
@@ -96,6 +97,8 @@ export class DateTimeInputComponent implements ControlValueAccessor, MatFormFiel
     this.dateTimeParts.setValue({ date: date, time: time });
     this.stateChanges.next();
   }
+
+  @Input() useBackgroundColor = true;
 
   dateTimeParts: FormGroup;
 
