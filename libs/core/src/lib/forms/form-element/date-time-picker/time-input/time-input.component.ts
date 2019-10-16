@@ -14,34 +14,33 @@ import { Subject } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import * as moment from 'moment';
-import { SdwFormTimeModel } from '../time-input/time-input.component';
 
 /** Data structure for holding date. */
-export class SdwFormDateModel {
-  constructor(public day: string,
-              public month: string,
-              public year: string) {
+export class SdwFormTimeModel {
+  constructor(public hour: string,
+              public minute: string) {
   }
 
-  get asIsoString(): string {
-    if (!this.day || !this.month || !this.year || this.year.length !== 4) {
+  get asValidString(): string {
+    if (!this.hour || !this.minute) {
+      return null;
+    }
+    const hourAsNumber = Number(this.hour);
+    const minuteAsNumber = Number(this.minute);
+
+    if (hourAsNumber < 0 || hourAsNumber > 24 || minuteAsNumber < 0 || minuteAsNumber > 59) {
       return null;
     }
 
-    const momentAusgang =
-      moment.utc(`${Number(this.day)}-${Number(this.month)}-${Number(this.year)}`, 'D-M-YYYY');
-
-    const validMoment = momentAusgang.isValid() ? momentAusgang : null;
-
-    return validMoment ? validMoment.toISOString() : null;
+    return `${hourAsNumber}:${minuteAsNumber}`;
   }
 }
 
 @Component({
-  selector: 'sdw-date-input',
-  templateUrl: './date-input.component.html',
-  styleUrls: ['./date-input.component.scss'],
-  providers: [{ provide: MatFormFieldControl, useExisting: DateInputComponent }],
+  selector: 'sdw-time-input',
+  templateUrl: './time-input.component.html',
+  styleUrls: ['./time-input.component.scss'],
+  providers: [{ provide: MatFormFieldControl, useExisting: TimeInputComponent }],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.floating-placeholder]': 'shouldLabelFloat',
@@ -49,7 +48,7 @@ export class SdwFormDateModel {
     '[attr.aria-describedby]': 'describedBy'
   }
 })
-export class DateInputComponent implements ControlValueAccessor, MatFormFieldControl<SdwFormDateModel>, OnDestroy {
+export class TimeInputComponent implements ControlValueAccessor, MatFormFieldControl<SdwFormTimeModel>, OnDestroy {
   static nextId = 0;
 
   @Input()
@@ -75,7 +74,7 @@ export class DateInputComponent implements ControlValueAccessor, MatFormFieldCon
   @Input()
   set disabled(value: boolean) {
     this._disabled = coerceBooleanProperty(value);
-    this._disabled ? this.dateParts.disable() : this.dateParts.enable();
+    this._disabled ? this.timeParts.disable() : this.timeParts.enable();
     this.stateChanges.next();
   }
 
@@ -84,33 +83,31 @@ export class DateInputComponent implements ControlValueAccessor, MatFormFieldCon
   }
 
   @Input()
-  get value(): SdwFormDateModel | null {
-    const { value: { day, month, year } } = this.dateParts;
-    return new SdwFormDateModel(day, month, year);
+  get value(): SdwFormTimeModel | null {
+    const { value: { hour, minute } } = this.timeParts;
+    return new SdwFormTimeModel(hour, minute);
   }
 
-  set value(date: SdwFormDateModel | null) {
-    const { day, month, year } = date || new SdwFormDateModel('', '', '');
+  set value(time: SdwFormTimeModel | null) {
+    const { hour, minute } = time || new SdwFormTimeModel('', '');
     this._currentValidValues = this.value;
-    this.dateParts.setValue({ day, month, year });
+    this.timeParts.setValue({ hour, minute });
     this.stateChanges.next();
   }
 
-  @Input() spacerChar = '.';
-
-  dateParts: FormGroup;
+  timeParts: FormGroup;
 
   stateChanges = new Subject<void>();
   focused = false;
   errorState = false;
-  controlType = 'sdw-form-date';
-  id = `sdw-inner-form-date-${DateInputComponent.nextId++}`;
+  controlType = 'sdw-form-time';
+  id = `sdw-inner-form-time-${TimeInputComponent.nextId++}`;
   describedBy = '';
 
   get empty() {
-    const { value: { day, month, year } } = this.dateParts;
+    const { value: { hour, minute } } = this.timeParts;
 
-    return !day && !month && !year;
+    return !hour && !minute;
   }
 
   get shouldLabelFloat() {
@@ -121,16 +118,13 @@ export class DateInputComponent implements ControlValueAccessor, MatFormFieldCon
   private _required = false;
   private _disabled = false;
 
-  @ViewChild('dayCtrl', {static: true, read: ElementRef})
-  private _dayCtrl: ElementRef<HTMLInputElement>;
+  @ViewChild('hourCtrl', {static: true, read: ElementRef})
+  private _hourCtrl: ElementRef<HTMLInputElement>;
 
-  @ViewChild('monthCtrl', {static: true, read: ElementRef})
-  private _monthCtrl: ElementRef<HTMLInputElement>;
+  @ViewChild('minuteCtrl', {static: true, read: ElementRef})
+  private _minuteCtrl: ElementRef<HTMLInputElement>;
 
-  @ViewChild('yearCtrl', {static: true, read: ElementRef})
-  private _yearCtrl: ElementRef<HTMLInputElement>;
-
-  private _currentValidValues = new SdwFormDateModel('', '', '');
+  private _currentValidValues = new SdwFormTimeModel('', '');
 
   constructor(
     formBuilder: FormBuilder,
@@ -138,10 +132,9 @@ export class DateInputComponent implements ControlValueAccessor, MatFormFieldCon
     private _elementRef: ElementRef<HTMLElement>,
     @Optional() @Self() public ngControl: NgControl) {
 
-    this.dateParts = formBuilder.group({
-      day: '',
-      month: '',
-      year: ''
+    this.timeParts = formBuilder.group({
+      hour: '',
+      minute: ''
     });
 
     _focusMonitor.monitor(_elementRef, true).subscribe(origin => {
@@ -172,7 +165,6 @@ export class DateInputComponent implements ControlValueAccessor, MatFormFieldCon
     this.describedBy = ids.join(' ');
   }
 
-  // TODO: Wenn Date und Time aktiv sind auf Date gehen
   onContainerClick(event: MouseEvent) {
     if ((event.target as Element).tagName.toLowerCase() !== 'input') {
       // tslint:disable-next-line:no-non-null-assertion
@@ -180,7 +172,7 @@ export class DateInputComponent implements ControlValueAccessor, MatFormFieldCon
     }
   }
 
-  writeValue(date: SdwFormDateModel | null): void {
+  writeValue(date: SdwFormTimeModel | null): void {
     this.value = date;
   }
 
@@ -196,39 +188,32 @@ export class DateInputComponent implements ControlValueAccessor, MatFormFieldCon
     this.disabled = isDisabled;
   }
 
-  dayChangeOnBlur(newValue: string) {
-    const {month, year} = this._currentValidValues;
-    this.value = new SdwFormDateModel(newValue, month, year);
-    this.dayChange();
+  hourChangeOnBlur(newValue: string) {
+    this.value = new SdwFormTimeModel(newValue, this._currentValidValues.minute);
+    this.hourChange();
   }
 
-  dayChange() {
-    if (!this._resetIncorrectValues(this._dayCtrl.nativeElement, this._currentValidValues.day, 31)) {
+  hourChange() {
+    if (!this._resetIncorrectValues(this._hourCtrl.nativeElement, this._currentValidValues.hour, 59)) {
       this._handleInput();
     }
   }
 
-  monthChangeOnBlur(newValue: string) {
-    const {day, year} = this._currentValidValues;
-    this.value = new SdwFormDateModel(day, newValue, year);
-    this.monthChange();
+  minuteChangeOnBlur(newValue: string) {
+    this.value = new SdwFormTimeModel(this._currentValidValues.hour, newValue);
+    this.minuteChange();
   }
 
-  monthChange() {
-    if (!this._resetIncorrectValues(this._monthCtrl.nativeElement, this._currentValidValues.month, 12)) {
-      this._handleInput();
-    }
-  }
-
-  yearChange() {
-    if (!this._resetIncorrectValues(this._yearCtrl.nativeElement, this._currentValidValues.year, 9999)) {
+  minuteChange() {
+    if (!this._resetIncorrectValues(this._minuteCtrl.nativeElement, this._currentValidValues.minute, 23)) {
       this._handleInput();
     }
   }
 
   private _handleInput(): void {
-    this.onChange(this.value.asIsoString);
-    this._currentValidValues = this.value;
+    this.onChange(this.value.asValidString);
+    const {hour, minute} = this.value;
+    this._currentValidValues = new SdwFormTimeModel(hour, minute);
   }
 
   private _resetIncorrectValues(ctrl: HTMLInputElement, prevValue: string, max: number): boolean {
@@ -238,7 +223,7 @@ export class DateInputComponent implements ControlValueAccessor, MatFormFieldCon
 
     const currValue = Number(ctrl.value);
 
-    if (isNaN(currValue) || currValue > max || (ctrl.value === '00' && currValue === 0)) {
+    if (isNaN(currValue) || currValue > max) {
       const selectionStart = ctrl.selectionStart - 1;
 
       ctrl.value = prevValue;

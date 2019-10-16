@@ -8,7 +8,7 @@ export class SwitchableInputDirective {
   @Input() postInputCtrl: HTMLInputElement;
   @Input() autoFillSize = true;
 
-  @Output() valueChange = new EventEmitter<string>();
+  @Output() blurValueChange = new EventEmitter<string>();
 
   constructor(
     @Self() private _elementRef: ElementRef<HTMLInputElement>
@@ -22,8 +22,8 @@ export class SwitchableInputDirective {
     const size = element.size || 2;
 
     if (value.length > 0 && value.length < size) {
-      element.value = new Array(size - value.length).fill('0').join('') + value;
-      this.valueChange.emit(element.value);
+      const newVal = new Array(size - value.length).fill('0').join('') + value;
+      this.blurValueChange.emit(newVal);
     }
   }
 

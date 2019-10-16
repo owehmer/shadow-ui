@@ -9,9 +9,15 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DateInputComponent } from './date-input/date-input.component';
 import { SwitchableInputDirective } from './switchable-input.directive';
+import { TimeInputComponent } from './time-input/time-input.component';
 
 @NgModule({
-  declarations: [SdwFormDateTimePickerComponent, DateInputComponent, SwitchableInputDirective],
+  declarations: [
+    SdwFormDateTimePickerComponent,
+    DateInputComponent,
+    TimeInputComponent,
+    SwitchableInputDirective
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

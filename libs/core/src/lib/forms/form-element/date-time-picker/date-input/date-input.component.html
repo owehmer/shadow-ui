@@ -10,21 +10,21 @@
 
          sdwSwitchableInput
          (input)="dayChange()"
-         (valueChange)="dayChange()"
+         (blurValueChange)="dayChangeOnBlur($event)"
          [postInputCtrl]="monthCtrl"
   >
 
   <span class="date-input-spacer">{{spacerChar}}</span>
 
   <input #monthCtrl
-         class="date-input-control month-day-input"
+         class="date-input-control date-month-input"
          formControlName="month"
          size="2"
          aria-label="Monat"
 
          sdwSwitchableInput
          (input)="monthChange()"
-         (valueChange)="monthChange()"
+         (blurValueChange)="monthChangeOnBlur($event)"
          [preInputCtrl]="dayCtrl"
          [postInputCtrl]="yearCtrl"
   >
@@ -32,14 +32,14 @@
   <span class="date-input-spacer">{{spacerChar}}</span>
 
   <input #yearCtrl
-         class="date-input-control year-day-input"
+         class="date-input-control date-year-input"
          formControlName="year"
          size="4"
          aria-label="Jahr"
 
          sdwSwitchableInput
          (input)="yearChange()"
-         (valueChange)="yearChange()"
+         (blurValueChange)="yearChange()"
          [preInputCtrl]="monthCtrl"
          [autoFillSize]="false"
   >

@@ -1,6 +1,11 @@
 <mat-form-field>
-  <sdw-date-input [formControl]="formControl"
-    [placeholder]="'TEST PLACEHOLDEr'"></sdw-date-input>
+  <!--  <sdw-date-input [formControl]="formControl"-->
+  <!--    [placeholder]="'TEST PLACEHOLDEr'"></sdw-date-input>-->
+
+  <sdw-time-input [formControl]="formControl"
+                  [placeholder]="'SOME PLACEHOLDER'">
+
+  </sdw-time-input>
 
   <mat-icon matSuffix>phone</mat-icon>
   <mat-hint>Include area code</mat-hint>

@@ -1,0 +1,35 @@
+<div [formGroup]="timeParts" class="time-input-container">
+
+  <input #hourCtrl
+         class="time-input-control time-hour-input"
+         formControlName="hour"
+         aria-label="Stunde"
+         type="text"
+         size="2"
+         min="0"
+         max="23"
+
+         sdwSwitchableInput
+         (input)="hourChange()"
+         (blurValueChange)="hourChangeOnBlur($event)"
+         [postInputCtrl]="minuteCtrl"
+  >
+
+  <span class="date-input-spacer">:</span>
+
+  <input #minuteCtrl
+         class="time-input-control time-minute-input"
+         formControlName="minute"
+         aria-label="Minute"
+         type="text"
+         size="2"
+         min="0"
+         max="59"
+
+         sdwSwitchableInput
+         (input)="minuteChange()"
+         (blurValueChange)="minuteChangeOnBlur($event)"
+         [preInputCtrl]="hourCtrl"
+  >
+
+</div>
