@@ -1,0 +1,12 @@
+<div [formGroup]="dateTimeParts" class="date-time-input-container">
+
+  <sdw-date-input #dateCtrl
+                  formControlName="date"
+                  [forceLabelFloat]="shouldLabelFloat"
+  ></sdw-date-input>
+
+  <sdw-time-input #timeCtrl
+                  formControlName="time"
+                  [forceLabelFloat]="shouldLabelFloat"
+  ></sdw-time-input>
+</div>

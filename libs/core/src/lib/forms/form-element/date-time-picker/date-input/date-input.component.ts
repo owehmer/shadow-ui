@@ -23,7 +23,7 @@ export class SdwFormDateModel {
               public year: string) {
   }
 
-  get asIsoString(): string {
+  get asIsoString(): string | null {
     if (!this.day || !this.month || !this.year || this.year.length !== 4) {
       return null;
     }
@@ -34,6 +34,10 @@ export class SdwFormDateModel {
     const validMoment = momentAusgang.isValid() ? momentAusgang : null;
 
     return validMoment ? validMoment.toISOString() : null;
+  }
+
+  get isEmpty(): boolean {
+    return !this.day && !this.month && !this.year;
   }
 }
 
@@ -98,6 +102,8 @@ export class DateInputComponent implements ControlValueAccessor, MatFormFieldCon
 
   @Input() spacerChar = '.';
 
+  @Input() forceLabelFloat = false;
+
   dateParts: FormGroup;
 
   stateChanges = new Subject<void>();
@@ -114,7 +120,7 @@ export class DateInputComponent implements ControlValueAccessor, MatFormFieldCon
   }
 
   get shouldLabelFloat() {
-    return this.focused || !this.empty;
+    return this.focused || !this.empty || this.forceLabelFloat;
   }
 
   private _placeholder: string;

@@ -10,12 +10,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { DateInputComponent } from './date-input/date-input.component';
 import { SwitchableInputDirective } from './switchable-input.directive';
 import { TimeInputComponent } from './time-input/time-input.component';
+import { DateTimeInputComponent } from './date-time-input/date-time-input.component';
 
 @NgModule({
   declarations: [
     SdwFormDateTimePickerComponent,
     DateInputComponent,
     TimeInputComponent,
+    DateTimeInputComponent,
     SwitchableInputDirective
   ],
   imports: [

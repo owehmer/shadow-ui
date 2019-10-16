@@ -6,11 +6,11 @@
   }
 }
 
-.time-input-container {
+.date-input-container {
   display: flex;
 }
 
-.time-input-control {
+.date-input-control {
   border: none;
   background: none;
   padding: 0;
@@ -20,7 +20,7 @@
   text-align: center;
 }
 
-.time-hour-input, .time-minute-input {
+.date-day-input, .date-month-input {
   width: 1.5em;
 }
 

@@ -21,7 +21,7 @@ export class SdwFormTimeModel {
               public minute: string) {
   }
 
-  get asValidString(): string {
+  get asValidString(): string | null {
     if (!this.hour || !this.minute) {
       return null;
     }
@@ -33,6 +33,10 @@ export class SdwFormTimeModel {
     }
 
     return `${hourAsNumber}:${minuteAsNumber}`;
+  }
+
+  get isEmpty(): boolean {
+    return !this.hour && !this.minute;
   }
 }
 
@@ -95,6 +99,8 @@ export class TimeInputComponent implements ControlValueAccessor, MatFormFieldCon
     this.stateChanges.next();
   }
 
+  @Input() forceLabelFloat = false;
+
   timeParts: FormGroup;
 
   stateChanges = new Subject<void>();
@@ -111,7 +117,7 @@ export class TimeInputComponent implements ControlValueAccessor, MatFormFieldCon
   }
 
   get shouldLabelFloat() {
-    return this.focused || !this.empty;
+    return this.focused || !this.empty || this.forceLabelFloat;
   }
 
   private _placeholder: string;
