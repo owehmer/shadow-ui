@@ -12,6 +12,7 @@
          (input)="dayChange()"
          (blurValueChange)="dayChangeOnBlur($event)"
          [postInputCtrl]="monthCtrl"
+         [bgColor]="shouldLabelFloat ? highlightBgColor : undefined"
   >
 
   <span class="date-input-spacer">{{spacerChar}}</span>
@@ -27,6 +28,7 @@
          (blurValueChange)="monthChangeOnBlur($event)"
          [preInputCtrl]="dayCtrl"
          [postInputCtrl]="yearCtrl"
+         [bgColor]="shouldLabelFloat ? highlightBgColor : undefined"
   >
 
   <span class="date-input-spacer">{{spacerChar}}</span>
@@ -42,5 +44,6 @@
          (blurValueChange)="yearChange()"
          [preInputCtrl]="monthCtrl"
          [autoFillSize]="false"
+         [bgColor]="shouldLabelFloat ? highlightBgColor : undefined"
   >
 </div>

@@ -13,6 +13,7 @@
          (input)="hourChange()"
          (blurValueChange)="hourChangeOnBlur($event)"
          [postInputCtrl]="minuteCtrl"
+         [bgColor]="shouldLabelFloat ? highlightBgColor : undefined"
   >
 
   <span class="date-input-spacer">:</span>
@@ -30,6 +31,7 @@
          (input)="minuteChange()"
          (blurValueChange)="minuteChangeOnBlur($event)"
          [preInputCtrl]="hourCtrl"
+         [bgColor]="shouldLabelFloat ? highlightBgColor : undefined"
   >
 
 </div>

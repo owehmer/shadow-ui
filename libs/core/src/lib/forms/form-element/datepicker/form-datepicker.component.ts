@@ -35,6 +35,8 @@ export class SdwFormDatepickerComponent<D> extends SdwFormElementComponent {
   @Input() panelClass: string | string[];
   @Input() touchUi: boolean;
 
+  @Input() placeholder: string;
+
   @Input() matDatepickerFilter: (date: D) => boolean;
   @Input() max: D | null;
   @Input() min: D | null;

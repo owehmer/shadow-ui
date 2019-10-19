@@ -1,12 +1,18 @@
 import {
   ChangeDetectionStrategy, ChangeDetectorRef,
-  Component, ContentChild, Directive, Input, TemplateRef, ViewChild
+  Component, Directive, Input, TemplateRef, ViewChild
 } from '@angular/core';
 import { SdwFormElementComponent } from '../form-element.component';
 import { SdwFormComponent } from '../../form/form.component';
-import { MatCalendarCellCssClasses, MatDatepicker } from '@angular/material/datepicker';
-import { ComponentType } from '@angular/cdk/overlay';
-import { ThemePalette } from '@angular/material/core';
+import { MatDatepicker } from '@angular/material/datepicker';
+
+@Directive({
+  selector: '[sdwFormSDateTimeSuffixTemplate]'
+})
+export class SdwFormDateTimeSuffixTemplateDirective {
+
+  constructor(public templateRef: TemplateRef<any>) { }
+}
 
 @Component({
   selector: 'sdw-form-date-time-picker, [sdw-form-date-time-picker]',
@@ -20,20 +26,18 @@ import { ThemePalette } from '@angular/material/core';
 })
 
 export class SdwFormDateTimePickerComponent<D> extends SdwFormElementComponent {
-  @Input() calendarHeaderComponent: ComponentType<any>;
-  @Input() color: ThemePalette;
-  @Input() dateClass: (date: D) => MatCalendarCellCssClasses;
-  @Input() panelClass: string | string[];
-  @Input() touchUi: boolean;
+  @Input() showDate = true;
+  @Input() showTime = true;
 
-  @Input() matDatepickerFilter: (date: D) => boolean;
-  @Input() max: D | null;
-  @Input() min: D | null;
+  @Input() placeholder: string;
 
-  @Input() showToggleButton = true;
-  @Input() toggleOnFocus = false;
+  @Input() highlightBgColor: string;
 
-  @ViewChild(MatDatepicker, {static: true}) readonly matSelect: MatDatepicker<D>;
+  @Input() hint: string;
+
+  // @ViewChild(MatDatepicker, {static: true}) readonly matSelect: MatDatepicker<D>;
+  @ViewChild(SdwFormDateTimeSuffixTemplateDirective, {static: true})
+  suffixTemplate: SdwFormDateTimeSuffixTemplateDirective;
 
   constructor(form: SdwFormComponent,
               cd: ChangeDetectorRef) {

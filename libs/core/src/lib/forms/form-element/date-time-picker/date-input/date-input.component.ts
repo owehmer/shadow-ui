@@ -53,6 +53,7 @@ export class SdwFormDateModel {
     '[attr.aria-describedby]': 'describedBy'
   }
 })
+
 export class DateInputComponent implements ControlValueAccessor, MatFormFieldControl<SdwFormDateModel>, OnDestroy {
   static nextId = 0;
 
@@ -103,6 +104,8 @@ export class DateInputComponent implements ControlValueAccessor, MatFormFieldCon
   @Input() spacerChar = '.';
 
   @Input() forceLabelFloat = false;
+
+  @Input() highlightBgColor: string;
 
   dateParts: FormGroup;
 

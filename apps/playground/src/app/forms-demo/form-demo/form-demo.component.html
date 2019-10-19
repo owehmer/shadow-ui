@@ -31,14 +31,19 @@
     </ng-template>
   </sdw-form-radio>
 
-  <sdw-form-datepicker [name]="'datepickerA'">
+  <sdw-form-datepicker [name]="'datepickerA'" [placeholder]="'Date Picker'">
 <!--    <ng-template sdwFormDatepicketButtonTemplate>-->
 <!--      A-->
 <!--    </ng-template>-->
   </sdw-form-datepicker>
 
-  <sdw-form-date-time-picker [name]="'dateTime'">
+  <sdw-form-date-time-picker [name]="'dateOnly'" [showTime]="false" [placeholder]="'Date only'">
+  </sdw-form-date-time-picker>
 
+  <sdw-form-date-time-picker [name]="'timeOnly'" [showDate]="false" [placeholder]="'Time only'">
+  </sdw-form-date-time-picker>
+
+  <sdw-form-date-time-picker [name]="'dateOnly'" [placeholder]="'Date und Time'" [highlightBgColor]="'rgba(0,0,0,0.05)'">
   </sdw-form-date-time-picker>
 </sdw-form>
 

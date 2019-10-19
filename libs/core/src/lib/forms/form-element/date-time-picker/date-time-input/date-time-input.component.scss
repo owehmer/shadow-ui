@@ -2,26 +2,10 @@
   display: inline-block;
 
   &.floating-placeholder {
-    &.date-time-with-background ::ng-deep {
-      .date-input-control, .time-input-control {
-        &.empty-input {
-          background-color: rgba(0, 0, 0, 0.05);
-        }
-      }
-    }
-
     .date-input-spacer {
       opacity: 1;
     }
   }
-
-  &.date-time-with-background ::ng-deep {
-    .date-input-control, .time-input-control {
-      transition: background-color 200ms;
-    }
-  }
-
-
 }
 
 .date-time-input-container {

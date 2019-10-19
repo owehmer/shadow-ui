@@ -17,6 +17,7 @@ export class SwitchableInputDirective {
   @Input() preInputCtrl: HTMLInputElement;
   @Input() postInputCtrl: HTMLInputElement;
   @Input() autoFillSize = true;
+  @Input() bgColor: string;
 
   @Output() blurValueChange = new EventEmitter<string>();
 
@@ -24,8 +25,19 @@ export class SwitchableInputDirective {
   get inputIsEmpty(): boolean {
     const element = this._elementRef.nativeElement;
     const value = element.value;
+    return !value;
+  }
+
+  get inputIsFilled(): boolean {
+    const element = this._elementRef.nativeElement;
+    const value = element.value;
     const size = element.size || 2;
-    return !value || value.length !== size;
+    return !this.inputIsEmpty && value.length === size;
+  }
+
+  @HostBinding('style.background-color')
+  get showBgColor(): string {
+    return !this.inputIsFilled && this.bgColor ? this.bgColor : undefined;
   }
 
   constructor(

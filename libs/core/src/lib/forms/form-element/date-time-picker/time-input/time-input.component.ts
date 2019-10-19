@@ -32,7 +32,7 @@ export class SdwFormTimeModel {
       return null;
     }
 
-    return `${hourAsNumber}:${minuteAsNumber}`;
+    return `${this.hour}:${this.minute}`;
   }
 
   get isEmpty(): boolean {
@@ -100,6 +100,8 @@ export class TimeInputComponent implements ControlValueAccessor, MatFormFieldCon
   }
 
   @Input() forceLabelFloat = false;
+
+  @Input() highlightBgColor: string;
 
   timeParts: FormGroup;
 
