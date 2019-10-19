@@ -1,9 +1,9 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy, ChangeDetectorRef,
-  Component,
+  Component, Inject,
   Input,
-  OnChanges, OnDestroy, OnInit,
+  OnChanges, OnDestroy, OnInit, Optional,
   SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
@@ -12,6 +12,12 @@ import { AbstractControl, AsyncValidatorFn, FormControl, ValidatorFn } from '@an
 import { Subject } from 'rxjs';
 import { skip, takeUntil } from 'rxjs/operators';
 import { hasFormControlRequiredValidator } from '../helpers';
+import {
+  MAT_FORM_FIELD_DEFAULT_OPTIONS,
+  MatFormFieldAppearance,
+  MatFormFieldDefaultOptions
+} from '@angular/material/form-field';
+import { FloatLabelType, ThemePalette } from '@angular/material/core';
 
 @Component({
   selector: 'sdw-form-element',
@@ -27,7 +33,6 @@ import { hasFormControlRequiredValidator } from '../helpers';
 export class SdwFormElementComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   @Input() name: string;
   @Input() validatorOrOpts: ValidatorFn | ValidatorFn[];
-
   @Input() asyncValidator: AsyncValidatorFn | AsyncValidatorFn[];
 
   formControl: AbstractControl;
@@ -36,7 +41,7 @@ export class SdwFormElementComponent implements OnInit, AfterViewInit, OnChanges
     return hasFormControlRequiredValidator(this.formControl);
   }
 
-  private _destroyed$ = new Subject();
+  protected _destroyed$ = new Subject();
 
   constructor(protected _form: SdwFormComponent,
               protected _cd: ChangeDetectorRef) {

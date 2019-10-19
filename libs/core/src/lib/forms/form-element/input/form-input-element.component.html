@@ -1,5 +1,11 @@
-<mat-form-field [floatLabel]="floatLabel">
+<mat-form-field [appearance]="appearance"
+                [color]="color"
+                [floatLabel]="floatLabel"
+                [hintLabel]="hintLabel"
+                [hideRequiredMarker]="hideRequiredMarker"
+>
   <mat-label *ngIf="label">{{label}}</mat-label>
+
   <input matInput
          [type]="type"
          [placeholder]="placeholder"

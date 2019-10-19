@@ -1,13 +1,14 @@
 import {
   ChangeDetectionStrategy, ChangeDetectorRef,
-  Component, ContentChild, Directive,
-  Input, OnInit, TemplateRef, ViewChild
+  Component, ContentChild, Directive, Inject,
+  Input, OnInit, Optional, TemplateRef, ViewChild
 } from '@angular/core';
-import { SdwFormElementComponent } from '../form-element.component';
+import { SdwFormMaterialElementComponent } from '../form-mat-element.component';
 import { SdwFormComponent } from '../../form/form.component';
 import { MatSelect } from '@angular/material/select';
 import { hasFormControlRequiredValidator } from '../../helpers';
 import { MatOption } from '@angular/material/core';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions } from '@angular/material/form-field';
 
 export interface SdwFormSelectOption {
   label: string;
@@ -44,7 +45,7 @@ export class SdwFormSelectTemplateDirective {
   }
 })
 
-export class SdwFormSelectComponent extends SdwFormElementComponent implements OnInit {
+export class SdwFormSelectComponent extends SdwFormMaterialElementComponent implements OnInit {
   @Input('aria-label') ariaLabel = '';
   @Input('aria-labelledby') ariaLabelledby: string;
   @Input() compareWith: (o1: any, o2: any) => boolean;
@@ -52,12 +53,8 @@ export class SdwFormSelectComponent extends SdwFormElementComponent implements O
   @Input() disableRipple = false;
   @Input() multiple = false;
   @Input() panelClass: string | string[] | Set<string> | { [key: string]: any; };
-  @Input() placeholder = '';
   @Input() sortComparator: (a: MatOption, b: MatOption, options: MatOption[]) => number;
   @Input() typeaheadDebounceInterval: number;
-
-  @Input() label: string;
-  @Input() hint: string;
 
   @Input()
   set options(value: SdwFormSelectGroup[]) {
@@ -75,8 +72,9 @@ export class SdwFormSelectComponent extends SdwFormElementComponent implements O
   private _groupedOptions: SdwFormSelectGroup[];
 
   constructor(form: SdwFormComponent,
-              cd: ChangeDetectorRef) {
-    super(form, cd);
+              cd: ChangeDetectorRef,
+              @Optional() @Inject(MAT_FORM_FIELD_DEFAULT_OPTIONS) _formFieldOptions: MatFormFieldDefaultOptions) {
+    super(form, cd, _formFieldOptions);
   }
 
   ngOnInit(): void {

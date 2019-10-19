@@ -1,4 +1,11 @@
-<mat-form-field>
+<mat-form-field [appearance]="appearance"
+                [color]="color"
+                [floatLabel]="floatLabel"
+                [hintLabel]="hintLabel"
+                [hideRequiredMarker]="hideRequiredMarker"
+>
+  <mat-label *ngIf="label">{{label}}</mat-label>
+
   <sdw-date-input *ngIf="showDate && !showTime"
                   [formControl]="formControl"
                   [placeholder]="placeholder"
@@ -20,6 +27,4 @@
   <div matSuffix *ngIf="suffixTemplate">
     <ng-container *ngTemplateOutlet="suffixTemplate.templateRef"></ng-container>
   </div>
-
-  <mat-hint *ngIf="hint">{{hint}}</mat-hint>
 </mat-form-field>

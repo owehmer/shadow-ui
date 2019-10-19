@@ -1,12 +1,13 @@
 import {
   ChangeDetectionStrategy, ChangeDetectorRef,
-  Component,
-  Input, ViewChild
+  Component, Inject,
+  Input, Optional, ViewChild
 } from '@angular/core';
-import { SdwFormElementComponent } from '../form-element.component';
+import { SdwFormMaterialElementComponent } from '../form-mat-element.component';
 import { SdwFormComponent } from '../../form/form.component';
 import { ThemePalette } from '@angular/material/core';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions } from '@angular/material/form-field';
 
 @Component({
   selector: 'sdw-form-checkbox, [sdw-form-checkbox]',
@@ -18,19 +19,17 @@ import { MatCheckbox } from '@angular/material/checkbox';
     'class': 'sdw-form-element sdw-form-checkbox',
   }
 })
-export class SdwFormCheckboxComponent extends SdwFormElementComponent {
+export class SdwFormCheckboxComponent extends SdwFormMaterialElementComponent {
   @Input('aria-label') ariaLabel: string;
   @Input('aria-labelledby') ariaLabelledby: string | null;
-  @Input() color: ThemePalette;
   @Input() disableRipple: boolean;
   @Input() labelPosition: 'before' | 'after';
-
-  @Input() label: string;
 
   @ViewChild(MatCheckbox, {static: true}) readonly matCheckbox: MatCheckbox;
 
   constructor(form: SdwFormComponent,
-              cd: ChangeDetectorRef) {
-    super(form, cd);
+              cd: ChangeDetectorRef,
+              @Optional() @Inject(MAT_FORM_FIELD_DEFAULT_OPTIONS) _formFieldOptions: MatFormFieldDefaultOptions) {
+    super(form, cd, _formFieldOptions);
   }
 }

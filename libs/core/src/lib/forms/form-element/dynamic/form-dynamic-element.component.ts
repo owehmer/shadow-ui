@@ -2,17 +2,18 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
-  ComponentRef, EmbeddedViewRef, InjectionToken, Injector,
+  ComponentRef, EmbeddedViewRef, Inject, InjectionToken, Injector,
   Input, OnChanges,
-  OnInit, SimpleChanges,
+  OnInit, Optional, SimpleChanges,
   TemplateRef, ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { ComponentType } from '@angular/cdk/overlay';
 import { BehaviorSubject } from 'rxjs';
 import { CdkPortalOutlet, ComponentPortal, PortalInjector, TemplatePortal } from '@angular/cdk/portal';
-import { SdwFormElementComponent } from '../form-element.component';
+import { SdwFormMaterialElementComponent } from '../form-mat-element.component';
 import { SdwFormComponent } from '../../form/form.component';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions } from '@angular/material/form-field';
 
 export const FORM_DYNAMIC_ELEMENT_DATA = new InjectionToken<any>('sdwFormDynamicElementData');
 
@@ -30,7 +31,7 @@ export const FORM_DYNAMIC_ELEMENT_DATA = new InjectionToken<any>('sdwFormDynamic
     'class': 'sdw-dynamic'
   }
 })
-export class SdwFormDynamicElementComponent extends SdwFormElementComponent implements OnInit, AfterViewInit, OnChanges {
+export class SdwFormDynamicElementComponent extends SdwFormMaterialElementComponent implements OnInit, AfterViewInit, OnChanges {
   // Dynamic form component
   @Input() componentOrTemplate: ComponentType<any> | TemplateRef<any>;
 
@@ -54,8 +55,9 @@ export class SdwFormDynamicElementComponent extends SdwFormElementComponent impl
 
   constructor(form: SdwFormComponent,
               cd: ChangeDetectorRef,
+              @Optional() @Inject(MAT_FORM_FIELD_DEFAULT_OPTIONS) _formFieldOptions: MatFormFieldDefaultOptions,
               private _injector: Injector) {
-    super(form, cd);
+    super(form, cd, _formFieldOptions);
   }
 
   ngOnInit() {

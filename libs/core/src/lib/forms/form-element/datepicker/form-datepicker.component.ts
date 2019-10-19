@@ -1,12 +1,13 @@
 import {
   ChangeDetectionStrategy, ChangeDetectorRef,
-  Component, ContentChild, Directive, Input, TemplateRef, ViewChild
+  Component, ContentChild, Directive, Inject, Input, Optional, TemplateRef, ViewChild
 } from '@angular/core';
-import { SdwFormElementComponent } from '../form-element.component';
+import { SdwFormMaterialElementComponent } from '../form-mat-element.component';
 import { SdwFormComponent } from '../../form/form.component';
 import { MatCalendarCellCssClasses, MatDatepicker } from '@angular/material/datepicker';
 import { ComponentType } from '@angular/cdk/overlay';
 import { ThemePalette } from '@angular/material/core';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions } from '@angular/material/form-field';
 
 
 @Directive({
@@ -28,14 +29,11 @@ export class SdwFormDatepicketButtonTemplateDirective {
   }
 })
 
-export class SdwFormDatepickerComponent<D> extends SdwFormElementComponent {
+export class SdwFormDatepickerComponent<D> extends SdwFormMaterialElementComponent {
   @Input() calendarHeaderComponent: ComponentType<any>;
-  @Input() color: ThemePalette;
   @Input() dateClass: (date: D) => MatCalendarCellCssClasses;
   @Input() panelClass: string | string[];
   @Input() touchUi: boolean;
-
-  @Input() placeholder: string;
 
   @Input() matDatepickerFilter: (date: D) => boolean;
   @Input() max: D | null;
@@ -50,8 +48,9 @@ export class SdwFormDatepickerComponent<D> extends SdwFormElementComponent {
   toggleButtonTemplate: SdwFormDatepicketButtonTemplateDirective;
 
   constructor(form: SdwFormComponent,
-              cd: ChangeDetectorRef) {
-    super(form, cd);
+              cd: ChangeDetectorRef,
+              @Optional() @Inject(MAT_FORM_FIELD_DEFAULT_OPTIONS) _formFieldOptions: MatFormFieldDefaultOptions) {
+    super(form, cd, _formFieldOptions);
   }
 
   openPickerIfSet() {

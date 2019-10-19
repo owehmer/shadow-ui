@@ -1,12 +1,13 @@
 import {
   ChangeDetectionStrategy, ChangeDetectorRef,
-  Component, ContentChild, Directive, Input, TemplateRef,
+  Component, ContentChild, Directive, Inject, Input, Optional, TemplateRef,
   ViewChild
 } from '@angular/core';
-import { SdwFormElementComponent } from '../form-element.component';
+import { SdwFormMaterialElementComponent } from '../form-mat-element.component';
 import { SdwFormComponent } from '../../form/form.component';
 import { MatRadioGroup } from '@angular/material/radio';
 import { ThemePalette } from '@angular/material/core';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions } from '@angular/material/form-field';
 
 export interface SdwFormRadioOption {
   label: string;
@@ -32,8 +33,7 @@ export class SdwFormRadioTemplateDirective {
   }
 })
 
-export class SdwFormRadioComponent extends SdwFormElementComponent {
-  @Input() color: ThemePalette;
+export class SdwFormRadioComponent extends SdwFormMaterialElementComponent {
   @Input() labelPosition: 'before' | 'after';
   @Input() disableRipple: boolean;
 
@@ -44,7 +44,8 @@ export class SdwFormRadioComponent extends SdwFormElementComponent {
   @ContentChild(SdwFormRadioTemplateDirective, {static: true}) templateDir: SdwFormRadioTemplateDirective;
 
   constructor(form: SdwFormComponent,
-              cd: ChangeDetectorRef) {
-    super(form, cd);
+              cd: ChangeDetectorRef,
+              @Optional() @Inject(MAT_FORM_FIELD_DEFAULT_OPTIONS) _formFieldOptions: MatFormFieldDefaultOptions) {
+    super(form, cd, _formFieldOptions);
   }
 }

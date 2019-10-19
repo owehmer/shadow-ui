@@ -1,12 +1,13 @@
 import {
   ChangeDetectionStrategy, ChangeDetectorRef,
-  Component,
-  Input, ViewChild,
+  Component, Inject,
+  Input, Optional, ViewChild
 } from '@angular/core';
-import { SdwFormElementComponent } from '../form-element.component';
+import { SdwFormMaterialElementComponent } from '../form-mat-element.component';
 import { FloatLabelType } from '@angular/material/core';
 import { SdwFormComponent } from '../../form/form.component';
 import { MatInput } from '@angular/material/input';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions } from '@angular/material/form-field';
 
 export type SdwFormElementTypes = 'number' | 'text' | 'email';
 
@@ -21,16 +22,14 @@ export type SdwFormElementTypes = 'number' | 'text' | 'email';
   }
 })
 
-export class SdwFormInputElementComponent extends SdwFormElementComponent {
-  @Input() placeholder: string;
-  @Input() floatLabel: FloatLabelType;
-  @Input() label: string;
+export class SdwFormInputElementComponent extends SdwFormMaterialElementComponent {
   @Input() type: SdwFormElementTypes = 'text';
 
   @ViewChild(MatInput, {static: true}) readonly matInput: MatInput;
 
   constructor(form: SdwFormComponent,
-              cd: ChangeDetectorRef) {
-    super(form, cd);
+              cd: ChangeDetectorRef,
+              @Optional() @Inject(MAT_FORM_FIELD_DEFAULT_OPTIONS) _formFieldOptions: MatFormFieldDefaultOptions) {
+    super(form, cd, _formFieldOptions);
   }
 }
