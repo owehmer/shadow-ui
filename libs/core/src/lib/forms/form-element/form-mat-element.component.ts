@@ -1,9 +1,9 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy, ChangeDetectorRef,
-  Component, Inject,
+  Component, Directive, Inject,
   Input,
-  OnChanges, OnDestroy, OnInit, Optional,
+  OnChanges, OnDestroy, OnInit, Optional, TemplateRef, ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { SdwFormComponent } from '../form/form.component';
@@ -15,6 +15,13 @@ import {
 } from '@angular/material/form-field';
 import { FloatLabelType, ThemePalette } from '@angular/material/core';
 import { SdwFormElementComponent } from './form-element.component';
+
+@Directive({
+  selector: '[sdwFormSuffix]'
+})
+export class SdwFormSuffixTemplateDirective {
+  constructor(public templateRef: TemplateRef<any>) { }
+}
 
 @Component({
   selector: 'sdw-form-mat-element',
@@ -38,6 +45,22 @@ export class SdwFormMaterialElementComponent extends SdwFormElementComponent imp
   @Input() placeholder: string;
 
   @Input() shownErrors: string[];
+
+  get errors(): any[] {
+    if (!this.shownErrors) {
+      return null;
+    }
+    const ctrlErrors = this.formControl && this.formControl.errors ? this.formControl.errors : {};
+    const visibleErrorsKeys = Object.keys(ctrlErrors).filter(e => this.shownErrors.includes(e));
+    return visibleErrorsKeys.map(key => ctrlErrors[key]);
+  }
+
+  get firstError(): any {
+    return this.errors && this.errors.length > 0 ? this.errors[0] : undefined;
+  }
+
+  @ViewChild(SdwFormSuffixTemplateDirective, {static: true})
+  readonly suffixTemplate: SdwFormSuffixTemplateDirective;
 
   get showRequiredMarker(): boolean {
     return !this.hideRequiredMarker && hasFormControlRequiredValidator(this.formControl);

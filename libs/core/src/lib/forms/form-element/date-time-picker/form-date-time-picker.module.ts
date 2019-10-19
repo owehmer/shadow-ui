@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   SdwFormDateTimePickerComponent,
-  SdwFormDateTimeSuffixTemplateDirective
 } from './form-date-time-picker.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -21,7 +20,6 @@ import { DateTimeInputComponent } from './date-time-input/date-time-input.compon
     DateInputComponent,
     TimeInputComponent,
     DateTimeInputComponent,
-    SdwFormDateTimeSuffixTemplateDirective,
     SwitchableInputDirective
   ],
   imports: [

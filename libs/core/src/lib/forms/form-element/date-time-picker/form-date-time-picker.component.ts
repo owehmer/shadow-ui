@@ -10,14 +10,6 @@ import { DateInputComponent } from './date-input/date-input.component';
 import { TimeInputComponent } from './time-input/time-input.component';
 import { DateTimeInputComponent } from './date-time-input/date-time-input.component';
 
-@Directive({
-  selector: '[sdwFormSDateTimeSuffixTemplate]'
-})
-export class SdwFormDateTimeSuffixTemplateDirective {
-
-  constructor(public templateRef: TemplateRef<any>) { }
-}
-
 @Component({
   selector: 'sdw-form-date-time-picker, [sdw-form-date-time-picker]',
   templateUrl: './form-date-time-picker.component.html',
@@ -38,9 +30,6 @@ export class SdwFormDateTimePickerComponent<D> extends SdwFormMaterialElementCom
   @ViewChild(DateInputComponent, {static: true}) readonly dateComponent: DateInputComponent;
   @ViewChild(TimeInputComponent, {static: true}) readonly timeComponent: TimeInputComponent;
   @ViewChild(DateTimeInputComponent, {static: true}) readonly dateTimeComponent: DateTimeInputComponent;
-
-  @ViewChild(SdwFormDateTimeSuffixTemplateDirective, {static: true})
-  readonly suffixTemplate: SdwFormDateTimeSuffixTemplateDirective;
 
   constructor(form: SdwFormComponent,
               cd: ChangeDetectorRef,

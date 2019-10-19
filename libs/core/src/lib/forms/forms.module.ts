@@ -6,12 +6,21 @@ import { SdwFormInputElementModule } from './form-element/input/form-input-eleme
 import { PortalModule } from '@angular/cdk/portal';
 import { SdwFormDynamicElementComponent } from './form-element/dynamic/form-dynamic-element.component';
 import { SdwFormCheckboxModule } from './form-element/checkbox/form-checkbox.module';
-import { SdwFormMaterialElementComponent } from './form-element/form-mat-element.component';
+import {
+  SdwFormMaterialElementComponent,
+  SdwFormSuffixTemplateDirective
+} from './form-element/form-mat-element.component';
 import { SdwFormSelectModule } from './form-element/select/form-select.module';
 import { SdwFormElementComponent } from './form-element/form-element.component';
 
 @NgModule({
-  declarations: [SdwFormComponent, SdwFormElementComponent, SdwFormMaterialElementComponent, SdwFormDynamicElementComponent],
+  declarations: [
+    SdwFormComponent,
+    SdwFormElementComponent,
+    SdwFormMaterialElementComponent,
+    SdwFormDynamicElementComponent,
+    SdwFormSuffixTemplateDirective,
+  ],
   imports: [
     CommonModule,
     FormsModule,

@@ -48,5 +48,11 @@
     </ng-template>
   </mat-select>
 
-  <mat-hint *ngIf="hint">{{hint}}</mat-hint>
+  <div matSuffix *ngIf="suffixTemplate">
+    <ng-container *ngTemplateOutlet="suffixTemplate.templateRef"></ng-container>
+  </div>
+
+  <mat-error *ngIf="firstError as error">
+    {{error}}
+  </mat-error>
 </mat-form-field>
