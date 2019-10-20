@@ -44,7 +44,7 @@ export class SdwFormTimeModel {
   selector: 'sdw-time-input',
   templateUrl: './time-input.component.html',
   styleUrls: ['./time-input.component.scss'],
-  providers: [{provide: MatFormFieldControl, useExisting: TimeInputComponent}],
+  providers: [{provide: MatFormFieldControl, useExisting: SdwTimeInputComponent}],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.floating-placeholder]': 'shouldLabelFloat',
@@ -52,7 +52,7 @@ export class SdwFormTimeModel {
     '[attr.aria-describedby]': 'describedBy'
   }
 })
-export class TimeInputComponent implements ControlValueAccessor, MatFormFieldControl<SdwFormTimeModel>, OnDestroy {
+export class SdwTimeInputComponent implements ControlValueAccessor, MatFormFieldControl<SdwFormTimeModel>, OnDestroy {
   static nextId = 0;
 
   @Input()
@@ -109,7 +109,7 @@ export class TimeInputComponent implements ControlValueAccessor, MatFormFieldCon
   focused = false;
   errorState = false;
   controlType = 'sdw-form-time';
-  id = `sdw-inner-form-time-${TimeInputComponent.nextId++}`;
+  id = `sdw-inner-form-time-${SdwTimeInputComponent.nextId++}`;
   describedBy = '';
 
   get empty() {

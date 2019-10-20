@@ -5,9 +5,9 @@ import {
 import {SdwFormMaterialElementComponent} from '../form-mat-element.component';
 import {SdwFormComponent} from '../../form.component';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions} from '@angular/material/form-field';
-import {DateInputComponent} from './date-input/date-input.component';
-import {TimeInputComponent} from './time-input/time-input.component';
-import {DateTimeInputComponent} from './date-time-input/date-time-input.component';
+import {SdwDateInputComponent} from './date-input/date-input.component';
+import {SdwTimeInputComponent} from './time-input/time-input.component';
+import {SdwDateTimeInputComponent} from './date-time-input/date-time-input.component';
 
 @Component({
   selector: 'sdw-form-date-time-picker, [sdw-form-date-time-picker]',
@@ -26,9 +26,9 @@ export class SdwFormDateTimePickerComponent<D> extends SdwFormMaterialElementCom
 
   @Input() highlightBgColor: string;
 
-  @ViewChild(DateInputComponent, {static: true}) readonly dateComponent: DateInputComponent;
-  @ViewChild(TimeInputComponent, {static: true}) readonly timeComponent: TimeInputComponent;
-  @ViewChild(DateTimeInputComponent, {static: true}) readonly dateTimeComponent: DateTimeInputComponent;
+  @ViewChild(SdwDateInputComponent, {static: true}) readonly dateComponent: SdwDateInputComponent;
+  @ViewChild(SdwTimeInputComponent, {static: true}) readonly timeComponent: SdwTimeInputComponent;
+  @ViewChild(SdwDateTimeInputComponent, {static: true}) readonly dateTimeComponent: SdwDateTimeInputComponent;
 
   constructor(form: SdwFormComponent,
               cd: ChangeDetectorRef,

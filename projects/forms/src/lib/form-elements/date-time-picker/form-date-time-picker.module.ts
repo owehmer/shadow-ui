@@ -9,17 +9,17 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
-import { DateInputComponent } from './date-input/date-input.component';
+import { SdwDateInputComponent } from './date-input/date-input.component';
 import { SwitchableInputDirective } from './switchable-input.directive';
-import { TimeInputComponent } from './time-input/time-input.component';
-import { DateTimeInputComponent } from './date-time-input/date-time-input.component';
+import { SdwTimeInputComponent } from './time-input/time-input.component';
+import { SdwDateTimeInputComponent } from './date-time-input/date-time-input.component';
 
 @NgModule({
   declarations: [
     SdwFormDateTimePickerComponent,
-    DateInputComponent,
-    TimeInputComponent,
-    DateTimeInputComponent,
+    SdwDateInputComponent,
+    SdwTimeInputComponent,
+    SdwDateTimeInputComponent,
     SwitchableInputDirective
   ],
   imports: [
