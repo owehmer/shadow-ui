@@ -7,9 +7,6 @@ export * from './lib/form-elements/form-element.component';
 export * from './lib/form-elements/form-mat-element.component';
 export * from './lib/form-elements/form-dynamic-element.component';
 
-export * from './lib/dyn-grid/dyn-grid.module';
-export * from './lib/dyn-grid/dyn-grid.directive';
-
 export * from './lib/form-elements/checkbox';
 
 export * from './lib/form-elements/date-time-picker';

@@ -16,7 +16,6 @@ import { AllDemosComponent } from './all-demos/all-demos.component';
 import { DialogDemoComponent } from './dialog-demo/dialog-demo/dialog-demo.component';
 import { FormDemoComponent } from './forms-demo/form-demo.component';
 import {
-  DynGridModule,
   SdwFormCheckboxModule,
   SdwFormDatepickerModule, SdwFormDateTimePickerModule,
   SdwFormInputElementModule,
@@ -26,6 +25,7 @@ import {
 } from '@shadowui/forms';
 import { SdwDialogModule } from '@shadowui/dialog';
 import { FormLayoutComponent } from './form-layout/form-layout.component';
+import { SdwDynGridModule } from '@shadowui/utils';
 
 @NgModule({
   declarations: [AppComponent, MyContentComponent, MyContentComponentShort, DynamicComponent, FormOneComponent, AllDemosComponent, DialogDemoComponent, FormDemoComponent, FormLayoutComponent],
@@ -52,7 +52,7 @@ import { FormLayoutComponent } from './form-layout/form-layout.component';
     SdwFormRadioModule,
     SdwFormDatepickerModule,
     SdwFormDateTimePickerModule,
-    DynGridModule
+    SdwDynGridModule
   ],
   providers: [],
   bootstrap: [AppComponent],

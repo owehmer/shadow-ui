@@ -1,8 +1,8 @@
-import { DynGridDirective } from './dyn-grid.directive';
+import { SdwDynGridDirective } from './dyn-grid.directive';
 
 describe('DynGridDirective', () => {
   it('should create an instance', () => {
-    const directive = new DynGridDirective(null);
+    const directive = new SdwDynGridDirective(null);
     expect(directive).toBeTruthy();
   });
 });

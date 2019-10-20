@@ -1,0 +1,26 @@
+{
+  "name": "@shadowui/utils",
+  "description": "Utils of the Shadow-UI",
+  "version": "0.1.0",
+  "author": "Oliver Wehmer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/owehmer/shadow-ui.git"
+  },
+  "keywords": [
+    "angular",
+    "material",
+    "components",
+    "form"
+  ],
+  "bugs": {
+    "url": "https://github.com/owehmer/shadow-ui/issues"
+  },
+  "homepage": "https://github.com/owehmer/shadow-ui#readme",
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": "^8.0.0",
+    "@angular/core": "^8.0.0"
+  },
+  "sideEffects": false
+}

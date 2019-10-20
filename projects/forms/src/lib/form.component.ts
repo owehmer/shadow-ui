@@ -9,7 +9,7 @@ import {
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { filter, switchMap, takeUntil } from 'rxjs/operators';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { DynGridContainerDirective } from './dyn-grid/dyn-grid.directive';
+import { SdwDynGridContainerDirective } from '@shadowui/utils';
 
 @Component({
   selector: 'sdw-form',
@@ -54,7 +54,7 @@ export class SdwFormComponent implements OnInit, AfterViewInit, OnDestroy {
   private _destroyed$ = new Subject();
 
   constructor(private _fb: FormBuilder,
-              @Self() @Optional() private _gridContainer: DynGridContainerDirective) {
+              @Self() @Optional() private _gridContainer: SdwDynGridContainerDirective) {
   }
 
   ngOnInit() {

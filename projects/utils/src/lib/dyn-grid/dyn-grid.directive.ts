@@ -25,7 +25,7 @@ type GridDisplay = {
 @Directive({
   selector: '[sdwDynGridChild]'
 })
-export class DynGridDirective {
+export class SdwDynGridDirective {
   @HostBinding('style.grid-column-start')
   get styleColSpan(): string {
     return this.colSpan ? `span ${this.colSpan}` : undefined;
@@ -39,7 +39,7 @@ export class DynGridDirective {
   @Input() colSpan: number;
   @Input() rowSpan: number;
 
-  constructor(public parent: DynGridContainerDirective) {
+  constructor(public parent: SdwDynGridContainerDirective) {
     console.warn('INIT WITH PARENT', parent);
   }
 
@@ -49,7 +49,7 @@ export class DynGridDirective {
 @Directive({
   selector: '[sdwDynGridContainer]'
 })
-export class DynGridContainerDirective implements AfterViewInit, OnChanges, OnDestroy {
+export class SdwDynGridContainerDirective implements AfterViewInit, OnChanges, OnDestroy {
   @Input()
   get elementRef(): ElementRef<any> {
     return this._elemRef$.getValue();
@@ -63,8 +63,8 @@ export class DynGridContainerDirective implements AfterViewInit, OnChanges, OnDe
   @Input() cols: string[] | number;
   @Input() rows: string[] | number;
 
-  @ContentChildren(DynGridDirective)
-  children: QueryList<DynGridDirective>;
+  @ContentChildren(SdwDynGridDirective)
+  children: QueryList<SdwDynGridDirective>;
 
   private _elemRef$ = new BehaviorSubject<ElementRef<HTMLElement>>(undefined);
   private _prefElemRef: ElementRef<HTMLElement>;
