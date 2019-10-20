@@ -40,7 +40,6 @@ export class SdwDynGridDirective {
   @Input() rowSpan: number;
 
   constructor(public parent: SdwDynGridContainerDirective) {
-    console.warn('INIT WITH PARENT', parent);
   }
 
 }

@@ -2,6 +2,8 @@
 
 This page is currently beeing created.
 
+#### Check out the [playground](https://shadow-ui.owehmer.now.sh/)!
+
 ## Getting started
 ### Step 1
 Choose any or all of the npm packages: 

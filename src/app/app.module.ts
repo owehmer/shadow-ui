@@ -44,6 +44,8 @@ import { SdwDynGridModule } from '@shadowui/utils';
 
     MatButtonModule,
     MatToolbarModule,
+    MatFormFieldModule,
+    MatInputModule,
 
     SdwFormCheckboxModule,
     SdwFormDateTimePickerModule,
