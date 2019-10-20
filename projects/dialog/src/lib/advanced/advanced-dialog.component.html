@@ -1,0 +1,24 @@
+<sdw-title-bar [useSimpleTitleBar]="simpleTitleBar"
+               [hasChanges]="contentChanged"
+               [leftIcons]="leftIcons"
+               [rightIcons]="rightIcons"
+               [titleColor]="titleColor"
+               [disabled]="buttonActionHappening"
+               [displayButtons]="isFullsize"
+               (buttonClick)="buttonClicked($event)">
+  {{title}}
+</sdw-title-bar>
+
+<sdw-content>
+  <span *ngIf="text" class="sdw-simple-content">{{text}}</span>
+  <ng-template cdkPortalOutlet></ng-template>
+</sdw-content>
+
+<sdw-footer [abortBtnText]="abortBtnText"
+            [okBtnText]="okBtnText"
+            [abortBtnDisabled]="abortBtnDisabled || buttonActionHappening"
+            [okBtnDisabled]="okBtnDisabled || buttonActionHappening"
+            [showAbortBtn]="showAbortBtn"
+            [showOkBtn]="showOkBtn"
+            (buttonClick)="buttonClicked($event)"
+></sdw-footer>

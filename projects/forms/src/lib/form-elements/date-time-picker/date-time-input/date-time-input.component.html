@@ -1,0 +1,14 @@
+<div [formGroup]="dateTimeParts" class="date-time-input-container">
+
+  <sdw-date-input #dateCtrl
+                  formControlName="date"
+                  [forceLabelFloat]="shouldLabelFloat"
+                  [highlightBgColor]="highlightBgColor"
+  ></sdw-date-input>
+
+  <sdw-time-input #timeCtrl
+                  formControlName="time"
+                  [forceLabelFloat]="shouldLabelFloat"
+                  [highlightBgColor]="highlightBgColor"
+  ></sdw-time-input>
+</div>

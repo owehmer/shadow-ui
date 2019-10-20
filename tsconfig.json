@@ -1,0 +1,40 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "paths": {
+      "@shadowui/forms": [
+        "projects/forms/src/public_api.ts"
+      ],
+      "@shadowui/dialog": [
+        "projects/dialog/src/public_api.ts"
+      ],
+      "forms": [
+        "dist/forms"
+      ],
+      "forms/*": [
+        "dist/forms/*"
+      ],
+      "dialog": [
+        "dist/dialog"
+      ],
+      "dialog/*": [
+        "dist/dialog/*"
+      ]
+    }
+  }
+}

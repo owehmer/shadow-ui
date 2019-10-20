@@ -1,0 +1,21 @@
+:host {
+  display: inline-block;
+
+  &.floating-placeholder {
+    .date-input-spacer {
+      opacity: 1;
+    }
+  }
+}
+
+.date-time-input-container {
+  display: flex;
+}
+
+.date-input-spacer {
+  opacity: 0;
+}
+
+sdw-time-input {
+  margin-left: 0.5em;
+}

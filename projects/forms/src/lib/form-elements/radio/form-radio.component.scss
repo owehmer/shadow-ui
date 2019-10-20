@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  align-items: center;
+  height: 42px;
+}
+
+.sdw-radio-group {
+  display: inline-block;
+}
+
+.sdw-radio-group > .mat-radio-button:not(:first-child) {
+  padding-left: 12px;
+}

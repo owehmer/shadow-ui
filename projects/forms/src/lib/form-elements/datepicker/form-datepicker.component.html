@@ -1,0 +1,33 @@
+<mat-form-field [appearance]="appearance"
+                [color]="color"
+                [floatLabel]="floatLabel"
+                [hintLabel]="hintLabel"
+                [hideRequiredMarker]="hideRequiredMarker"
+                (click)="openPickerIfSet()"
+>
+  <mat-label *ngIf="label">{{label}}</mat-label>
+
+  <input matInput
+         [formControl]="formControl"
+         [placeholder]="placeholder"
+         [matDatepicker]="picker"
+         [matDatepickerFilter]="matDatepickerFilter"
+         [max]="max"
+         [min]="min"
+  >
+  <mat-datepicker-toggle matSuffix *ngIf="showToggleButton" [for]="picker">
+    <ng-container matDatepickerToggleIcon *ngIf="toggleButtonTemplate">
+      <ng-container *ngTemplateOutlet="toggleButtonTemplate.templateRef"></ng-container>
+    </ng-container>
+  </mat-datepicker-toggle>
+
+  <mat-datepicker #picker></mat-datepicker>
+
+  <div matSuffix *ngIf="suffixTemplate">
+    <ng-container *ngTemplateOutlet="suffixTemplate.templateRef"></ng-container>
+  </div>
+
+  <mat-error *ngIf="firstError as error">
+    {{error}}
+  </mat-error>
+</mat-form-field>

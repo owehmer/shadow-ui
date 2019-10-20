@@ -1,0 +1,58 @@
+<sdw-form [sdwFormGroup]="formGroup">
+  <sdw-form-input-element [name]="name"
+                          [type]="'text'"
+                          [label]="label"
+                          [placeholder]="placeholder"
+                          [validatorOrOpts]="requiredValidator"
+  >
+  </sdw-form-input-element>
+
+  <sdw-form-input-element [name]="'inputNumber'"
+                          [type]="'number'"
+                          [label]="label"
+                          [placeholder]="placeholder"
+  >
+  </sdw-form-input-element>
+
+  <sdw-form-checkbox [name]="'check'" [labelPosition]="'after'">
+    Test
+  </sdw-form-checkbox>
+
+  <sdw-form-select [name]="'select'" [label]="'Choose wisely'" [options]="selectOptions">
+    <ng-template sdwFormSelectTemplate let-option>
+      <span>{{option.label}}</span>
+      <span>aaa</span>
+    </ng-template>
+  </sdw-form-select>
+
+  <sdw-form-radio [name]="'radio'" [options]="radioOptions">
+    <ng-template sdwFormRadioTemplate let-option>
+      <{{option.label}}>
+    </ng-template>
+  </sdw-form-radio>
+
+  <sdw-form-datepicker [name]="'datepickerA'" [placeholder]="'Date Picker'">
+<!--    <ng-template sdwFormDatepicketButtonTemplate>-->
+<!--      A-->
+<!--    </ng-template>-->
+  </sdw-form-datepicker>
+
+  <sdw-form-date-time-picker [name]="'dateOnly'" [showTime]="false" [placeholder]="'Date only'">
+  </sdw-form-date-time-picker>
+
+  <sdw-form-date-time-picker [name]="'timeOnly'" [showDate]="false" [placeholder]="'Time only'">
+  </sdw-form-date-time-picker>
+
+  <sdw-form-date-time-picker [name]="'dateOnly'" [placeholder]="'Date und Time'" [highlightBgColor]="'rgba(0,0,0,0.05)'">
+  </sdw-form-date-time-picker>
+</sdw-form>
+
+<button (click)="editPlaceholder()">{{placeholder}}</button>
+<button (click)="editLabel()">Edit Label. Current: '{{label}}'</button>
+<button (click)="removeValidator()">Remove validator</button>
+<button (click)="changeGroup()">Change FB Group</button>
+<button (click)="setValue()">SET VALUE</button>
+
+<div class="form-result">
+  {{formResult | json}}
+</div>

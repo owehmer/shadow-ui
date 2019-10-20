@@ -1,0 +1,40 @@
+@import '../../advanced/material-guidelines.scss';
+
+.sdw-fullscreen-dialog {
+  $titleBig: 64px;
+  $titleSmall: 56px;
+
+  .sdw-content {
+    max-width: 100vw !important;
+    width: 100vw !important;
+  }
+
+  .sdw-title-bar:not(.sdw-simple-title-bar) + .sdw-content {
+    @media (max-width: 599.99px) and (orientation: portrait) {
+      max-height: calc(100vh - #{$titleSmall}) !important;
+      height: calc(100vh - #{$titleSmall}) !important;
+    }
+  }
+  .sdw-title-bar.sdw-simple-title-bar + .sdw-content, .sdw-content {
+    max-height: calc(100vh - #{$titleBig}) !important;
+    height: calc(100vh - #{$titleBig}) !important;
+  }
+}
+
+.sdw-content {
+  display: block;
+  box-sizing: border-box;
+  outline: none;
+
+  &:not(.sdw-content-padded) {
+    padding: 0;
+  }
+
+  &.sdw-content-padded {
+    padding: $mat-default-padding $mat-default-padding 0 $mat-default-padding;
+  }
+
+  & > *:first-child {
+    margin-top: 0;
+  }
+}

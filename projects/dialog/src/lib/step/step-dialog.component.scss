@@ -1,0 +1,25 @@
+@import '../advanced/material-guidelines.scss';
+
+@include matDialogStyles(sdw-step-dialog);
+
+.sdw-step-dialog {
+  .mat-stepper-horizontal {
+    &.resizing {
+      overflow: hidden;
+    }
+    &.animated-stepper {
+      transition: height 200ms;
+    }
+
+    .mat-horizontal-stepper-header-container {
+      position: sticky;
+      top: 0;
+      background: #FFFFFF;
+      z-index: 5;
+    }
+
+    .sdw-step-subtitle {
+      font-size: 12px;
+    }
+  }
+}

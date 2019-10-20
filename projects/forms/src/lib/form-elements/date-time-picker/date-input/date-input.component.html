@@ -1,0 +1,49 @@
+<div [formGroup]="dateParts" class="date-input-container">
+
+  <input #dayCtrl
+         class="date-input-control date-day-input"
+         formControlName="day" size="2"
+         aria-label="Tag"
+         type="text"
+         min="1"
+         max="31"
+
+         sdwSwitchableInput
+         (input)="dayChange()"
+         (blurValueChange)="dayChangeOnBlur($event)"
+         [postInputCtrl]="monthCtrl"
+         [bgColor]="shouldLabelFloat ? highlightBgColor : undefined"
+  >
+
+  <span class="date-input-spacer">{{spacerChar}}</span>
+
+  <input #monthCtrl
+         class="date-input-control date-month-input"
+         formControlName="month"
+         size="2"
+         aria-label="Monat"
+
+         sdwSwitchableInput
+         (input)="monthChange()"
+         (blurValueChange)="monthChangeOnBlur($event)"
+         [preInputCtrl]="dayCtrl"
+         [postInputCtrl]="yearCtrl"
+         [bgColor]="shouldLabelFloat ? highlightBgColor : undefined"
+  >
+
+  <span class="date-input-spacer">{{spacerChar}}</span>
+
+  <input #yearCtrl
+         class="date-input-control date-year-input"
+         formControlName="year"
+         size="4"
+         aria-label="Jahr"
+
+         sdwSwitchableInput
+         (input)="yearChange()"
+         (blurValueChange)="yearChange()"
+         [preInputCtrl]="monthCtrl"
+         [autoFillSize]="false"
+         [bgColor]="shouldLabelFloat ? highlightBgColor : undefined"
+  >
+</div>

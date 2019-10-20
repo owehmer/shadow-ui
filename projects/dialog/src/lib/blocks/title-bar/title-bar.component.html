@@ -1,0 +1,44 @@
+<mat-toolbar *ngIf="!useSimpleTitleBar; else simpleTitle"
+             class="sdw-title-container sdw-toolbar-title-container"
+             [color]="titleColor">
+
+  <button *ngIf="displayButtons && leftIcon"
+          mat-icon-button
+          class="sdw-left-title-btn"
+          [disabled]="disabled"
+          (click)="iconClicked(false)"
+  >
+    <mat-icon *ngIf="leftIcon" [svgIcon]="settings.iconSource == 'svg' ? leftIcon : null">
+      {{settings.iconSource == 'font' ? leftIcon : null}}
+    </mat-icon>
+  </button>
+
+  <div class="sdw-title-text">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </div>
+
+  <div *ngIf="displayButtons && rightIcon || extendedConfig" style="flex: 1;"></div>
+
+  <button *ngIf="displayButtons && rightIcon"
+          mat-icon-button
+          class="sdw-right-title-btn"
+          [disabled]="disabled"
+          (click)="iconClicked(true)"
+  >
+    <mat-icon *ngIf="leftIcon || rightIcon">{{rightIcon}}</mat-icon>
+  </button>
+
+  <sdw-extended-ok *ngIf="extendedConfig" [config]="extendedConfig"
+                   [disabled]="disabled"></sdw-extended-ok>
+</mat-toolbar>
+
+<ng-template #simpleTitle>
+  <h1 mat-dialog-title class="sdw-title-container sdw-simple-title-container">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </h1>
+</ng-template>
+
+<!--There can only be one standard <ng-content> in a template-->
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>

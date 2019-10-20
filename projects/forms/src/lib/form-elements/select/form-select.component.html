@@ -1,0 +1,58 @@
+<mat-form-field [appearance]="appearance"
+                [color]="color"
+                [floatLabel]="floatLabel"
+                [hintLabel]="hintLabel"
+                [hideRequiredMarker]="hideRequiredMarker"
+>
+  <mat-label *ngIf="label">{{label}}</mat-label>
+
+  <mat-select [formControl]="formControl"
+              [aria-label]="ariaLabel"
+              [aria-labelledby]="ariaLabelledby"
+              [compareWith]="compareWith ? compareWith : undefined"
+              [disableOptionCentering]="disableOptionCentering"
+              [disableRipple]="disableRipple"
+              [multiple]="multiple"
+              [panelClass]="panelClass"
+              [placeholder]="placeholder"
+              [sortComparator]="sortComparator"
+              [typeaheadDebounceInterval]="typeaheadDebounceInterval"
+  >
+    <ng-container *ngFor="let group of groupedOptions">
+      <ng-container *ngIf="group.label; else simpleOptions">
+        <mat-optgroup [label]="group.label"
+                      [disabled]="group.disabled"
+        >
+          <ng-container *ngTemplateOutlet="optionTemplate; context: {groupedOptions: group.options}"></ng-container>
+        </mat-optgroup>
+      </ng-container>
+
+      <ng-template #simpleOptions>
+        <ng-container *ngTemplateOutlet="optionTemplate; context: {groupedOptions: group.options}"></ng-container>
+      </ng-template>
+    </ng-container>
+
+    <ng-template #optionTemplate let-groupedOptions="groupedOptions">
+      <mat-option *ngFor="let option of groupedOptions"
+                  [value]="option.value ? option.value : option.label"
+                  [disabled]="option.disabled"
+      >
+        <ng-container *ngIf="templateDir; else simpleOptionLabel">
+          <ng-container *ngTemplateOutlet="templateDir.templateRef; context: {$implicit: option}"></ng-container>
+        </ng-container>
+
+        <ng-template #simpleOptionLabel>
+          {{option.label}}
+        </ng-template>
+      </mat-option>
+    </ng-template>
+  </mat-select>
+
+  <div matSuffix *ngIf="suffixTemplate">
+    <ng-container *ngTemplateOutlet="suffixTemplate.templateRef"></ng-container>
+  </div>
+
+  <mat-error *ngIf="firstError as error">
+    {{error}}
+  </mat-error>
+</mat-form-field>

@@ -1,0 +1,31 @@
+:host {
+  display: inline-block;
+
+  &.floating-placeholder .date-input-spacer {
+    opacity: 1;
+  }
+}
+
+.time-input-container {
+  display: flex;
+}
+
+.time-input-control {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  font: inherit;
+  text-align: center;
+  transition: background-color 200ms;
+}
+
+.time-hour-input, .time-minute-input {
+  width: 1.5em;
+}
+
+.date-input-spacer {
+  opacity: 0;
+  transition: opacity 200ms;
+}
