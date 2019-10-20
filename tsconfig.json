@@ -24,6 +24,7 @@
         "projects/dialog/src/public_api.ts"
       ],
       "@shadowui/utils": [
+        "dist/utils/public_api.d.ts",
         "projects/utils/src/public_api.ts"
       ],
       "forms": [

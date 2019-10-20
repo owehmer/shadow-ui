@@ -9,7 +9,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "publish:forms": "npm run build forms && npm publish ./dist/forms",
-    "publish:dialog": "npm run build dialog && npm publish ./dist/dialog"
+    "publish:dialog": "npm run build dialog && npm publish ./dist/dialog",
+    "publish:utils": "npm run build utils && npm publish ./dist/utils",
+    "publish:all": "npm run publish:utils && npm run publish:dialog && npm run publish:forms"
   },
   "private": true,
   "dependencies": {

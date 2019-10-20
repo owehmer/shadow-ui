@@ -34,7 +34,6 @@ import { SdwDynGridModule } from '@shadowui/utils';
     BrowserAnimationsModule,
     SdwDialogModule,
     SdwFormsModule,
-    SdwFormInputElementModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: 'dialog', component: DialogDemoComponent },
@@ -43,15 +42,15 @@ import { SdwDynGridModule } from '@shadowui/utils';
       { path: '**', component: AllDemosComponent }
     ]),
 
-    MatFormFieldModule,
-    MatInputModule,
     MatButtonModule,
     MatToolbarModule,
+
     SdwFormCheckboxModule,
-    SdwFormSelectModule,
-    SdwFormRadioModule,
-    SdwFormDatepickerModule,
     SdwFormDateTimePickerModule,
+    SdwFormDatepickerModule,
+    SdwFormInputElementModule,
+    SdwFormRadioModule,
+    SdwFormSelectModule,
     SdwDynGridModule
   ],
   providers: [],
