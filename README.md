@@ -1,27 +1,103 @@
-# ShadowUi2
+# ShadowUi
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
+This page is currently beeing created.
 
-## Development server
+## Getting started
+### Step 1
+Choose any or all of the npm packages: 
+Install the latest package from npm with: ``npm i --save @shadowui/dialog @shadowui/forms @shadowui/utils``
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Step 2.1: Dialog imports
+Import the whole dialog module or either of the dialogs
+```js
+import {SdwDialogModule} from '@shadowui/dialog;'
+```
+or
+```js
+import {SdwSimpleDialogModule, SdwAdvancedDialogModule} from '@shadowui/dialog;'
+```
 
-## Code scaffolding
+### Step 2.2 Create a dialog
+Use one the the dedicated builders to set ur your dialog
+```js
+const builder = new SdwSimpleDialogBuilder(this.dlgService)
+  .setDimensions('500px')
+  .setDisplayComponent(MyContentComponent)
+  .setTitle('My dialog')
+  .setDialogData({provide: 'some data'})
+;
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Step 2.3 Open the dialog
+Open the dialog you just prepared with
+```js
+builder.open();
+```
 
-## Build
+### Step 3.1: Import the Forms module
+```js
+import {
+    SdwFormsModule,
+    SdwFormCheckboxModule,
+    SdwFormDateTimePickerModule,
+    SdwFormDatepickerModule,
+    SdwFormInputElementModule,
+    SdwFormRadioModule,
+    SdwFormSelectModule
+} from '@shadowui/forms;'
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### Step 3.2: Create the template
+For any further customization checkout the playground. Documentation on every component is coming soon.
+```html
+<sdw-form>
+  <sdw-form-input-element [name]="name">
+  </sdw-form-input-element>
 
-## Running unit tests
+  <sdw-form-checkbox [name]="checkName">
+    Some Checkbox Label
+  </sdw-form-checkbox>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+  <sdw-form-select [name]="selectName" [options]="selectOptions">
+  </sdw-form-select>
 
-## Running end-to-end tests
+  <sdw-form-radio [name]="radioName" [options]="radioOptions">
+  </sdw-form-radio>
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+  <sdw-form-datepicker [name]="datepickerSimple">
+  </sdw-form-datepicker>
 
-## Further help
+  <sdw-form-date-time-picker [name]="dateOnly" [showTime]="false" [placeholder]="'Date only'">
+  </sdw-form-date-time-picker>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+  <sdw-form-date-time-picker [name]="'timeOnly'" [showDate]="false" [placeholder]="'Time only'">
+  </sdw-form-date-time-picker>
+
+  <sdw-form-date-time-picker [name]="'dateOnly'" [placeholder]="'Date und Time'" [highlightBgColor]="'rgba(0,0,0,0.05)'">
+  </sdw-form-date-time-picker>
+</sdw-form>
+```
+
+### Step 4.1 Use the utils for some help
+```js
+import { SdwDynGridModule } from '@shadowui/utils';
+```
+
+and in the template just use
+
+```html
+<sdw-form sdwDynGridContainer [cols]="['300px', '1fr']">
+  <sdw-form-input-element [name]="'input1'" [placeholder]="'Placeholder 1'"
+                          sdwDynGridChild
+  ></sdw-form-input-element>
+
+  <sdw-form-input-element [name]="'input2'" [placeholder]="'Placeholder 3'"
+                          sdwDynGridChild
+  ></sdw-form-input-element>
+
+  <sdw-form-input-element [name]="'input3'" [placeholder]="'Placeholder 3'"
+                          sdwDynGridChild
+  ></sdw-form-input-element>
+</sdw-form>
+
+```

@@ -13,8 +13,8 @@ import {ControlValueAccessor, FormBuilder, FormGroup, NgControl} from '@angular/
 import {Subject} from 'rxjs';
 import {FocusMonitor} from '@angular/cdk/a11y';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
-import {DateInputComponent} from '../date-input/date-input.component';
-import {TimeInputComponent} from '../time-input/time-input.component';
+import {SdwDateInputComponent} from '../date-input/date-input.component';
+import {SdwTimeInputComponent} from '../time-input/time-input.component';
 
 import * as moment from 'moment';
 import {takeUntil} from 'rxjs/operators';
@@ -42,7 +42,7 @@ export class SdwFormDateTimeModel {
   selector: 'sdw-date-time-input',
   templateUrl: './date-time-input.component.html',
   styleUrls: ['./date-time-input.component.scss'],
-  providers: [{provide: MatFormFieldControl, useExisting: DateTimeInputComponent}],
+  providers: [{provide: MatFormFieldControl, useExisting: SdwDateTimeInputComponent}],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.floating-placeholder]': 'shouldLabelFloat',
@@ -50,7 +50,7 @@ export class SdwFormDateTimeModel {
     '[attr.aria-describedby]': 'describedBy'
   }
 })
-export class DateTimeInputComponent implements ControlValueAccessor, MatFormFieldControl<SdwFormDateTimeModel>, OnDestroy {
+export class SdwDateTimeInputComponent implements ControlValueAccessor, MatFormFieldControl<SdwFormDateTimeModel>, OnDestroy {
   static nextId = 0;
 
   @Input()
@@ -105,7 +105,7 @@ export class DateTimeInputComponent implements ControlValueAccessor, MatFormFiel
   focused = false;
   errorState = false;
   controlType = 'sdw-form-date-time';
-  id = `sdw-inner-form-date-time-${DateTimeInputComponent.nextId++}`;
+  id = `sdw-inner-form-date-time-${SdwDateTimeInputComponent.nextId++}`;
   describedBy = '';
 
   get empty() {
@@ -123,11 +123,11 @@ export class DateTimeInputComponent implements ControlValueAccessor, MatFormFiel
   private _required = false;
   private _disabled = false;
 
-  @ViewChild('dateCtrl', {static: true, read: DateInputComponent})
-  private _dateCtrl: DateInputComponent;
+  @ViewChild('dateCtrl', {static: true, read: SdwDateInputComponent})
+  private _dateCtrl: SdwDateInputComponent;
 
-  @ViewChild('timeCtrl', {static: true, read: TimeInputComponent})
-  private _timeCtrl: TimeInputComponent;
+  @ViewChild('timeCtrl', {static: true, read: SdwTimeInputComponent})
+  private _timeCtrl: SdwTimeInputComponent;
 
   private _destroyed$ = new Subject();
 

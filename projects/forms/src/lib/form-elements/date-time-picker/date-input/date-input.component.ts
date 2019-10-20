@@ -45,7 +45,7 @@ export class SdwFormDateModel {
   selector: 'sdw-date-input',
   templateUrl: './date-input.component.html',
   styleUrls: ['./date-input.component.scss'],
-  providers: [{provide: MatFormFieldControl, useExisting: DateInputComponent}],
+  providers: [{provide: MatFormFieldControl, useExisting: SdwDateInputComponent}],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.floating-placeholder]': 'shouldLabelFloat',
@@ -54,7 +54,7 @@ export class SdwFormDateModel {
   }
 })
 
-export class DateInputComponent implements ControlValueAccessor, MatFormFieldControl<SdwFormDateModel>, OnDestroy {
+export class SdwDateInputComponent implements ControlValueAccessor, MatFormFieldControl<SdwFormDateModel>, OnDestroy {
   static nextId = 0;
 
   @Input()
@@ -113,7 +113,7 @@ export class DateInputComponent implements ControlValueAccessor, MatFormFieldCon
   focused = false;
   errorState = false;
   controlType = 'sdw-form-date';
-  id = `sdw-inner-form-date-${DateInputComponent.nextId++}`;
+  id = `sdw-inner-form-date-${SdwDateInputComponent.nextId++}`;
   describedBy = '';
 
   get empty() {

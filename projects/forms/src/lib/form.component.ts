@@ -1,14 +1,15 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  Component,
+  Component, ElementRef,
   Input,
   OnDestroy,
-  OnInit,
+  OnInit, Optional, Self, ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { filter, switchMap, takeUntil } from 'rxjs/operators';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { SdwDynGridContainerDirective } from '@shadowui/utils';
 
 @Component({
   selector: 'sdw-form',
@@ -17,7 +18,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   // tslint:disable-next-line:use-host-property-decorator
   host: {
-    'class': 'sdw-form',
+    'class': 'sdw-form'
   }
 })
 export class SdwFormComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -44,12 +45,17 @@ export class SdwFormComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
+  @ViewChild('formRef', { static: true })
+  private _formRef: ElementRef<any>;
+
   private _sdwFormGroup$ = new BehaviorSubject<FormGroup>(this._fb.group({}));
 
   private _init = false;
   private _destroyed$ = new Subject();
 
-  constructor(private _fb: FormBuilder) {}
+  constructor(private _fb: FormBuilder,
+              @Self() @Optional() private _gridContainer: SdwDynGridContainerDirective) {
+  }
 
   ngOnInit() {
     this._sdwFormGroup$.pipe(
@@ -58,6 +64,9 @@ export class SdwFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    if (this._gridContainer) {
+      this._gridContainer.elementRef = this._formRef;
+    }
     this._init = true;
   }
 

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DateTimeInputComponent } from './date-time-input.component';
+import { SdwDateTimeInputComponent } from './date-time-input.component';
 
 describe('TimeInputComponent', () => {
-  let component: DateTimeInputComponent;
-  let fixture: ComponentFixture<DateTimeInputComponent>;
+  let component: SdwDateTimeInputComponent;
+  let fixture: ComponentFixture<SdwDateTimeInputComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DateTimeInputComponent ]
+      declarations: [ SdwDateTimeInputComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DateTimeInputComponent);
+    fixture = TestBed.createComponent(SdwDateTimeInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

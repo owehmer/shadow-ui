@@ -1,6 +1,6 @@
 {
-  "name": "@shadowui/forms",
-  "description": "Dynamic Form Component of the Shadow-UI",
+  "name": "@shadowui/utils",
+  "description": "Utils of the Shadow-UI",
   "version": "0.1.1",
   "author": "Oliver Wehmer",
   "repository": {
@@ -20,13 +20,7 @@
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^8.0.0",
-    "@angular/core": "^8.0.0",
-    "@angular/animations": "^8.0.0",
-    "@angular/material": "^8.0.0",
-    "@angular/cdk": "^8.0.0",
-    "@angular/forms": "^8.0.0",
-    "rxjs": "^6.5.0",
-    "moment": "^2.24.0"
+    "@angular/core": "^8.0.0"
   },
   "sideEffects": false
 }
