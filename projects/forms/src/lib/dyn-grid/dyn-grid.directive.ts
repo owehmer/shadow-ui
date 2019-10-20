@@ -15,7 +15,7 @@ import {
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { auditTime, startWith, takeUntil } from 'rxjs/operators';
 
-type GridDisplayKeys = 'display' | 'grid-gap' | 'grid-template-columns';
+type GridDisplayKeys = 'display' | 'grid-gap' | 'grid-template-columns' | 'grid-template-rows';
 
 type GridDisplay = {
   [key in GridDisplayKeys]: any;
@@ -61,6 +61,7 @@ export class DynGridContainerDirective implements AfterViewInit, OnChanges, OnDe
 
   @Input() gridGap = '5px';
   @Input() cols: string[] | number;
+  @Input() rows: string[] | number;
 
   @ContentChildren(DynGridDirective)
   children: QueryList<DynGridDirective>;
@@ -70,7 +71,8 @@ export class DynGridContainerDirective implements AfterViewInit, OnChanges, OnDe
   private _prefElemStyles: GridDisplay = {
     display: '',
     'grid-gap': '',
-    'grid-template-columns': ''
+    'grid-template-columns': '',
+    'grid-template-rows': ''
   };
 
   private _changes$ = new Subject();
@@ -124,19 +126,21 @@ export class DynGridContainerDirective implements AfterViewInit, OnChanges, OnDe
       return;
     }
 
-    const cols = this._colsToStringArr();
+    const cols = this._colAndRowToStringArr(this.cols);
+    const rows = this._colAndRowToStringArr(this.rows);
     this._renderer.setStyle(elemRef, 'display', 'grid');
     this._renderer.setStyle(elemRef, 'grid-gap', this.gridGap, RendererStyleFlags2.DashCase);
     this._renderer.setStyle(elemRef, 'grid-template-columns', cols.join(' '), RendererStyleFlags2.DashCase);
+    this._renderer.setStyle(elemRef, 'grid-template-rows', rows.join(' '), RendererStyleFlags2.DashCase);
   }
 
-  private _colsToStringArr() {
-    if (this.cols == null) {
+  private _colAndRowToStringArr(input: string[] | number) {
+    if (input == null) {
       return ['1fr'];
     }
-    if (typeof this.cols === 'number') {
-      return new Array(this.cols).fill('1fr');
+    if (typeof input === 'number') {
+      return new Array(input).fill('1fr');
     }
-    return this.cols.map(c => c ? c : '1fr');
+    return input.map(c => c ? c : '1fr');
   }
 }
