@@ -1,0 +1,26 @@
+<mat-form-field [appearance]="appearance"
+                [color]="color"
+                [floatLabel]="floatLabel"
+                [hintLabel]="hintLabel"
+                [hideRequiredMarker]="hideRequiredMarker"
+>
+  <mat-label *ngIf="label">{{label}}</mat-label>
+
+  <textarea matInput cdkTextareaAutosize
+            [cdkTextareaAutosize]="autosize"
+            [cdkAutosizeMaxRows]="maxRows"
+            [cdkAutosizeMinRows]="minRows"
+         [type]="type"
+         [placeholder]="placeholder"
+         [formControl]="formControl"
+         [required]="showRequiredMarker"
+  ></textarea>
+
+  <div matSuffix *ngIf="suffixTemplate">
+    <ng-container *ngTemplateOutlet="suffixTemplate.templateRef"></ng-container>
+  </div>
+
+  <mat-error *ngIf="firstError as error">
+    {{error}}
+  </mat-error>
+</mat-form-field>

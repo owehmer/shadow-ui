@@ -38,10 +38,6 @@ export class SdwDynGridDirective {
 
   @Input() colSpan: number;
   @Input() rowSpan: number;
-
-  constructor(public parent: SdwDynGridContainerDirective) {
-  }
-
 }
 
 

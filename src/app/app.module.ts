@@ -26,6 +26,7 @@ import {
 import { SdwDialogModule } from '@shadowui/dialog';
 import { FormLayoutComponent } from './form-layout/form-layout.component';
 import { SdwDynGridModule } from '@shadowui/utils';
+import { SdwFormTextareaElementModule } from '../../projects/forms/src/lib/form-elements/textarea';
 
 @NgModule({
   declarations: [AppComponent, MyContentComponent, MyContentComponentShort, DynamicComponent, FormOneComponent, AllDemosComponent, DialogDemoComponent, FormDemoComponent, FormLayoutComponent],
@@ -53,7 +54,8 @@ import { SdwDynGridModule } from '@shadowui/utils';
     SdwFormInputElementModule,
     SdwFormRadioModule,
     SdwFormSelectModule,
-    SdwDynGridModule
+    SdwDynGridModule,
+    SdwFormTextareaElementModule
   ],
   providers: [],
   bootstrap: [AppComponent],
