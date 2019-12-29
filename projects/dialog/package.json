@@ -1,7 +1,7 @@
 {
   "name": "@shadowui/dialog",
   "description": "Dynamic dialog Component of the Shadow-UI",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "author": "Oliver Wehmer",
   "repository": {
     "type": "git",
