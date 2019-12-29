@@ -8,17 +8,17 @@ import {
   Self,
   ViewChild
 } from '@angular/core';
-import {MatFormFieldControl} from '@angular/material/form-field';
-import {ControlValueAccessor, FormBuilder, FormGroup, NgControl} from '@angular/forms';
-import {Subject} from 'rxjs';
-import {FocusMonitor} from '@angular/cdk/a11y';
-import {coerceBooleanProperty} from '@angular/cdk/coercion';
+import { MatFormFieldControl } from '@angular/material/form-field';
+import { ControlValueAccessor, FormBuilder, FormGroup, NgControl } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { FocusMonitor } from '@angular/cdk/a11y';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import * as moment from 'moment';
 
 /** Data structure for holding date. */
 export class SdwFormTimeModel {
   constructor(public hour: string,
-              public minute: string) {
+    public minute: string) {
   }
 
   get asValidString(): string | null {
@@ -44,7 +44,7 @@ export class SdwFormTimeModel {
   selector: 'sdw-time-input',
   templateUrl: './time-input.component.html',
   styleUrls: ['./time-input.component.scss'],
-  providers: [{provide: MatFormFieldControl, useExisting: SdwTimeInputComponent}],
+  providers: [{ provide: MatFormFieldControl, useExisting: SdwTimeInputComponent }],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.floating-placeholder]': 'shouldLabelFloat',
@@ -88,14 +88,14 @@ export class SdwTimeInputComponent implements ControlValueAccessor, MatFormField
 
   @Input()
   get value(): SdwFormTimeModel | null {
-    const {value: {hour, minute}} = this.timeParts;
+    const { value: { hour, minute } } = this.timeParts;
     return new SdwFormTimeModel(hour, minute);
   }
 
   set value(time: SdwFormTimeModel | null) {
-    const {hour, minute} = time || new SdwFormTimeModel('', '');
+    const { hour, minute } = time || new SdwFormTimeModel('', '');
     this._currentValidValues = this.value;
-    this.timeParts.setValue({hour, minute});
+    this.timeParts.setValue({ hour, minute });
     this.stateChanges.next();
   }
 
@@ -113,7 +113,7 @@ export class SdwTimeInputComponent implements ControlValueAccessor, MatFormField
   describedBy = '';
 
   get empty() {
-    const {value: {hour, minute}} = this.timeParts;
+    const { value: { hour, minute } } = this.timeParts;
 
     return !hour && !minute;
   }
@@ -126,10 +126,10 @@ export class SdwTimeInputComponent implements ControlValueAccessor, MatFormField
   private _required = false;
   private _disabled = false;
 
-  @ViewChild('hourCtrl', {static: true, read: ElementRef})
+  @ViewChild('hourCtrl', { static: true, read: ElementRef })
   private _hourCtrl: ElementRef<HTMLInputElement>;
 
-  @ViewChild('minuteCtrl', {static: true, read: ElementRef})
+  @ViewChild('minuteCtrl', { static: true, read: ElementRef })
   private _minuteCtrl: ElementRef<HTMLInputElement>;
 
   private _currentValidValues = new SdwFormTimeModel('', '');
@@ -202,7 +202,7 @@ export class SdwTimeInputComponent implements ControlValueAccessor, MatFormField
   }
 
   hourChange() {
-    if (!this._resetIncorrectValues(this._hourCtrl.nativeElement, this._currentValidValues.hour, 59)) {
+    if (!this._resetIncorrectValues(this._hourCtrl.nativeElement, this._currentValidValues.hour, 23)) {
       this._handleInput();
     }
   }
@@ -213,14 +213,14 @@ export class SdwTimeInputComponent implements ControlValueAccessor, MatFormField
   }
 
   minuteChange() {
-    if (!this._resetIncorrectValues(this._minuteCtrl.nativeElement, this._currentValidValues.minute, 23)) {
+    if (!this._resetIncorrectValues(this._minuteCtrl.nativeElement, this._currentValidValues.minute, 59)) {
       this._handleInput();
     }
   }
 
   private _handleInput(): void {
     this.onChange(this.value.asValidString);
-    const {hour, minute} = this.value;
+    const { hour, minute } = this.value;
     this._currentValidValues = new SdwFormTimeModel(hour, minute);
   }
 
