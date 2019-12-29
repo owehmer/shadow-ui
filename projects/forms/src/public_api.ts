@@ -7,14 +7,35 @@ export * from './lib/form-elements/form-element.component';
 export * from './lib/form-elements/form-mat-element.component';
 export * from './lib/form-elements/form-dynamic-element.component';
 
-export * from './lib/form-elements/checkbox';
+// Checkbox
+export * from './lib/form-elements/checkbox/form-checkbox.module';
+export * from './lib/form-elements/checkbox/form-checkbox.component';
 
-export * from './lib/form-elements/date-time-picker';
 
-export * from './lib/form-elements/datepicker';
+// Datetime
+export * from './lib/form-elements/date-time-picker/form-date-time-picker.module';
+export * from './lib/form-elements/date-time-picker/form-date-time-picker.component';
+export * from './lib/form-elements/date-time-picker/date-input/date-input.component';
+export * from './lib/form-elements/date-time-picker/date-time-input/date-time-input.component';
+export * from './lib/form-elements/date-time-picker/time-input/time-input.component';
 
-export * from './lib/form-elements/input';
 
-export * from './lib/form-elements/radio';
+// Datepicker
+export * from './lib/form-elements/datepicker/form-datepicker.module';
+export * from './lib/form-elements/datepicker/form-datepicker.component';
 
-export * from './lib/form-elements/select';
+
+// Input
+export * from './lib/form-elements/input/form-input-element.module';
+export * from './lib/form-elements/input/form-input-element.component';
+
+
+// Radio
+export * from './lib/form-elements/radio/form-radio.module';
+export * from './lib/form-elements/radio/form-radio.component';
+
+
+// Select
+export * from './lib/form-elements/select/form-select.module';
+export * from './lib/form-elements/select/form-select.component';
+
