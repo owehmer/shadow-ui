@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { MyContentComponent } from './dialog-demo/my-content/my-content.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,15 +20,25 @@ import {
   SdwFormInputElementModule,
   SdwFormRadioModule,
   SdwFormSelectModule,
-  SdwFormsModule
+  SdwFormsModule,
+  SdwFormTextareaElementModule
 } from '@shadowui/forms';
 import { SdwDialogModule } from '@shadowui/dialog';
 import { FormLayoutComponent } from './form-layout/form-layout.component';
 import { SdwDynGridModule } from '@shadowui/utils';
-import { SdwFormTextareaElementModule } from '../../projects/forms/src/lib/form-elements/textarea';
 
 @NgModule({
-  declarations: [AppComponent, MyContentComponent, MyContentComponentShort, DynamicComponent, FormOneComponent, AllDemosComponent, DialogDemoComponent, FormDemoComponent, FormLayoutComponent],
+  declarations: [
+    AppComponent,
+    MyContentComponent,
+    MyContentComponentShort,
+    DynamicComponent,
+    FormOneComponent,
+    AllDemosComponent,
+    DialogDemoComponent,
+    FormDemoComponent,
+    FormLayoutComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

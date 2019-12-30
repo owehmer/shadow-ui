@@ -3,8 +3,7 @@ import {
   Component, ContentChild, Directive, Inject,
   Input, OnInit, Optional, TemplateRef, ViewChild
 } from '@angular/core';
-import {SdwFormMaterialElementComponent} from '../form-mat-element.component';
-import {SdwFormComponent} from '../../form.component';
+import {SdwFormMaterialElementComponent, SdwFormComponent} from '@shadowui/forms/core';
 import {MatSelect} from '@angular/material/select';
 import {MatOption} from '@angular/material/core';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions} from '@angular/material/form-field';

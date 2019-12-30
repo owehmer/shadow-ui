@@ -7,16 +7,16 @@ import {
   SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
-import {SdwFormComponent} from '../form.component';
-import {AbstractControl, AsyncValidatorFn, FormControl, ValidatorFn} from '@angular/forms';
-import {Subject} from 'rxjs';
-import {skip, takeUntil} from 'rxjs/operators';
-import {hasFormControlRequiredValidator} from '../helpers';
+import { SdwFormComponent } from './form.component';
+import { AbstractControl, AsyncValidatorFn, FormControl, ValidatorFn } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { skip, takeUntil } from 'rxjs/operators';
+import { hasFormControlRequiredValidator } from './helpers';
 
 @Component({
   selector: 'sdw-form-element',
   template: `
-      <ng-content></ng-content>`,
+    <ng-content></ng-content>`,
   styles: [':host { display: block; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

@@ -2,8 +2,7 @@ import {
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component, Inject, Input, Optional, ViewChild
 } from '@angular/core';
-import {SdwFormMaterialElementComponent} from '../form-mat-element.component';
-import {SdwFormComponent} from '../../form.component';
+import {SdwFormMaterialElementComponent, SdwFormComponent} from '@shadowui/forms/core';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions} from '@angular/material/form-field';
 import {SdwDateInputComponent} from './date-input/date-input.component';
 import {SdwTimeInputComponent} from './time-input/time-input.component';

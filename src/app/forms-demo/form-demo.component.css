@@ -1,11 +1,15 @@
-:host {
-  display: block;
-}
-
 .form-result {
-  margin-top: 16px;
   width: 300px;
+  margin: 16px;
+  padding: 16px;
   background-color: rgba(0,0,0,0.1);
   border-radius: 4px;
-  padding: 16px;
+}
+
+:host {
+  display: flex;
+}
+
+sdw-form {
+  flex: 1;
 }

@@ -6,15 +6,15 @@ import {
   OnChanges, OnDestroy, OnInit, Optional, TemplateRef, ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import {SdwFormComponent} from '../form.component';
-import {hasFormControlRequiredValidator} from '../helpers';
+import { SdwFormComponent } from './form.component';
+import { hasFormControlRequiredValidator } from './helpers';
 import {
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
   MatFormFieldAppearance,
   MatFormFieldDefaultOptions
 } from '@angular/material/form-field';
-import {FloatLabelType, ThemePalette} from '@angular/material/core';
-import {SdwFormElementComponent} from './form-element.component';
+import { FloatLabelType, ThemePalette } from '@angular/material/core';
+import { SdwFormElementComponent } from './form-element.component';
 
 @Directive({
   selector: '[sdwFormSuffix]'
@@ -27,7 +27,7 @@ export class SdwFormSuffixTemplateDirective {
 @Component({
   selector: 'sdw-form-mat-element',
   template: `
-      <ng-content></ng-content>`,
+    <ng-content></ng-content>`,
   styles: [':host { display: block; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -61,7 +61,7 @@ export class SdwFormMaterialElementComponent extends SdwFormElementComponent imp
     return this.errors && this.errors.length > 0 ? this.errors[0] : undefined;
   }
 
-  @ViewChild(SdwFormSuffixTemplateDirective, {static: true})
+  @ViewChild(SdwFormSuffixTemplateDirective, { static: true })
   readonly suffixTemplate: SdwFormSuffixTemplateDirective;
 
   get showRequiredMarker(): boolean {

@@ -14,7 +14,6 @@ import {Subject} from 'rxjs';
 import {FocusMonitor} from '@angular/cdk/a11y';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
 import * as moment from 'moment';
-import {SdwFormTimeModel} from '../time-input/time-input.component';
 
 /** Data structure for holding date. */
 export class SdwFormDateModel {
