@@ -3,12 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SdwFormComponent } from './form.component';
 import { PortalModule } from '@angular/cdk/portal';
-import { SdwFormDynamicElementComponent } from './form-elements/form-dynamic-element.component';
-import {
-  SdwFormMaterialElementComponent,
-  SdwFormSuffixTemplateDirective
-} from './form-elements/form-mat-element.component';
-import { SdwFormElementComponent } from './form-elements/form-element.component';
+import { SdwFormElementComponent } from './form-element.component';
+import { SdwFormMaterialElementComponent, SdwFormSuffixTemplateDirective } from './form-mat-element.component';
+import { SdwFormDynamicElementComponent } from './form-dynamic-element.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +13,7 @@ import { SdwFormElementComponent } from './form-elements/form-element.component'
     SdwFormElementComponent,
     SdwFormMaterialElementComponent,
     SdwFormDynamicElementComponent,
-    SdwFormSuffixTemplateDirective,
+    SdwFormSuffixTemplateDirective
   ],
   imports: [
     CommonModule,

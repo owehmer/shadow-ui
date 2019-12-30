@@ -13,7 +13,6 @@ import { ControlValueAccessor, FormBuilder, FormGroup, NgControl } from '@angula
 import { Subject } from 'rxjs';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import * as moment from 'moment';
 
 const MINUTE_MAX = 59;
 const HOUR_MAX = 23;
@@ -21,7 +20,7 @@ const HOUR_MAX = 23;
 /** Data structure for holding date. */
 export class SdwFormTimeModel {
   constructor(public hour: string,
-    public minute: string) {
+              public minute: string) {
   }
 
   get asValidString(): string | null {
@@ -35,7 +34,7 @@ export class SdwFormTimeModel {
       return null;
     }
 
-    return `${this.hour}:${this.minute}`;
+    return `${ this.hour }:${ this.minute }`;
   }
 
   get isEmpty(): boolean {
@@ -112,7 +111,7 @@ export class SdwTimeInputComponent implements ControlValueAccessor, MatFormField
   focused = false;
   errorState = false;
   controlType = 'sdw-form-time';
-  id = `sdw-inner-form-time-${SdwTimeInputComponent.nextId++}`;
+  id = `sdw-inner-form-time-${ SdwTimeInputComponent.nextId++ }`;
   describedBy = '';
 
   get empty() {
@@ -187,26 +186,26 @@ export class SdwTimeInputComponent implements ControlValueAccessor, MatFormField
     this.onKeyDown(event,
       () => this.updateMinute(Number(this._currentValidValues.minute) + 1),
       () => this.updateMinute(Number(this._currentValidValues.minute) - 1)
-    )
+    );
   }
 
   onHourKeyDown(event: KeyboardEvent) {
     this.onKeyDown(event,
       () => this.updateHour(Number(this._currentValidValues.hour) + 1),
       () => this.updateHour(Number(this._currentValidValues.hour) - 1)
-    )
+    );
   }
 
   updateMinute(newValue: number) {
     if (newValue > MINUTE_MAX) {
       newValue = 0;
-      this.updateHour(Number(this._currentValidValues.hour) + 1)
+      this.updateHour(Number(this._currentValidValues.hour) + 1);
     }
     if (newValue < 0) {
       newValue = MINUTE_MAX;
-      this.updateHour(Number(this._currentValidValues.hour) - 1)
+      this.updateHour(Number(this._currentValidValues.hour) - 1);
     }
-    this.value = new SdwFormTimeModel(this._currentValidValues.hour, `${newValue}`);
+    this.value = new SdwFormTimeModel(this._currentValidValues.hour, `${ newValue }`);
     this._handleInput();
   }
 
@@ -217,20 +216,20 @@ export class SdwTimeInputComponent implements ControlValueAccessor, MatFormField
     if (newValue < 0) {
       newValue = HOUR_MAX;
     }
-    this.value = new SdwFormTimeModel(`${newValue}`, this._currentValidValues.minute);
+    this.value = new SdwFormTimeModel(`${ newValue }`, this._currentValidValues.minute);
     this._handleInput();
   }
 
 
   onKeyDown(event: KeyboardEvent, incrementFn: Function, decrementFn: Function) {
     switch (event.key) {
-      case "Down": // IE/Edge specific value
-      case "ArrowDown":
+      case 'Down': // IE/Edge specific value
+      case 'ArrowDown':
         decrementFn();
         break;
-      case "Up": // IE/Edge specific value
-      case "ArrowUp":
-        incrementFn()
+      case 'Up': // IE/Edge specific value
+      case 'ArrowUp':
+        incrementFn();
         break;
     }
   }

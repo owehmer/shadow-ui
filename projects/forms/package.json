@@ -26,7 +26,8 @@
     "@angular/cdk": "^8.0.0",
     "@angular/forms": "^8.0.0",
     "rxjs": "^6.5.0",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "@shadowui/utils": "^0.2.0"
   },
   "sideEffects": false
 }

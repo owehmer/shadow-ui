@@ -124,7 +124,7 @@
     },
     "forms": {
       "root": "projects/forms",
-      "sourceRoot": "projects/forms/src",
+      "sourceRoot": "projects/forms",
       "projectType": "library",
       "prefix": "lib",
       "architect": {
