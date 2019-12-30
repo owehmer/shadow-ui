@@ -21,6 +21,14 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions} from '@angul
 export class SdwFormInputElementComponent extends SdwFormMaterialElementComponent {
   @Input() type: SdwFormElementTypes = 'text';
 
+  @Input() autocomplete = true;
+  @Input() spellcheck = false;
+  @Input() max: number;
+  @Input() min: number;
+  @Input() minLength: number;
+  @Input() maxLength: number;
+  @Input() pattern: string;
+
   @ViewChild(MatInput, {static: true}) readonly matInput: MatInput;
 
   constructor(form: SdwFormComponent,
