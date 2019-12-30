@@ -52,31 +52,77 @@ import {
 ### Step 3.2: Create the template
 For any further customization checkout the playground. Documentation on every component is coming soon.
 ```html
-<sdw-form>
-  <sdw-form-input-element [name]="name">
+<sdw-form [sdwFormGroup]="formGroup">
+  <sdw-form-input-element name="inputText"
+                          type="text"
+                          label="Some Text Label"
+                          placeholder="Some Input Placeholder"
+                          [validatorOrOpts]="requiredValidator"
+  >
   </sdw-form-input-element>
 
-  <sdw-form-checkbox [name]="checkName">
-    Some Checkbox Label
+  <sdw-form-input-element name="inputNumber"
+                          type="number"
+                          label="Some Number Label"
+                          placeholder="Some Input Number Placeholder"
+  >
+  </sdw-form-input-element>
+
+  <sdw-form-checkbox name="inputCheckbox"
+                     labelPosition="after"
+  >
+    Checkbox Text
   </sdw-form-checkbox>
 
-  <sdw-form-select [name]="selectName" [options]="selectOptions">
+  <sdw-form-select name="inputSelect"
+                   label="Choose an option"
+                   [options]="selectOptions"
+  >
+    <ng-template sdwFormSelectTemplate let-option>
+      <span>{{option.label}}</span>
+    </ng-template>
   </sdw-form-select>
 
-  <sdw-form-radio [name]="radioName" [options]="radioOptions">
+  <sdw-form-radio name="inputRadio"
+                  [options]="radioOptions"
+  >
+    <ng-template sdwFormRadioTemplate let-option>
+      <{{option.label}}>
+    </ng-template>
   </sdw-form-radio>
 
-  <sdw-form-datepicker [name]="datepickerSimple">
+  <sdw-form-datepicker name="inputMatDatepicker"
+                       placeholder="Some Datepicker Placeholder"
+                       label="Some Datepicker Label"
+  >
   </sdw-form-datepicker>
 
-  <sdw-form-date-time-picker [name]="dateOnly" [showTime]="false" [placeholder]="'Date only'">
+  <sdw-form-date-time-picker name="inputDateOnly"
+                             [showTime]="false"
+                             placeholder="Some Date Placeholder"
+                             label="Some Date Label"
+  >
   </sdw-form-date-time-picker>
 
-  <sdw-form-date-time-picker [name]="'timeOnly'" [showDate]="false" [placeholder]="'Time only'">
+  <sdw-form-date-time-picker name="inputTimeOnly"
+                             [showDate]="false"
+                             label="Some Time Label"
+                             placeholder="Some Time Placeholder">
   </sdw-form-date-time-picker>
 
-  <sdw-form-date-time-picker [name]="'dateOnly'" [placeholder]="'Date und Time'" [highlightBgColor]="'rgba(0,0,0,0.05)'">
+  <sdw-form-date-time-picker name="inputDateTime"
+                             label="Some Date + Time Label"
+                             placeholder="Some Date + Time Placeholder"
+                             highlightBgColor="rgba(0,0,0,0.05)">
   </sdw-form-date-time-picker>
+
+  <sdw-form-textarea-element name="inputTextarea"
+                             placeholder="Some Textarea Placeholder"
+                             [autosize]="true"
+                             [minRows]="5"
+                             label="Some Textarea Label">
+
+  </sdw-form-textarea-element>
 </sdw-form>
 ```
 
