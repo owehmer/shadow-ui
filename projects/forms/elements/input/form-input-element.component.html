@@ -11,6 +11,13 @@
          [placeholder]="placeholder"
          [formControl]="formControl"
          [required]="showRequiredMarker"
+         [attr.autocomplete]="autocomplete"
+         [attr.max]="max"
+         [attr.min]="min"
+         [attr.pattern]="pattern"
+         [attr.maxlength]="maxLength"
+         [attr.minlength]="minLength"
+         [attr.spellcheck]="spellcheck"
   >
 
   <div matSuffix *ngIf="suffixTemplate">
