@@ -32,7 +32,7 @@
   </sdw-form-select>
 
   <sdw-form-radio name="inputRadio"
-                  [options]="radioOptions"
+                  [options]="[{label: 'Label 1', value: 0}, {label: 'Label 2', value: 1}]"
   >
     <ng-template sdwFormRadioTemplate let-option>
       <{{option.label}}>

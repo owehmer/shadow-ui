@@ -1,3 +1,7 @@
 :host {
   display: block;
 }
+
+.horz-line {
+  margin: 42px -16px;
+}
