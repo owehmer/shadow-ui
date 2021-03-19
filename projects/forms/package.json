@@ -25,9 +25,9 @@
     "@angular/material": "^11.0.0",
     "@angular/cdk": "^11.0.0",
     "@angular/forms": "^11.0.0",
-    "rxjs": "^6.5.0",
+    "rxjs": "^6.6.0",
     "moment": "^2.24.0",
-    "@shadowui/utils": "^0.2.0"
+    "@shadowui/utils": "^0.3.0"
   },
   "sideEffects": false
 }
