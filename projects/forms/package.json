@@ -1,7 +1,7 @@
 {
   "name": "@shadowui/forms",
   "description": "Dynamic Form Component of the Shadow-UI",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "Oliver Wehmer",
   "repository": {
     "type": "git",

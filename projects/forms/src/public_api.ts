@@ -4,4 +4,4 @@
 
 export * from './lib/core';
 
-// export * from './elements';
+export * from './lib/elements';
