@@ -47,11 +47,11 @@ import { SdwDynGridModule } from '@shadowui/utils';
     SdwFormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: 'dialog', component: DialogDemoComponent },
-      { path: 'form', component: FormDemoComponent },
-      { path: 'form-layout', component: FormLayoutComponent },
-      { path: '**', component: AllDemosComponent }
-    ]),
+    { path: 'dialog', component: DialogDemoComponent },
+    { path: 'form', component: FormDemoComponent },
+    { path: 'form-layout', component: FormLayoutComponent },
+    { path: '**', component: AllDemosComponent }
+], { relativeLinkResolution: 'legacy' }),
 
     MatButtonModule,
     MatToolbarModule,

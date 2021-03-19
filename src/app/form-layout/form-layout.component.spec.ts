@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FormLayoutComponent } from './form-layout.component';
 
@@ -6,7 +6,7 @@ describe('FormLayoutComponent', () => {
   let component: FormLayoutComponent;
   let fixture: ComponentFixture<FormLayoutComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FormLayoutComponent ]
     })
