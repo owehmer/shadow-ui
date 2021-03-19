@@ -46,7 +46,7 @@ export class SdwFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @ViewChild('formRef', { static: true })
-  private _formRef: ElementRef<any>;
+  private _formRef: ElementRef;
 
   private _sdwFormGroup$ = new BehaviorSubject<FormGroup>(this._fb.group({}));
 

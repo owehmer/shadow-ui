@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import {ComponentType} from '@angular/cdk/overlay';
 import {BehaviorSubject} from 'rxjs';
-import {CdkPortalOutlet, ComponentPortal, PortalInjector, TemplatePortal} from '@angular/cdk/portal';
+import { CdkPortalOutlet, ComponentPortal, PortalInjector, TemplatePortal } from '@angular/cdk/portal';
 import {SdwFormMaterialElementComponent} from './form-mat-element.component';
 import {SdwFormComponent} from './form.component';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions} from '@angular/material/form-field';

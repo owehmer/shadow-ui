@@ -2,10 +2,11 @@ import {
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component, ContentChild, Directive, Inject, Input, Optional, TemplateRef, ViewChild
 } from '@angular/core';
-import {SdwFormMaterialElementComponent, SdwFormComponent} from '@shadowui/forms/core';
 import {MatCalendarCellCssClasses, MatDatepicker} from '@angular/material/datepicker';
 import {ComponentType} from '@angular/cdk/overlay';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions} from '@angular/material/form-field';
+import { SdwFormMaterialElementComponent } from '../../core/form-mat-element.component';
+import { SdwFormComponent } from '../../core/form.component';
 
 @Directive({
   selector: '[sdwFormDatepicketButtonTemplate]'

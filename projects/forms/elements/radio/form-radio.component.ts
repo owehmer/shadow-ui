@@ -3,9 +3,10 @@ import {
   Component, ContentChild, Directive, Inject, Input, Optional, TemplateRef,
   ViewChild
 } from '@angular/core';
-import {SdwFormMaterialElementComponent, SdwFormComponent} from '@shadowui/forms/core';
 import {MatRadioGroup} from '@angular/material/radio';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions} from '@angular/material/form-field';
+import { SdwFormMaterialElementComponent } from '../../core/form-mat-element.component';
+import { SdwFormComponent } from '../../core/form.component';
 
 export interface SdwFormRadioOption {
   label: string;

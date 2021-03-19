@@ -3,9 +3,11 @@ import {
   Component, Inject,
   Input, Optional, ViewChild
 } from '@angular/core';
-import {SdwFormMaterialElementComponent, SdwFormComponent} from '@shadowui/forms/core';
+
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions} from '@angular/material/form-field';
+import { SdwFormMaterialElementComponent } from '../../core/form-mat-element.component';
+import { SdwFormComponent } from '../../core/form.component';
 
 @Component({
   selector: 'sdw-form-checkbox, [sdw-form-checkbox]',
