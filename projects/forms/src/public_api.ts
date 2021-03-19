@@ -2,6 +2,6 @@
  * Public API Surface of forms
  */
 
-export * from './core';
+export * from './lib/core';
 
 // export * from './elements';

@@ -17,10 +17,7 @@
     "skipDefaultLibCheck": true,
     "paths": {
       "@shadowui/forms": [
-        "projects/forms"
-      ],
-      "@shadowui/forms/*": [
-        "projects/forms/*"
+        "projects/forms/src/public_api.ts"
       ],
       "@shadowui/dialog": [
         "projects/dialog/src/public_api.ts"
