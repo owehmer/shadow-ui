@@ -9,7 +9,8 @@ import { MyContentComponentShort } from './dialog-demo/my-content-short/my-conte
 import { DynamicComponent } from './dialog-demo/dynamic/dynamic.component';
 import { FormOneComponent } from './dialog-demo/form-dlgs/form-one/form-one.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { AllDemosComponent } from './all-demos/all-demos.component';
 import { DialogDemoComponent } from './dialog-demo/dialog-demo/dialog-demo.component';
@@ -46,11 +47,11 @@ import { SdwDynGridModule } from '@shadowui/utils';
     SdwFormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: 'dialog', component: DialogDemoComponent },
-      { path: 'form', component: FormDemoComponent },
-      { path: 'form-layout', component: FormLayoutComponent },
-      { path: '**', component: AllDemosComponent }
-    ]),
+    { path: 'dialog', component: DialogDemoComponent },
+    { path: 'form', component: FormDemoComponent },
+    { path: 'form-layout', component: FormLayoutComponent },
+    { path: '**', component: AllDemosComponent }
+], { relativeLinkResolution: 'legacy' }),
 
     MatButtonModule,
     MatToolbarModule,

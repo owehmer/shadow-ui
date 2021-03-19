@@ -2,11 +2,12 @@ import {
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component, Inject, Input, Optional, ViewChild
 } from '@angular/core';
-import {SdwFormMaterialElementComponent, SdwFormComponent} from '@shadowui/forms/core';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions} from '@angular/material/form-field';
 import {SdwDateInputComponent} from './date-input/date-input.component';
 import {SdwTimeInputComponent} from './time-input/time-input.component';
 import {SdwDateTimeInputComponent} from './date-time-input/date-time-input.component';
+import { SdwFormMaterialElementComponent } from '../../core/form-mat-element.component';
+import { SdwFormComponent } from '../../core/form.component';
 
 @Component({
   selector: 'sdw-form-date-time-picker, [sdw-form-date-time-picker]',

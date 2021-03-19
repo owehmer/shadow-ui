@@ -3,9 +3,11 @@ import {
   Component, Inject,
   Input, Optional, ViewChild
 } from '@angular/core';
-import {SdwFormMaterialElementComponent, SdwFormComponent, SdwFormElementTypes} from '@shadowui/forms/core';
 import {MatInput} from '@angular/material/input';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions} from '@angular/material/form-field';
+import { SdwFormComponent } from '../../core/form.component';
+import { SdwFormMaterialElementComponent } from '../../core/form-mat-element.component';
+import { SdwFormElementTypes } from '../../core/models';
 
 @Component({
   selector: 'sdw-form-textarea-element, [sdw-form-textarea-element]',

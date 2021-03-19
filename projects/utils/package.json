@@ -1,7 +1,7 @@
 {
   "name": "@shadowui/utils",
   "description": "Utils of the Shadow-UI",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Oliver Wehmer",
   "repository": {
     "type": "git",
@@ -19,8 +19,8 @@
   "homepage": "https://github.com/owehmer/shadow-ui#readme",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^8.0.0",
-    "@angular/core": "^8.0.0"
+    "@angular/common": "^11.0.0",
+    "@angular/core": "^11.0.0"
   },
   "sideEffects": false
 }

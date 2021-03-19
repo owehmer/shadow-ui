@@ -9,11 +9,12 @@ import {
 import { SdwFormComponent } from './form.component';
 import { hasFormControlRequiredValidator } from './helpers';
 import {
+  FloatLabelType,
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
   MatFormFieldAppearance,
   MatFormFieldDefaultOptions
 } from '@angular/material/form-field';
-import { FloatLabelType, ThemePalette } from '@angular/material/core';
+import { ThemePalette } from '@angular/material/core';
 import { SdwFormElementComponent } from './form-element.component';
 
 @Directive({
