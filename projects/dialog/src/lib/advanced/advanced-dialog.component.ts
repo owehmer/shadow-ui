@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component, ComponentRef, ElementRef, HostBinding,
   Inject,
@@ -206,7 +207,7 @@ export class SdwAdvancedDialogBuilder<C = any, D = any, R = any> extends SdwDial
     'tabindex': '-1'
   }
 })
-export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit, OnDestroy {
+export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit, AfterViewInit, OnDestroy {
   get fullscreenOnMobile(): boolean {
     return this._fullscreenOnMobile;
   }
@@ -303,6 +304,10 @@ export class SdwAdvancedDialogComponent extends SdwDialogBase implements OnInit,
     this.initBackdropClose();
     this.setFullscreenOnMobile();
     this.initDynamicContent();
+  }
+
+  ngAfterViewInit() {
+    this.cd.detectChanges();
   }
 
   ngOnDestroy(): void {

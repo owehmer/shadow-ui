@@ -16,27 +16,19 @@ import { Subscription } from 'rxjs';
     'class': 'sdw-content mat-dialog-content'
   }
 })
-export class SdwContentComponent implements OnDestroy {
+export class SdwContentComponent {
   @HostBinding('class.sdw-content-padded')
   @Input()
   padded = true;
 
-  private _titleHeight = 64; // 56
-  private readonly _footerHeight = 52;
+  @Input()
+  titleBarHeight = 64;
 
-  private _titleHeight$$: Subscription;
+  private readonly _footerHeight = 52;
 
   constructor(private sanitizer: DomSanitizer,
               private dialogRef: MatDialogRef<any>,
               private _bpObserver: BreakpointObserver) {
-    // The Material Toolbar is bigger in non HandsetPortrait
-    this._titleHeight$$ = this._bpObserver.observe([Breakpoints.HandsetPortrait]).pipe(
-      distinctUntilChanged((preResult, nowResult) => preResult.matches === nowResult.matches)
-    ).subscribe(result => this._titleHeight = result.matches ? 56 : 64);
-  }
-
-  ngOnDestroy(): void {
-    this._titleHeight$$.unsubscribe();
   }
 
   /**
@@ -45,7 +37,7 @@ export class SdwContentComponent implements OnDestroy {
   @HostBinding('style')
   get getContentStyles(): SafeStyle {
     const _config = this.dialogRef._containerInstance._config;
-    const heightSubtraction = `${this._titleHeight + this._footerHeight}px`;
+    const heightSubtraction = `${this.titleBarHeight + this._footerHeight}px`;
 
     const height = _config.height && _config.height !== ''
       ? `calc(${_config.height} - ${heightSubtraction})`

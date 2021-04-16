@@ -5,11 +5,13 @@
                [titleColor]="titleColor"
                [disabled]="buttonActionHappening"
                [displayButtons]="isFullsize"
-               (buttonClick)="buttonClicked($event)">
+               (buttonClick)="buttonClicked($event)"
+               #titleBar
+>
   {{title}}
 </sdw-title-bar>
 
-<sdw-content>
+<sdw-content [titleBarHeight]="titleBar.elementRef.nativeElement.offsetHeight">
   <span *ngIf="text" class="sdw-simple-content">{{text}}</span>
   <ng-template cdkPortalOutlet></ng-template>
 </sdw-content>
