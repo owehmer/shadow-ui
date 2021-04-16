@@ -1,6 +1,6 @@
 import {
   ChangeDetectionStrategy,
-  Component, EventEmitter, HostBinding, Inject, InjectionToken,
+  Component, ElementRef, EventEmitter, HostBinding, Inject, InjectionToken,
   Input,
   OnChanges,
   Output,
@@ -64,7 +64,8 @@ export class SdwTitleBarComponent implements OnChanges {
   public leftIcon?: string;
   public rightIcon?: string;
 
-  constructor(@Inject(SDW_DLG_TITLE_SETTINGS) public settings: SdwDialogTitleSettings) {
+  constructor(@Inject(SDW_DLG_TITLE_SETTINGS) public settings: SdwDialogTitleSettings,
+              public elementRef: ElementRef<HTMLElement>) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
